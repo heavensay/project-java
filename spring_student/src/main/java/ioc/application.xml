@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="  
+	http://www.springframework.org/schema/beans     
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+	http://www.springframework.org/schema/context        
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!-- id 表示你这个组件的名字，class表示组件类 -->
+	<bean id="hello" class="ioc.HelloImpl"></bean>
+
+	<bean id="zoo" class="ioc.Zoo" scope="singleton" init-method="initM">
+		
+		<property name="name">
+			<value>welcome to hz zoo</value>
+		</property>
+		
+		<property name="opentime" value="2012-11-12" />
+	</bean>
+
+	<!-- 添加了spring应用能力后,把这个包加入进来 -->
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<!--
+					引用这个ID <entry key="java.util.Date" value-ref="dataTrans"></entry>
+				-->
+				<entry key="java.sql.Timestamp" value-ref="dataTrans"></entry>
+			</map>
+		</property>
+	</bean>
+	<!-- 这个类,继承了PropertyEditorSupport -->
+	<bean id="dataTrans" class="ioc.DateTransation"></bean>
+
+	<context:component-scan base-package="ioc*"></context:component-scan>
+
+</beans>  
