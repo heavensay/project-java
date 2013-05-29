@@ -1,6 +1,17 @@
 package aop;
 
+import java.lang.reflect.Method;
+
 import org.junit.Test;
+import org.springframework.aop.Advisor;
+import org.springframework.aop.aspectj.AbstractAspectJAdvice;
+import org.springframework.aop.aspectj.AspectInstanceFactory;
+import org.springframework.aop.aspectj.AspectJAfterAdvice;
+import org.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.springframework.aop.aspectj.AspectJPointcutAdvisor;
+import org.springframework.aop.aspectj.SimpleAspectInstanceFactory;
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -32,6 +43,30 @@ public class TestAop {
 	     ApplicationContext cxt = new ClassPathXmlApplicationContext("aop/application-proxyfactorybean.xml");	
 	     IZoo zoo = cxt.getBean("testproxyfactBean",IZoo.class);
 	     zoo.open();
+	}
+	
+	@Test public void test5ProxyFactoryBean() throws Exception{
+		
+		Zoo zoo = new Zoo();
+		
+		ProxyFactory factory = new ProxyFactory(zoo);
+		factory.setInterfaces(new Class[]{IZoo.class});
+		
+//		Advisor advisor = new  DefaultPointcutAdvisor();
+		
+		Method after = ZooService.class.getMethod("after", null);
+		AspectJExpressionPointcut expressionPointcut = new AspectJExpressionPointcut();
+		expressionPointcut.setExpression("execution(* aop..*.*(..))");
+		AspectInstanceFactory aif = new SimpleAspectInstanceFactory(ZooService.class);
+		AbstractAspectJAdvice advice = new AspectJAfterAdvice(after, expressionPointcut, aif);
+		Advisor advisor = new  AspectJPointcutAdvisor(advice);
+		
+		factory.addAdvisor(advisor);
+		
+//		Object o = factory.getProxy();
+		IZoo proxy = (IZoo)factory.getProxy();
+		proxy.open();
+		
 	}
 	
 //	@Test
