@@ -2,6 +2,7 @@ package aop;
 
 import java.lang.reflect.Method;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AbstractAspectJAdvice;
@@ -11,6 +12,7 @@ import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.aspectj.AspectJPointcutAdvisor;
 import org.springframework.aop.aspectj.SimpleAspectInstanceFactory;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.interceptor.ExposeInvocationInterceptor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,7 +20,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class TestAop {
 
 	// 1、读取配置文件实例化一个IoC容器
-	private static ApplicationContext context = new ClassPathXmlApplicationContext("aop/application.xml");
+	private static ApplicationContext context = null;
+	
+	@Before
+	public void before(){
+//		context = new ClassPathXmlApplicationContext("aop/application.xml");
+	}
 	
 	@Test
 	public void test1() {
@@ -34,9 +41,13 @@ public class TestAop {
 	
 	@Test
 	public void test3(){
-		Tiger tiger = context.getBean("tiger",Tiger.class);
-//		tiger.getName();
-		tiger.before();
+		IZoo tiger = context.getBean("zoo2",IZoo.class);
+		tiger.open();
+		
+		System.out.println("------------------------");
+		
+		IZoo zoo = context.getBean("zoo", IZoo.class);
+		zoo.open();
 	}
 	
 	@Test public void test4ProxyFactoryBean(){
@@ -45,7 +56,7 @@ public class TestAop {
 	     zoo.open();
 	}
 	
-	@Test public void test5ProxyFactoryBean() throws Exception{
+	@Test public void test5Assembly() throws Exception{
 		
 		Zoo zoo = new Zoo();
 		
@@ -59,8 +70,10 @@ public class TestAop {
 		expressionPointcut.setExpression("execution(* aop..*.*(..))");
 		AspectInstanceFactory aif = new SimpleAspectInstanceFactory(ZooService.class);
 		AbstractAspectJAdvice advice = new AspectJAfterAdvice(after, expressionPointcut, aif);
+		
 		Advisor advisor = new  AspectJPointcutAdvisor(advice);
 		
+		factory.addAdvisor(ExposeInvocationInterceptor.ADVISOR);
 		factory.addAdvisor(advisor);
 		
 //		Object o = factory.getProxy();

@@ -9,8 +9,4 @@ public class Tiger {
 		System.out.println(" i am a tiger");
 	}
 	
-	public void before(){
-		System.out.println(" before tiger");
-	}
-	
 }
