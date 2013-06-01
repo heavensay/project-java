@@ -9,6 +9,7 @@ import org.springframework.aop.aspectj.AbstractAspectJAdvice;
 import org.springframework.aop.aspectj.AspectInstanceFactory;
 import org.springframework.aop.aspectj.AspectJAfterAdvice;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.springframework.aop.aspectj.AspectJMethodBeforeAdvice;
 import org.springframework.aop.aspectj.AspectJPointcutAdvisor;
 import org.springframework.aop.aspectj.SimpleAspectInstanceFactory;
 import org.springframework.aop.framework.ProxyFactory;
@@ -66,15 +67,19 @@ public class TestAop {
 //		Advisor advisor = new  DefaultPointcutAdvisor();
 		
 		Method after = ZooService.class.getMethod("after", null);
+		Method before = ZooService.class.getMethod("before", null);
 		AspectJExpressionPointcut expressionPointcut = new AspectJExpressionPointcut();
 		expressionPointcut.setExpression("execution(* aop..*.*(..))");
 		AspectInstanceFactory aif = new SimpleAspectInstanceFactory(ZooService.class);
-		AbstractAspectJAdvice advice = new AspectJAfterAdvice(after, expressionPointcut, aif);
+		AbstractAspectJAdvice afterAdvice = new AspectJAfterAdvice(after, expressionPointcut, aif);
+		AbstractAspectJAdvice beforeAdvice = new AspectJMethodBeforeAdvice(before,expressionPointcut,aif);
 		
-		Advisor advisor = new  AspectJPointcutAdvisor(advice);
+		Advisor afterAdvisor = new  AspectJPointcutAdvisor(afterAdvice);
+		Advisor beforeAdvisor = new  AspectJPointcutAdvisor(beforeAdvice);
 		
 		factory.addAdvisor(ExposeInvocationInterceptor.ADVISOR);
-		factory.addAdvisor(advisor);
+		factory.addAdvisor(afterAdvisor);
+		factory.addAdvice(beforeAdvice);
 		
 //		Object o = factory.getProxy();
 		IZoo proxy = (IZoo)factory.getProxy();
