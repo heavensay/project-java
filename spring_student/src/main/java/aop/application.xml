@@ -21,10 +21,18 @@
 	<aop:config>
 		<aop:pointcut id="pointcut" expression="execution(* aop..*.*(..))" />
 		<aop:aspect ref="aspect">
+		<!-- 
 			<aop:before pointcut-ref="pointcut" method="before" />
+			 -->
 			<aop:after pointcut="execution(* open())"
 				method="after" />
 		</aop:aspect>
+		
+		<aop:aspect ref="aspect">
+			<aop:before pointcut="execution(* aop..*.*(..)) and args(str)"
+				method="before(java.lang.String)" 
+				arg-names="str" />
+		</aop:aspect>		
 		
 		<aop:aspect ref="zooafterreturn">
 			<aop:after-returning method="afterReturning"  pointcut="execution(* open(..))"

@@ -13,4 +13,8 @@ public class Zoo implements IZoo{
 		System.out.println(" the zoo is open ");
 	}
 	
+	public void close(String str){
+		System.out.println(" the zoo is close ... "+str);
+	}
+	
 }
