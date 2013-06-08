@@ -2,6 +2,8 @@ package ioc;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.CustomEditorConfigurer;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -53,5 +55,6 @@ public class TestIoc {
 		
 		// 2、从容器中获取Bean，注意此处完全“面向接口编程，而不是面向实现”
 		Zoo zoo = context.getBean("zoo", Zoo.class);
+		System.out.println(zoo.getTiger());
 	}
 }

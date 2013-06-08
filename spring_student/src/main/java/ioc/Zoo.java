@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Zoo {
 
 	private String name;
-	@Autowired
+//	@Autowired
 	private Tiger tiger;
 
 	private Timestamp opentime;
+	
+	public Zoo(){
+		
+	}
 	
 	public String getName() {
 		return name;

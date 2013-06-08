@@ -7,13 +7,15 @@
 	http://www.springframework.org/schema/context        
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<!-- id 表示你这个组件的名字，class表示组件类 -->
-	<bean id="hello" class="ioc.HelloImpl"></bean>
+	<bean id="hello" name="hello" class="ioc.HelloImpl"></bean>
 
 	<bean id="zoo" class="ioc.Zoo" scope="singleton" init-method="initM">
 		
 		<property name="name">
 			<value>welcome to hz zoo</value>
 		</property>
+		
+		<property name="tiger" ref="tiger"></property>
 		
 		<property name="opentime" value="2012-11-12" />
 	</bean>
