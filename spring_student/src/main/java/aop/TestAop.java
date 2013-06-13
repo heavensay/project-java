@@ -27,12 +27,13 @@ public class TestAop {
 	
 	@Before
 	public void before(){
-		context = new ClassPathXmlApplicationContext("aop/application.xml");
+//		context = new ClassPathXmlApplicationContext("aop/application.xml");
 	}
 	
 	@Test
 	public void test1() {
 		// 2、从容器中获取Bean
+		context = new ClassPathXmlApplicationContext("aop/application.xml");
 		IZoo zoo = context.getBean("zoo", IZoo.class);
 		zoo.open();
 		System.out.println("-------****---------");
@@ -101,22 +102,16 @@ public class TestAop {
 		proxy.close(" happy day ");
 	}
 	
-//	@Test
-//	public void test3() {
-//		Resource resource = new ClassPathResource("aop/application.xml");
-//		// 1、读取配置文件实例化一个aop容器
-//		DefaultListableBeanFactory context = new XmlBeanFactory(resource);
-//		
-//		//autowired处理器使spring能自动解析装配bean中annotation。
-//		AutowiredAnnotationBeanPostProcessor processor = new AutowiredAnnotationBeanPostProcessor();
-//		processor.setBeanFactory(context);
-//		context.addBeanPostProcessor(processor);
-//		
-//		// 2、从容器中获取Bean，注意此处完全“面向接口编程，而不是面向实现”
-//		Zoo zoo = context.getBean("zoo", Zoo.class);
-//
-//		System.out.println(zoo.getName()+"---"+zoo.getOpentime());
-//		System.out.println(zoo.getTiger());
-//		
-//	}
+	@Test
+	public void test6AopAnnotationStyle() {
+		context = new ClassPathXmlApplicationContext("aop/application-annotation.xml");
+		
+		// 2、从容器中获取Bean，注意此处完全“面向接口编程，而不是面向实现”
+		IZoo zoo = context.getBean("zoo", IZoo.class);
+		zoo.open();
+		
+		System.out.println("----------------****-----------------");
+		
+		zoo.close(" happy day ");
+	}
 }
