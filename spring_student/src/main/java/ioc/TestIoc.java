@@ -14,17 +14,6 @@ import org.springframework.core.io.Resource;
 public class TestIoc {
 
 	@Test
-	public void test1() {
-		// 1、读取配置文件实例化一个IoC容器
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"ioc/application.xml");
-		// 2、从容器中获取Bean，注意此处完全“面向接口编程，而不是面向实现”
-		HelloApi helloApi = context.getBean("hello", HelloApi.class);
-		// 3、执行业务逻辑
-		helloApi.sayHello();
-	}
-
-	@Test
 	public void test2() {
 		// 1、读取配置文件实例化一个IoC容器
 		ApplicationContext context = new ClassPathXmlApplicationContext(
@@ -36,6 +25,7 @@ public class TestIoc {
 		// Tiger tiger = context.getBean("tiger", Tiger.class);
 		Tiger tiger = context.getBean(Tiger.class);
 		System.out.println(tiger);
+		System.out.println(zoo.getOpentime());
 	}
 
 	/**
@@ -56,5 +46,6 @@ public class TestIoc {
 		// 2、从容器中获取Bean，注意此处完全“面向接口编程，而不是面向实现”
 		Zoo zoo = context.getBean("zoo", Zoo.class);
 		System.out.println(zoo.getTiger());
+		System.out.println(zoo.getOpentime());
 	}
 }

@@ -21,7 +21,6 @@ public class ZooServiceForAnnotation {
 		System.out.println(" pppppp --");
 	}
 	
-//	@After(value="execution(* aop..*.*(..))" ,argNames="")  //这样注释是可行的
 	@After(value="afterpoint()" ,argNames="")
 	public void after() {
 		System.out.println(" annotation after zoo ...");

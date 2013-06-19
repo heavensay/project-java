@@ -8,7 +8,7 @@ import java.util.Date;
 public class DateTransation extends PropertyEditorSupport {
 	
 	public DateTransation(){
-		
+		System.out.println(" instant DateTransation");
 	}
 	
 	@Override

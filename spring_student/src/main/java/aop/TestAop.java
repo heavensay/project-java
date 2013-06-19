@@ -31,7 +31,7 @@ public class TestAop {
 	}
 	
 	@Test
-	public void test1() {
+	public void test1BasicConfiguration() {
 		// 2、从容器中获取Bean
 		context = new ClassPathXmlApplicationContext("aop/application.xml");
 		IZoo zoo = context.getBean("zoo", IZoo.class);
