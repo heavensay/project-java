@@ -12,9 +12,9 @@
 		<property name="name">
 			<value>welcome to hz zoo</value>
 		</property>
-		
-		<property name="tiger" ref="tiger"></property>
-		
+		<!-- 
+		<property name="tiger" ref="tiger"/>
+		 -->
 		<property name="opentime" value="2012-11-12" />
 	</bean>
 
