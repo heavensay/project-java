@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+	default-autowire="byType" default-lazy-init="true">
+
+	<description>Web Service配置</description>
+	
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+
+	<!-- jax-ws endpoint定义  -->
+	<jaxws:endpoint id="helloWorldService"  address="/HW">
+		<jaxws:implementor ref="helloWorld" />
+		
+		<!-- mtom使用用于支付传送二进制附件 -->
+		<jaxws:properties>
+			<entry key="mtom_enabled" value="true"/>
+		</jaxws:properties>
+	</jaxws:endpoint>
+
+	
+
+	<!-- WebService的实现Bean定义 -->
+	<bean id="helloWorld" class="com.cxf.service.HelloWorldImpl" />	
+	
+<!-- Define HelloWorld service 这种方式好像不需要使用@WebService这样注解，直接把pojo类型的java服务，配置成webservice服务
+	<jaxws:server id="helloWorldService" serviceClass="com.cxf.IHelloWorld"
+		address="/HW">
+		<jaxws:serviceBean>
+			<ref bean="helloWorld" />
+		</jaxws:serviceBean>
+	</jaxws:server>
+-->
+	
+</beans>
