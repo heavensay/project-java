@@ -13,8 +13,11 @@ import org.springframework.core.io.Resource;
 
 public class TestIoc {
 
+	/**
+	 * 
+	 */
 	@Test
-	public void test2() {
+	public void test1Basic() {
 		// 1、读取配置文件实例化一个IoC容器
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"ioc/application.xml");
@@ -33,7 +36,7 @@ public class TestIoc {
 	 * 
 	 */
 	@Test(expected=Exception.class)
-	public void test3() {
+	public void test2PlainFactory() {
 		Resource resource = new ClassPathResource("ioc/application.xml");
 		// 1、读取配置文件实例化一个IoC容器
 		DefaultListableBeanFactory context = new XmlBeanFactory(resource);
