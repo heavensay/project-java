@@ -4,5 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Tiger {
-
+  public Tiger(){
+    
+  }
 }
