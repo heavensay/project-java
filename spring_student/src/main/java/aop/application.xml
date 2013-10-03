@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"  
+	xsi:schemaLocation="  
+	http://www.springframework.org/schema/beans     
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+	http://www.springframework.org/schema/context        
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">  
+	<!-- id 表示你这个组件的名字，class表示组件类 -->
+	<bean id="zoo" class="aop.Zoo" scope="singleton" init-method="initM">
+	</bean>
+
+	<context:component-scan base-package="aop*" ></context:component-scan>
+
+	<bean id="aspect" class="aop.ZooService"/>
+	<bean id="zooafterreturn" class="aop.ZooAfterAdvice"/>
+	
+	<aop:config>
+		<aop:pointcut id="pointcut" expression="execution(* aop..*.*(..))" />
+		<aop:aspect ref="aspect">
+		<!-- 
+			<aop:before pointcut-ref="pointcut" method="before" />
+			 -->
+			<aop:after pointcut="execution(* open())"
+				method="after" />
+		</aop:aspect>
+		
+		<aop:aspect ref="aspect">
+			<aop:before pointcut="execution(* aop..*.*(..)) and args(str)"
+				method="before(java.lang.String)" 
+				arg-names="str" />
+		</aop:aspect>		
+		
+		<aop:aspect ref="zooafterreturn">
+			<aop:after-returning method="afterReturning"  pointcut="execution(* open(..))"
+			arg-names="returnobject" returning="returnobject"/>	
+		</aop:aspect>
+		
+	</aop:config>  	
+</beans>  
