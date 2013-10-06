@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Tiger {
   public Tiger(){
-	  System.out.println("fuck abcde");
+	  System.out.println("fuck 9876");
   }
 }
