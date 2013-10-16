@@ -4,4 +4,4 @@
 *.jar
 *.war
 *.ear
-/WebRoot/htmltest/*
+htmltest/
