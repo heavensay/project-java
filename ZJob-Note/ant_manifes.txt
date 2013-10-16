@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+
+Class-Path: lib/xwork-core-2.1.6.jar 
+
+

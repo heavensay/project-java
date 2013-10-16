@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ZJob-Note</groupId>
+	<artifactId>ZJob-Note</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.0.5.RELEASE</spring.version>
+	</properties>
+
+	<build>
+		<directory>target2</directory><!-- 这是打包的文件的路径。默认是该工程的根目录。 -->
+		<finalName>zjob</finalName><!--生成的目标文件名 -->
+		<sourceDirectory>src</sourceDirectory>
+		<!--
+			源文件名夹的名称。这里对应填写我们的src目录。
+		-->
+		<outputDirectory>bin</outputDirectory>
+		<!--
+			编译后的java文件输出的文件夹位 置。
+		-->
+		<testSourceDirectory>test</testSourceDirectory>
+		<testOutputDirectory>bin</testOutputDirectory>
+		<!--
+			测试文件源文件夹。这里与src文件 夹的定义是相同的。在打包时有区别，打包时，test文件夹下的源文件和资源文件都不被打到war包里面。
+		-->
+		<plugins>
+			<plugin>
+				<!-- 设置javac编译器的版本和编码字符 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>utf8</encoding><!-- 编译器编码 -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>	
+	
+	<!-- 引入Spring-AOP等相关Jar -->
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+		</dependency>
+	</dependencies>
+</project>
