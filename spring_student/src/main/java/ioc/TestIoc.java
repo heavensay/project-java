@@ -76,7 +76,7 @@ public class TestIoc {
 		System.out.println(count);
 		System.out.println(reader.getRegistry().getBeanDefinitionCount());
 		
-		BeanDefinition beanDefinition = registry.getBeanDefinition("zoo");
-		
+		BeanDefinition zooBD = registry.getBeanDefinition("zoo");
+		System.out.println(zooBD);
 	}
 }
