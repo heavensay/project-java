@@ -6,21 +6,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <<script type="text/javascript">
-<<<<<<< HEAD
-<!--
-	easyloader.base = '../';    // 设置easyui根目录
-	easyloader.load('messager', function(){        // 载入特定模块
-    $.messager.alert('Title', 'load ok');
-});
-//-->
-=======
-<!--
-	easyloader.base = '../';    // 设置easyui根目录
-	easyloader.load('messager', function(){        // 载入特定模块
-    $.messager.alert('Title', 'load ok');
-});
-//-->
->>>>>>> 6faa8f8deb6715c25cc79661c5826551561748f1
 </script>
 
 <html>
@@ -49,13 +34,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
 	<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>
 	<div data-options="region:'center',title:'Center'"></div>
-<<<<<<< HEAD
-	</body>
 	    
 	</body>
-=======
-</body>
-    
-  </body>
->>>>>>> 6faa8f8deb6715c25cc79661c5826551561748f1
 </html>

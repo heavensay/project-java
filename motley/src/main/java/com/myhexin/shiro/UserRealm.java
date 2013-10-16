@@ -22,11 +22,8 @@ import com.myhexin.service.UserService;
 
 /**
  * 类CrmRealm的实现描述：shiro领域，用于授权和认证
-<<<<<<< HEAD
 =======
  * 
- * @author Administrator 2012-12-3 下午6:13:48
->>>>>>> 0d4920b588ffb60872c6e29f62e10dbdfb47f637
  */
 public class UserRealm extends AuthorizingRealm {
 
