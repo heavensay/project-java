@@ -10,18 +10,28 @@
 
 	</body>
 	<div id='div1'>
-		div1----
+		div1 common
 	</div>
 
-	<script type="text/javascript">
-		$('#div1').data('aa','111');
-		console.log($('#div1').data('aa'));
-		console.log($('#div1').attr('aa'));
-		
-		$('#div1').bind('click',function(){
-			console.log($(this)+'-->click');			
+		<script type="text/javascript">
+		jQuery.fn.extend({
+			f1:function(){
+				console.log(this+'->f1()');
+			}
 		});
 		
-	</script>	
+		var div1 = $('#div1');
+			console.log(div1.f1());
+		
+		
+		div1.click(function(){
+			console.log($(this)+'->click()');
+		});
+		
+		div1.bind('mouseleave',function(){
+			console.log(this+'->mouseleave()');
+		});
+
+		</script>	
 
 </html>
