@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="webfront"
+  id="myeclipse.1382583933370"
+  context-root="/webfront"
+  j2ee-spec="5.0"
+  archive="webfront.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+
