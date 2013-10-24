@@ -8,6 +8,7 @@
 	</resultMap>
 
 	<resultMap type="com.myhexin.entity.TResourceTreeDTO" id="tResourceTreeDTO">
+		<result column="id" property="id" javaType="int"/>
 		<association property="children"  column="id" select="queryChildPermissionById"/>
 	</resultMap>
 
