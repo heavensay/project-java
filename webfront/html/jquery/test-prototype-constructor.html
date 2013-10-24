@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+	<script type="text/javascript">
+
+
+    /*********
+Function
+　　首先回顾一下函数对象的概念，函数就是对象,代表函数的对象就是函数对象。所有的函数对象是被Function这个函数对象构造出来的。也就是说，Function是最顶层的构造器。它构造了系统中所有的对象，包括用户自定义对象，系统内置对象，甚至包括它自已。这也表明Function具有自举性(自已构造自己的能力)。这也间接决定了Function的[[call]]和[[constructor]]逻辑相同。
+o为对象，是普通对象；f为函数，其实函数也是对象，函数对象，既然是函数也是对象，所以必然含有对象拥有的全部性质，包括对象在创建时设定的原型链__proto__属性。
+
+Object　
+　　对于Object它是最顶层的对象，所有的对象都将继承Object的原型，但是你也要明确的知道Object也是一个函数对象，所以说Object是被Function构造出来的。
+
+ prototype指对象显示的prototype属性，而[[Prototype]]则代表对象内部Prototype属性(隐式的)。构成对象Prototype链的是内部隐式的[[Prototype]]，而并非对象显示的prototype属性。显示的prototype只有在函数对象上才有意义，从上面的创建过程可以看到，函数的prototype被赋给派生对象隐式[[Prototype]]属性，这样根据Prototype规则，派生对象和函数的prototype对象之间才存在属性、方法的继承/共享关系
+
+		1 函数对象有一个显示的prototype原型对象(普通对象(i.e.  {} )是没有prototype属性的)
+		2 js中每定义或实例化一个对象的时候，都附加一个名为__proto__的隐藏属性(firefox跟chrome中名称为__proto__，并且可以被访问到)，
+		原型链正是基于__proto__才得以形成
+	***********/
+
+	function Animal(){
+		
+	}
+	var  anim = new Animal();
+	
+	console.log('***********Animal anim proto*****************');
+	console.log('typeof Animal.prototype:' +typeof Animal.prototype);  //object 
+	console.log('anim.__proto__===Animal.prototype:'+(anim.__proto__===Animal.prototype));  //true
+	console.log('Animal.__proto__===Function.prototype:'+(Animal.__proto__===Function.prototype));  //true
+	console.log('Animal.prototype.__proto__===Object.prototype:'+(Animal.prototype.__proto__===Object.prototype));  //true
+	
+	
+	console.log('***********Function proto*****************');
+	console.log('typeof Function.prototype:'+typeof Function.prototype);  //function
+	console.log('typeof Function.__proto__:'+typeof Function.__proto__);  //function
+	console.log('typeof Function.prototype.prototype:'+typeof Function.prototype.prototype); //undefined
+	console.log('typeof Function.prototype.__proto__:'+typeof Function.prototype.__proto__);   //object
+	console.log('Function.prototype===Function.__proto__:'+(Function.prototype===Function.__proto__)); //true
+
+	console.log('***********Object proto*****************');
+	console.log('typeof Object.prototype:'+typeof Object.prototype);  //object
+	console.log('typeof Object.__proto__:'+typeof Object.__proto__);  //function
+	console.log('Object.prototype.prototype:'+Object.prototype.prototype);  //undefied
+	console.log('Object.prototype.__proto__===null:'+(Object.prototype.__proto__===null));  //null
+
+	console.log('***********Function Object  proto关系*****************');
+	console.log('Function.prototype===Object.__proto__:'+(Function.prototype===Object.__proto__));   //true
+	console.log('Function.__proto__===Object.__proto__:'+(Function.__proto__===Object.__proto__));   //true
+	console.log('Function.prototype.__proto__===Object.prototype:'+(Function.prototype.__proto__===Object.prototype));   //true
+
+	
+	
+	/********************  更改Object、Function的prototype属性
+  	console.log('************** update prototype ****************'); 
+	Object.prototype=null;
+	console.log(Object.prototype);  //object {}
+	
+	console.log(null);  //object
+	Function.prototype=null;
+	anim=null;
+	console.log(Function.prototype);  //function
+	//Function.__proto__=null;   //脚本运行错误   
+	//Object.__proto__=null;	 //脚本运行错误
+	console.log(Function.__proto__); //undefined
+	
+	
+	console.log(Object.__proto__); //undefined
+	 *************************/
+	 
+	/********************* 系统定义的对象Array、Date ****************************/
+	console.log('**************test Array、Date****************'); 	 
+	var array = new Array();
+	var date = new Date();
+	console.log('array.__proto__===Array.prototype:'+(array.__proto__===Array.prototype));   //true
+	console.log('Array.__proto__===Function.prototype:'+(Array.__proto__===Function.prototype));  //true
+	console.log('date.__proto__===Date.prototype:'+(date.__proto__===Date.prototype));	//true
+	console.log('Date.__proto__===Function.prototype:'+(Date.__proto__===Function.prototype));	 //true
+	 
+	/********************* prototype  practice
+	 * 
+	 *  ****************************/
+	console.log('**************prototype  practice****************'); 
+	
+	function Human(){  }
+	Human.prototype.speak = function(content){
+		console.log('Human.prototype.speak:'+content);
+	}
+	
+	function Black(){}
+	
+	var hm = new Human();
+	hm.speak('i am a human');
+	
+	Black.prototype=hm;
+	var bl = new Black();
+	bl.speak('i am a black');   //继承了Human原型上的speak方法
+	console.log('Black.__proto__===Function.prototype:'+(Black.__proto__===Function.prototype));
+	 
+	console.log('**************constructor****************'); 
+
+	console.log('anim.constructor===Animal:'+(anim.constructor===Animal))	;	//true
+	console.log('Animal===Animal.prototype.constructor:'+(Animal===Animal.prototype.constructor))	;	//true
+	console.log('Animal.constructor===Function.prototype.constructor:'+(Animal.constructor===Function.prototype.constructor));   //true
+	console.log('Function.prototype.constructor===Function:'+(Function.prototype.constructor===Function));    //true
+	console.log('Function.constructor===Function.prototype.constructor:'+(Function.constructor===Function.prototype.constructor));    //true
+
+	console.log('Object.prototype.constructor===Object:'+(Object.prototype.constructor===Object));	//true
+	console.log('Object.constructor====Function:'+(Object.constructor===Function));	//true
+	
+	console.log('Object.__proto__.constructor:'+Object.__proto__.constructor);   //function Function() { [native code] } basic.html:170
+	
+	//console.log('Object.prototype.__proto__.constructor:'+Object.prototype.__proto__.constructor); 
+	//console.log('null.constructor:'+null.constructor); 
+	console.log('NaN.constructor:'+NaN.constructor);   // function Number() { [native code] } 
+	
+	</script>
+</head>
+<body>
+
+</body>
+	<div id='div1'>
+		div1----
+	</div>
+
+</html>
