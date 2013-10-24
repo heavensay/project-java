@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.myhexin.entity.PermissionDTO;
+import com.myhexin.entity.TResourceTreeDTO;
 import com.myhexin.entity.User;
 
 public interface IUserDao {
@@ -14,4 +15,5 @@ public interface IUserDao {
 	
 	public List<PermissionDTO> queryUserPermission(@Param("name")String name);
 	
+	public TResourceTreeDTO queryPermissionTreeById(@Param("id")Integer id);
 }

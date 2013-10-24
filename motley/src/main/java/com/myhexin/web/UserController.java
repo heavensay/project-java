@@ -1,5 +1,7 @@
 package com.myhexin.web;
 
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -8,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.myhexin.entity.PermissionDTO;
+import com.myhexin.entity.TResourceTreeDTO;
 import com.myhexin.entity.User;
 import com.myhexin.service.UserService;
 
@@ -45,5 +50,23 @@ public class UserController {
             return "redirect:/login.jsp";
         }
 	}
-
+	
+	/**
+	 * 
+	 */
+	@RequestMapping(value = "/queryUserPermission",method=RequestMethod.GET)
+	@ResponseBody
+	public List<PermissionDTO> queryUserPermission(String name) {
+			return userService.queryUserPermission(name);
+    }
+	
+	/**
+	 * 
+	 */
+	@RequestMapping(value = "/queryResourceTree",method=RequestMethod.GET)
+	@ResponseBody
+	public TResourceTreeDTO queryResourceTreeById(String name) {
+			return userService.queryResourceTreeById(1);
+    }
+	
 }
