@@ -7,7 +7,7 @@
     <meta http-equiv="description" content="this is my page">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!-- 3秒以后重定向 -->
-    <meta http-equiv="refresh" content="3; url=index.html"/>
+    <meta http-equiv="refresh" content="3; url=index.jsp"/>
     
   </head>
   
