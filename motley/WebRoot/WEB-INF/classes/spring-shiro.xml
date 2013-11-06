@@ -23,6 +23,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/user/* = anon
+				/common/* = anon
 				/**/** = authc
 			</value>
 		</property>

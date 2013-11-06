@@ -70,13 +70,4 @@ public class UserController {
 			return userService.queryResourceTreeById(1);
     }
 	
-	/**
-	 * 
-	 */
-	@RequestMapping(value = "/view1",method=RequestMethod.GET)
-	@ModelAttribute(value="list")
-	public List<PermissionDTO>  view1(String name) {
-			List<PermissionDTO> list = userService.queryUserPermission(name);
-			return list;
-    }
 }
