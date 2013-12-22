@@ -14,7 +14,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.myhexin.dao.IUserDao;
+import com.myhexin.dao.user.IUserDao;
 import com.myhexin.entity.PermissionDTO;
 import com.myhexin.entity.User;
 import com.myhexin.service.UserService;

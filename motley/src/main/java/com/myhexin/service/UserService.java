@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.myhexin.dao.IUserDao;
+import com.myhexin.dao.user.IUserDao;
 import com.myhexin.entity.PermissionDTO;
 import com.myhexin.entity.TResource;
 import com.myhexin.entity.TResourceTreeDTO;

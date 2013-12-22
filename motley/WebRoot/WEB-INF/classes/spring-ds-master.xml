@@ -40,11 +40,12 @@
     
     <tx:annotation-driven transaction-manager="transactionManager" />    
     
-    <!-- sqlSessionFactoryBeanName/sqlSessionTemplateBeanName   
+    <!-- sqlSessionFactoryBeanName/sqlSessionTemplateBeanName   --> 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
-        <property name="basePackage" value="com.myhexin.dao" />  
+        <property name="basePackage" value="com.myhexin.dao.user" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>  
     </bean>      
-    --> 
+    
     
     <!-- ***************************************** -->
  <!-- JOTM实例 --> 

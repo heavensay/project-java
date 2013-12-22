@@ -35,7 +35,7 @@ public class ProductController  extends BaseController{
 	}
 	
 	/**
-	 * 理财专区->活动列表
+	 * 多数据源的测试
 	 * @return
 	 */
 	@RequestMapping(value = "/insertPctMetal",method=RequestMethod.GET)

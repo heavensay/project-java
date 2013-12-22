@@ -1,4 +1,4 @@
-package com.myhexin.dao;
+package com.myhexin.dao.product;
 
 import java.util.List;
 
