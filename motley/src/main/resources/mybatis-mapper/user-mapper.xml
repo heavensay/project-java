@@ -7,10 +7,17 @@
 	<resultMap type="com.myhexin.entity.PermissionDTO" id="permissionDTO">
 	</resultMap>
 
+ 	<resultMap type="com.myhexin.entity.TResource" id="tresource"/>
+ 
 	<resultMap type="com.myhexin.entity.TResourceTreeDTO" id="tResourceTreeDTO">
 		<result column="id" property="id" javaType="int"/>
 		<association property="children"  column="id" select="queryChildPermissionById"/>
 	</resultMap>
+
+    <select id="queryPermissionByPage"  resultMap="tresource" parameterType="page"> 
+		select * 
+			from tresource
+    </select>       
 
     <select id="getUserById" parameterType="int" resultType="User">  
         SELECT *   
@@ -41,6 +48,11 @@
 		select id,resourcename text 
 		 from tresource 
 		where pid=#{id}
-    </select>             
+    </select>         
     
+    <insert id="insertTUser" parameterType="User">
+    	insert into tuser(name,password)
+    	values(#{name},#{password})
+    </insert>    
+    	
 </mapper> 

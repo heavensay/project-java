@@ -9,5 +9,7 @@
 
 	<context:component-scan base-package="*"></context:component-scan>
 
+	<import resource="spring-ds-master.xml"/>
+	<import resource="spring-ds-slave.xml"/>
 
 </beans>  

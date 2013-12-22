@@ -20,32 +20,53 @@
  	-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">  
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>  
-        <property name="url" value="jdbc:oracle:thin:@192.168.1.93:1521:ORCL" />  
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" />  
         <property name="username" value="diy" />  
         <property name="password" value="diy" />  
     </bean>
-          
+    
+
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSource" />  
-        <property name="configLocation" value="WEB-INF/classes/mybatis-map-config.xml" />  
+        <!-- 
+        	<property name="configLocation" value="WEB-INF/classes/mybatis-map-config.xml" />  
+         -->
+        <property name="configLocation" value="classpath:mybatis-config.xml" />  
     </bean>
     
-   <bean id="transactionManager"  
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+	<bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
         <property name="dataSource" ref="dataSource" />  
     </bean>  
     
     <tx:annotation-driven transaction-manager="transactionManager" />    
     
-    
-    <!--这里要注意，刚开始我用的是注释掉的那句话，但是会报错，查了资料改为了用sqlSessionFactoryBeanName-->  
+    <!-- sqlSessionFactoryBeanName/sqlSessionTemplateBeanName   
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
         <property name="basePackage" value="com.myhexin.dao" />  
-       <!-- 
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />  
-  	    <property name="annotationClass" value="org.springframework.stereotype.Repository" />        
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
-         -->   
     </bean>      
+    --> 
+    
+    <!-- ***************************************** -->
+ <!-- JOTM实例 --> 
+    <bean id="jotm" class="com.myhexin.tool.spring.JotmFactoryBean"/> 
+    <!-- JTA事务管理器 --> 
+	<bean id="jtaTxManager" 
+                    class="org.springframework.transaction.jta.JtaTransactionManager"> 
+          <property name="userTransaction" ref="jotm"/> 
+    </bean>
+             
+	<bean id="xaDataSource" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource"
+		destroy-method="shutdown">
+		<property name="dataSource">
+			<bean class="org.enhydra.jdbc.standard.StandardXADataSource"
+				destroy-method="shutdown">
+				<property name="transactionManager" ref="jotm" />
+				<property name="driverName" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" />
+			</bean>
+		</property>
+		<property name="user" value="diy" />
+		<property name="password" value="diy" />
+	</bean>    
     
 </beans>  

@@ -8,14 +8,15 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myhexin.entity.PermissionDTO;
+import com.myhexin.entity.TResource;
 import com.myhexin.entity.TResourceTreeDTO;
 import com.myhexin.entity.User;
+import com.myhexin.persistent.Page;
 import com.myhexin.service.UserService;
 
 /**
@@ -68,6 +69,13 @@ public class UserController {
 	@ResponseBody
 	public TResourceTreeDTO queryResourceTreeById(String name) {
 			return userService.queryResourceTreeById(1);
+    }
+	
+	@RequestMapping(value = "/queryPermissionByPage",method=RequestMethod.GET)
+	@ResponseBody
+	public List<TResource> queryPermissionByPage(String name) {
+		Page page = new Page();
+		return userService.queryPermissionByPage(page);
     }
 	
 }

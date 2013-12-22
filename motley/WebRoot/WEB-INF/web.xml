@@ -29,7 +29,6 @@
 			classpath*:/WEB-INF/classes/spring*.xml
 			-->
 			classpath*:/spring-applicationContext.xml
-			classpath*:/spring-mybatis-config.xml
 			classpath*:/spring-shiro.xml
 		</param-value>
 	</context-param>
