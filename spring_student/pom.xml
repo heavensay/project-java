@@ -38,8 +38,9 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>1.0.1</version>
+			<version>1.1.0</version>
 		</dependency>
+		
 		<dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
@@ -155,11 +156,6 @@
 			spring-context, spring-tx) Define this if you use Spring's
 			JdbcTemplate API (org.springframework.jdbc.*)
 		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
 
 		<!--
 			Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, and
@@ -231,6 +227,12 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.1.1.RELEASE</version>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 </project>
