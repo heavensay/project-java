@@ -1,4 +1,4 @@
-package test.http;
+package testhttp;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

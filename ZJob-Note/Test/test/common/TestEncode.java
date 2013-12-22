@@ -35,7 +35,7 @@ public class TestEncode {
 		System.out.println(Integer.toBinaryString((int)'汉'));
 		System.out.println(Integer.toHexString((int)'汉'));
 		
-		String str = "汉字";
+		String str = "中国";
 		
 		byte[] unicodes = str.getBytes("unicode");
 		System.out.println("以unicode编码 ，长度："+unicodes.length);
@@ -102,6 +102,10 @@ public class TestEncode {
 		System.out.print("\r\n无符号byte的整数值：\r\n");
 		for(byte b : bytes){
 			System.out.print((b&0xff)+" ");
+		}
+		System.out.print("\r\n有符号byte的整数值：\r\n");
+		for(byte b : bytes){
+			System.out.print((b)+" ");
 		}
 				
 		System.out.print("\r\n 二进制表现形式：\r\n");

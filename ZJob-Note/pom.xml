@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ZJob-Note</groupId>
 	<artifactId>ZJob-Note</artifactId>
@@ -9,44 +8,48 @@
 		<spring.version>3.0.5.RELEASE</spring.version>
 	</properties>
 
-	<build>
-		<directory>target2</directory><!-- 这是打包的文件的路径。默认是该工程的根目录。 -->
-		<finalName>zjob</finalName><!--生成的目标文件名 -->
-		<sourceDirectory>src</sourceDirectory>
-		<!--
-			源文件名夹的名称。这里对应填写我们的src目录。
-		-->
-		<outputDirectory>bin</outputDirectory>
-		<!--
-			编译后的java文件输出的文件夹位 置。
-		-->
-		<testSourceDirectory>test</testSourceDirectory>
-		<testOutputDirectory>bin</testOutputDirectory>
-		<!--
-			测试文件源文件夹。这里与src文件 夹的定义是相同的。在打包时有区别，打包时，test文件夹下的源文件和资源文件都不被打到war包里面。
-		-->
-		<plugins>
-			<plugin>
-				<!-- 设置javac编译器的版本和编码字符 -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>utf8</encoding><!-- 编译器编码 -->
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>	
+<dependencies>
 	
-	<!-- 引入Spring-AOP等相关Jar -->
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>	
+	<dependency>
+		<groupId>commons-lang</groupId>
+		<artifactId>commons-lang</artifactId>
+		<version>2.6</version>
+	</dependency>
+	
+	<!-- excel相关操作 -->
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi</artifactId>
+		<version>3.9</version>
+	</dependency>
+            	
+	<!-- json操作 -->
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-mapper-asl</artifactId>
+		<version>1.9.13</version>
+	</dependency>
+            
+	<dependency>
+		<groupId>commons-httpclient</groupId>
+		<artifactId>commons-httpclient</artifactId>
+		<version>3.1</version>
+	</dependency>
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.16</version>
+	</dependency>
+
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.11</version>
+		<scope>test</scope>
+	</dependency>	
+		
+		<!-- 引入Spring-AOP等相关Jar
+
 	
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -73,5 +76,39 @@
 			<artifactId>javaee-api</artifactId>
 			<version>6.0</version>
 		</dependency>
+		 -->
 	</dependencies>
+	
+	<build>
+		<directory>target2</directory><!-- 这是打包的文件的路径。默认是该工程的根目录。 -->
+		<finalName>zjob</finalName><!--生成的目标文件名 -->
+		
+		<sourceDirectory>${basedir}/src</sourceDirectory>
+		<!--
+			源文件名夹的名称。这里对应填写我们的src目录。
+		-->
+    	<outputDirectory>${basedir}/bin</outputDirectory>
+
+		<!--
+			编译后的java文件输出的文件夹位 置。
+		-->
+		<testSourceDirectory>${basedir}/Test</testSourceDirectory>
+		<testOutputDirectory>${basedir}/bin</testOutputDirectory>
+		<!--
+			测试文件源文件夹。这里与src文件 夹的定义是相同的。在打包时有区别，打包时，test文件夹下的源文件和资源文件都不被打到war包里面。
+		-->
+		<plugins>
+			<plugin>
+				<!-- 设置javac编译器的版本和编码字符 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>utf8</encoding><!-- 编译器编码 -->
+				</configuration> 
+			</plugin>
+		</plugins>
+	</build>	
+		
 </project>

@@ -4,5 +4,3 @@
 *.jar
 *.war
 *.ear
-/motley/WebRoot/htmltest/
-/motley/WebRoot/classes/

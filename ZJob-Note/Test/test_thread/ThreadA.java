@@ -1,5 +1,10 @@
 package test_thread;
 
+/**
+ * 测试TimeUnit类的用法
+ * @author banana
+ *
+ */
 class ThreadA {
 	public static void main(String[] args) {
 		int a  = 5; 

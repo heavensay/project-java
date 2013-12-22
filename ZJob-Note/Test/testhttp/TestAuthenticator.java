@@ -1,4 +1,4 @@
-package test.http;
+package testhttp;
 
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
