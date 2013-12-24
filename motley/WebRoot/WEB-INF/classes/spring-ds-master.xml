@@ -46,28 +46,4 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>  
     </bean>      
     
-    
-    <!-- ***************************************** -->
- <!-- JOTM实例 --> 
-    <bean id="jotm" class="com.myhexin.tool.spring.JotmFactoryBean"/> 
-    <!-- JTA事务管理器 --> 
-	<bean id="jtaTxManager" 
-                    class="org.springframework.transaction.jta.JtaTransactionManager"> 
-          <property name="userTransaction" ref="jotm"/> 
-    </bean>
-             
-	<bean id="xaDataSource" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource"
-		destroy-method="shutdown">
-		<property name="dataSource">
-			<bean class="org.enhydra.jdbc.standard.StandardXADataSource"
-				destroy-method="shutdown">
-				<property name="transactionManager" ref="jotm" />
-				<property name="driverName" value="oracle.jdbc.driver.OracleDriver" />
-				<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" />
-			</bean>
-		</property>
-		<property name="user" value="diy" />
-		<property name="password" value="diy" />
-	</bean>    
-    
 </beans>  

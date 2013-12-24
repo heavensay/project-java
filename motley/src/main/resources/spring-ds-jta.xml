@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    ">
+
+ <!-- JOTM实例 --> 
+    <bean id="jotm" class="com.myhexin.tool.spring.JotmFactoryBean"/> 
+             
+	<bean id="dataSource" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource"
+		destroy-method="shutdown">
+		<property name="dataSource">
+			<bean class="org.enhydra.jdbc.standard.StandardXADataSource"
+				destroy-method="shutdown">
+				<property name="transactionManager" ref="jotm" />
+				<property name="driverName" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" />
+			</bean>
+		</property>
+		<property name="user" value="diy" />
+		<property name="password" value="diy" />
+	</bean>
+	 	
+	<bean id="transactionManager" 
+                    class="org.springframework.transaction.jta.JtaTransactionManager"> 
+          <property name="userTransaction" ref="jotm"/> 
+    </bean>	 		 	
+	 	
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource" />  
+        <!-- 
+        	<property name="configLocation" value="WEB-INF/classes/mybatis-map-config.xml" />  
+         -->
+        <property name="configLocation" value="classpath:mybatis-config.xml" />  
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />    
+    
+    <!-- sqlSessionFactoryBeanName/sqlSessionTemplateBeanName   --> 
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
+        <property name="basePackage" value="com.myhexin.dao.user" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>  
+    </bean>      
+    
+    <!-- ********************** two ************************** -->
+    
+	<bean id="slaveDataSource" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource"
+		destroy-method="shutdown">
+		<property name="dataSource">
+			<bean class="org.enhydra.jdbc.standard.StandardXADataSource"
+				destroy-method="shutdown">
+				<property name="transactionManager" ref="jotm" />
+				<property name="driverName" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/jianhang" />
+			</bean>
+		</property>
+		<property name="user" value="banana" />
+		<property name="password" value="123456" />
+	</bean>    
+    
+    <bean id="slaveSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="slaveDataSource" />  
+        <property name="configLocation" value="classpath:mybatis-config.xml" />  
+    </bean>
+    
+	<!-- sqlSessionFactoryBeanName/sqlSessionTemplateBeanName  -->  
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
+        <property name="basePackage" value="com.myhexin.dao.product" />  
+        <property name="sqlSessionFactoryBeanName" value="slaveSqlSessionFactory"/>
+    </bean>      
+    
+        
+    
+</beans>  

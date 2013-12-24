@@ -11,7 +11,8 @@ import com.myhexin.entity.PctMetal;
 import com.myhexin.entity.User;
 
 @Service
-@Transactional("slaveTransactionManager")
+//@Transactional("slaveTransactionManager")  //多个数据源事务测试
+@Transactional("transactionManager") //jta测试
 public class ProductService {
 	
 	@Autowired
