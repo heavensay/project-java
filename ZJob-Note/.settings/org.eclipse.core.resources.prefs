@@ -1,5 +1,7 @@
-#Tue Aug 30 17:58:57 CST 2011
+#Wed Mar 16 16:40:52 CST 2016
 eclipse.preferences.version=1
+encoding//Test/testfastdfs/fdfs_client.properties=UTF-8
 encoding//Test/testio/StringTest.java=UTF-8
 encoding//Test/testio/nio/nioSamples/src=GBK
+encoding//Test/testlog/log4j.properties=UTF-8
 encoding/<project>=UTF-8
