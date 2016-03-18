@@ -18,21 +18,21 @@ import javax.mail.internet.MimeUtility;
 public class MailSend{  
     // 邮箱服务器  
 //    private String host = "smtp.163.com";  
-	private String host = "mail.myhexin.com";
+	private String host = "mail.test.com";
     
     // 这个是你的邮箱用户名  
-    private String username = "lijianyu@myhexin.com";  
+    private String username = "test@test.com";  
     // 你的邮箱密码  
-    private String password = "heavensay";  
+    private String password = "testpwd";  
       
-    private String mail_to = "lijianyu@myhexin.com,zny818@163.com";  
+    private String mail_to = "test@test.com,zny818@163.com";  
     private String mail_cc = "zny818@163.com";
     
-    private String mail_from = "lijianyu@myhexin.com";  
+    private String mail_from = "test@test.com";  
   
     private String mail_subject = " 行情采集出现问题！ ";  
   
-//    private String personalName = "heaven";  
+//    private String personalName = "test";  
   
     public MailSend(){}  
   

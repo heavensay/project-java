@@ -303,13 +303,13 @@ public class MailRecive {
     public static void main(String args[]) throws Exception {  
         Properties props = System.getProperties();  
 //        props.put("mail.smtp.host", "smtp.163.com"); 
-        props.put("mail.smtp.host", "mail.myhexin.com");
+        props.put("mail.smtp.host", "mail.mailhost.com");
         props.put("mail.smtp.auth", "true");  
         
         Session session = Session.getDefaultInstance(props, null);
         
-        URLName urln = new URLName("imap", "mail.myhexin.com", 143, null,  
-                "lijianyu@myhexin.com", "heavensay");  
+        URLName urln = new URLName("imap", "mail.mailhost.com", 143, null,  
+                "test@mailhost.com", "mailhostpwd");  
         Store store = session.getStore(urln);  
         store.connect();  
         Folder folder = store.getFolder("INBOX");  
