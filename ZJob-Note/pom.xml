@@ -3,6 +3,19 @@
 	<groupId>ZJob-Note</groupId>
 	<artifactId>ZJob-Note</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<repositories>
+		<repository>    
+		       <id>center</id>    
+		       <name>local private nexus</name>    
+		       <url>http://central.maven.org/maven2</url>    
+		       <releases>    
+		           <enabled>true</enabled>    
+		       </releases>    
+		        <snapshots>    
+		            <enabled>true</enabled>    
+		        </snapshots>    
+    		</repository>  
+	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.0.5.RELEASE</spring.version>
@@ -10,6 +23,19 @@
 
 <dependencies>
 	
+		<!-- 模板工具 -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.22</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>	
 	<dependency>
 		<groupId>commons-lang</groupId>
 		<artifactId>commons-lang</artifactId>
@@ -76,7 +102,37 @@
 			<artifactId>javaee-api</artifactId>
 			<version>6.0</version>
 		</dependency>
+		<!-- fastdfs分布式文件服务 -->
+		<dependency>
+			<groupId>org.csource</groupId>
+			<artifactId>fastdfs</artifactId>
+			<version>1.24</version>
+		</dependency>		
+		<!-- 
+	    <dependency>
+	      <groupId>org.csource</groupId>
+	      <artifactId>fastdfs-client-java</artifactId>
+	      <version>5.0.4</version>
+	    </dependency>		
 		 -->
+		 
+		<dependency>
+			<groupId>com.googlecode.xmemcached</groupId>
+			<artifactId>xmemcached</artifactId>
+			<version>2.0.0</version>
+		</dependency>	
+		
+		<dependency>
+			<groupId>com.whalin</groupId>
+			<artifactId>Memcached-Java-Client</artifactId>
+			<version>3.0.0</version>
+		</dependency>			
+		<!--  -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>			 
 	</dependencies>
 	
 	<build>
