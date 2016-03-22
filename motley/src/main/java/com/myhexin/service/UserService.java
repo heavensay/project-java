@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.myhexin.dao.IUserDao;
+import com.myhexin.dao.user.IUserDao;
 import com.myhexin.entity.PermissionDTO;
+import com.myhexin.entity.TResource;
 import com.myhexin.entity.TResourceTreeDTO;
 import com.myhexin.entity.User;
+import com.myhexin.persistent.Page;
 
 @Service
-@Transactional
+@Transactional("transactionManager")
+//@Transactional("jtaTxManager")
 public class UserService {
 	
 	@Autowired
@@ -42,4 +45,12 @@ public class UserService {
 		return iuserDao.queryPermissionTreeById(id);
 	}
 	
+	
+	public List<TResource> queryPermissionByPage(Page page){
+		return iuserDao.queryPermissionByPage(page);
+	}
+	
+	public void insertTuser(User user){
+		iuserDao.insertTUser(user);
+	}
 }

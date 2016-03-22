@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+<properties>
+	<property name="global_path" value="D:/a/b/"/>
+</properties>
+
+	<settings>
+		<!--
+			设置但JDBC类型为空时,某些驱动程序 要指定值,default: OTHER 默认值得花，当传进来的一些值为null,会报错
+		-->
+		<setting name="jdbcTypeForNull" value="NULL" />
+
+	</settings>
+	<typeAliases>
+		<!--配置别名，是在Mapper中使用别名-->
+		<typeAlias alias="user" type="mybatis.User" />
+		<!-- -->
+		<typeAlias alias="page" type="mybatis.Page" />
+		<typeAlias alias="PageInterceptor" type="mybatis.PageInterceptor" />
+
+	</typeAliases>
+
+	<!--   -->
+	<plugins>
+		<plugin interceptor="PageInterceptor">
+			<property name="databaseType" value="Oracle" />
+			<property name="pageSqlKey" value=".*ByPage"/>
+		</plugin>
+	</plugins>
+
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" />
+				<property name="username" value="diy" />
+				<property name="password" value="diy" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="mybatis/user-mapper.xml" />
+	</mappers>
+
+</configuration>  

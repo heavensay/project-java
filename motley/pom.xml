@@ -19,6 +19,47 @@
   
   <!-- 项目建立的时候自带的依赖 -->
   <dependencies>
+   		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+            <scope>provided</scope>
+		</dependency>      
+  
+   
+		<!-- 不幸的是由于二进制许可 binary license的限制， 没有任何一个公共的repository可以包含oracle 的jdbc driver。
+		我们的很多依赖都面对同样的问题，这不是Maven的错。即使你偶然发现了某个公共的repository可以包含这个JAR，那么那一定是违法的
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.4.0</version>
+		</dependency>
+		 -->
+
+	<!-- J2EE JTA事务支持 -->	
+		<dependency>  
+            <groupId>com.experlog</groupId>  
+            <artifactId>xapool</artifactId>  
+            <version>1.5.0</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.ow2.jotm</groupId>  
+            <artifactId>jotm-core</artifactId>  
+            <version>2.2.2</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.ow2.jotm</groupId>  
+            <artifactId>jotm</artifactId>  
+            <version>2.2.2</version>  
+            <type>pom</type>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.ow2.spec.ee</groupId>  
+            <artifactId>ow2-connector-1.5-spec</artifactId>  
+            <version>1.0.9</version>  
+        </dependency>  
+            
+   
     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>javaee-api</artifactId>
@@ -63,8 +104,9 @@
       <artifactId>aopalliance</artifactId>
       <version>1.0</version>
       <scope>compile</scope>
-      
     </dependency>
+    
+
   		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -114,7 +156,7 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>1.0.1</version>
+			<version>1.1.0</version>
 		</dependency>
     		<dependency>
   			<groupId>org.apache.shiro</groupId>
@@ -157,28 +199,11 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.8</version>
 		</dependency>		
-
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
-            <scope>provided</scope>
-		</dependency>        
-		<!-- 不幸的是由于二进制许可 binary license的限制， 没有任何一个公共的repository可以包含oracle 的jdbc driver。
-		我们的很多依赖都面对同样的问题，这不是Maven的错。即使你偶然发现了某个公共的repository可以包含这个JAR，那么那一定是违法的
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc14</artifactId>
-			<version>10.2.0.4.0</version>
-		</dependency>
-		 -->
-            		
 		        
   </dependencies>
   
   
-  <!-- 
+  <!-- -->
   <build>
     <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
     <outputDirectory>${basedir}/WebRoot/WEB-INF/classes</outputDirectory>
@@ -207,6 +232,6 @@
       </plugin>
     </plugins>
   </build>
-   -->
+   
   
 </project>
