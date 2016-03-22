@@ -6,3 +6,7 @@
 *.ear
 /motley/WebRoot/htmltest/
 /motley/WebRoot/classes/
+/motley/target/classes/
+/ZJob-Note/bin/
+*.mymetadata
+*.myumldata
