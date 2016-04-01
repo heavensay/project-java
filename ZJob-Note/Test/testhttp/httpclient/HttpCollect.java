@@ -1,6 +1,16 @@
 package testhttp.httpclient;
 
 import java.io.IOException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -41,5 +51,56 @@ public class HttpCollect {
 		int statusCode = httpclient.executeMethod(getMethod);
 		System.out.println("response=" + getMethod.getResponseBodyAsString());
 		getMethod.releaseConnection();
+	}
+	
+	@Test
+	public void test3https() throws HttpException, IOException {
+		
+		trustAllHosts();
+		HttpClient httpclient = new HttpClient();// 创建一个客户端，类似打开一个浏览器
+		GetMethod getMethod = new GetMethod("https://127.0.0.1:8443/webfront/data/queryResourceTree");
+		int statusCode = httpclient.executeMethod(getMethod);
+		System.out.println("response=" + getMethod.getResponseBodyAsString());
+		getMethod.releaseConnection();
+	}
+	
+	
+	/**
+	 * Trust every server - dont check for any certificate
+	 */
+	private static void trustAllHosts() {
+		// Create a trust manager that does not validate certificate chains
+		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+
+			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
+
+			public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+			}
+
+			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+			}
+		} };
+
+		
+		//这个好像是HOST验证
+		X509HostnameVerifier hostnameVerifier = new X509HostnameVerifier() {
+			public boolean verify(String arg0, SSLSession arg1) {
+				return true;
+			}
+			public void verify(String arg0, SSLSocket arg1) throws IOException {}
+			public void verify(String arg0, String[] arg1, String[] arg2) throws SSLException {}
+			public void verify(String arg0, X509Certificate arg1) throws SSLException {}
+		};		
+		
+		// Install the all-trusting trust manager
+		try {
+			SSLContext sc = SSLContext.getInstance("TLS");
+			sc.init(null, trustAllCerts, new java.security.SecureRandom());
+			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

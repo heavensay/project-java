@@ -17,6 +17,7 @@ public class TestLogRedirector {
 	
 	@Before
 	public void before() throws Exception {
+		//系统输出流重定向
 		System.setOut(new PrintStream(new FileOutputStream(new File(outPath))));
 		System.setErr(new PrintStream(new FileOutputStream(new File(errPath))));	
 	}

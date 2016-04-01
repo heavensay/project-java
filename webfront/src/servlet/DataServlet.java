@@ -28,6 +28,7 @@ public class DataServlet extends HttpServlet {
 	
 	public void getJsonTree(HttpServletRequest request,
 			HttpServletResponse response) throws IOException{
+		System.out.println("ddddddddddddd");
 		//{"id":null,"text":"用户权限","state":"open","checked":false,"attributes":null,
 		//"children":[{"id":null,"text":"用户插入","state":"open","checked":false,"attributes":null,
 		//"children":[{"id":null,"text":"用户插入批量","state":"open","checked":false,"attributes":null,
