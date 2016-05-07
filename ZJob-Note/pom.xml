@@ -144,13 +144,19 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.12</version>
 		</dependency>
-		
+		<!-- slf4j->log4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.13</version>
 		</dependency>
-		
+
+		<!-- java.util.logging->slf4j->具体日志实现类 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<version>1.7.21</version>
+		</dependency>		
 		
 		
 		<!-- redis jar包 -->
