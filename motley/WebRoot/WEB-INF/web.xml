@@ -32,8 +32,58 @@
 			classpath*:/spring-shiro.xml
 		</param-value>
 	</context-param>
+
 	
-<!-- Shiro filter -->
+	<!--  filter -->
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+      
+      <!-- 文件上传安全校验  放在最后一个server，文件上传读取的是input，直接会把文件存储到服务器上	 -->
+     <filter>
+          <filter-name>fileMultipartFilter</filter-name>
+          <filter-class>
+              com.myhexin.filter.FileMultipartFilter
+          </filter-class>
+      </filter>
+      <filter-mapping>
+          <filter-name>fileMultipartFilter</filter-name>
+          <url-pattern>/*</url-pattern>
+      </filter-mapping>	      	 
+
+
+     <filter>
+          <filter-name>xssSecurityFilter</filter-name>
+          <filter-class>
+              com.myhexin.filter.XSSSecurityFilter
+          </filter-class>
+          
+           <init-param>  
+            	<param-name>securityconfig</param-name>  
+	            <param-value>  
+	                /WEB-INF/classes/xss_security_config.xml  
+	            </param-value>  
+        </init-param>  
+      </filter>
+	  <!-- 	 -->      
+	  <filter-mapping>
+          <filter-name>xssSecurityFilter</filter-name>
+          <url-pattern>/*</url-pattern>
+      </filter-mapping>	
+      
      <filter>
           <filter-name>shiroFilter</filter-name>
           <filter-class>
@@ -48,8 +98,8 @@
           <filter-name>shiroFilter</filter-name>
           <url-pattern>/*</url-pattern>
       </filter-mapping>	
-	
-	
+      
+
 	
 	<!-- Spring MVC配置 -->  
 	<!-- ====================================== -->  
@@ -62,7 +112,7 @@
 	        <param-value>/WEB-INF/spring-dispatcher-servlet.xml</param-value>   
 	    </init-param>  
 	   
-	    <load-on-startup>1</load-on-startup>  
+	    <load-on-startup>1</load-on-startup>
 	</servlet>  
 	  
 	<servlet-mapping>  

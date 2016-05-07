@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XSSConfig>
+	<!-- 是否进行header校验 -->
+	<isCheckHeader>false</isCheckHeader>
+	<!-- 是否进行parameter校验 -->
+	<isCheckParameter>true</isCheckParameter>
+	<!-- 是否记录日志 -->
+	<isLog>true</isLog>
+	<!-- 是否中断请求 -->
+	<isChain>true</isChain>
+	<!-- 检测到Xss之后，跳转到的错误页；只有isChaina=true，此属性才生效 -->
+	<xssErrorPagePath>/error.jsp</xssErrorPagePath>
+	
+	<!-- 是否开启特殊字符替换 -->
+	<replace>true</replace>
+	<!-- 是否开启特殊url校验 -->
+	<isCheckUrl>true</isCheckUrl>
+	
+	<regexList>
+		<!-- 匹配含有字符： alert( ) 
+		<regex><![CDATA[.*[A|a][L|l][E|e][R|r][T|t]\\s*\\(.*\\).*]]></regex>
+		-->
+		
+		<!-- 匹配含有字符： window.location = -->
+		<regex><![CDATA[.*window\\.location\\s*=.*]]></regex>
+		
+		<!-- 匹配含有字符：style = x:ex pression ( ) -->
+		<regex><![CDATA[.*style\\s*=.*x:ex.*pression\\s*\\(.*\\).*]]></regex>
+		
+		<!-- 匹配含有字符： document.cookie -->
+		<regex><![CDATA[.*document\\.cookie.*]]></regex>
+		
+		<!-- 匹配含有字符： eval( ) -->
+		<regex><![CDATA[.*eval\\s*\\(.*\\).*]]></regex>
+		
+		<!-- 匹配含有字符： unescape() -->
+		<regex><![CDATA[.*unescape\\s*\\(.*\\).*]]></regex>
+		<!-- 匹配含有字符： execscript( ) -->
+		<regex><![CDATA[.*execscript\\s*\\(.*\\).*]]></regex>
+		<!-- 匹配含有字符： msgbox( ) -->
+		<regex><![CDATA[.*msgbox\\s*\\(.*\\).*]]></regex>
+		
+		<!-- 匹配含有字符： confirm( ) -->
+		<regex><![CDATA[.*confirm\\s*\\(.*\\).*]]></regex>
+		
+		<!-- 匹配含有字符： prompt( ) -->
+		<regex><![CDATA[.*prompt\\s*\\(.*\\).*]]></regex>
+		<!-- 匹配含有字符： <script> </script> -->
+		<regex><![CDATA[.*<script>.*</script>.*]]></regex>
+		
+		<!-- 匹配含有字符： 含有一个符号： "  
+		<regex><![CDATA[[.&[^\"]]*\"[.&[^\"]]*]]></regex>
+		-->
+		<!-- 匹配含有字符： 含有一个符号： '  
+		<regex><![CDATA[[.&[^']]*'[.&[^']]*]]></regex>
+		-->
+		
+		<!-- 匹配含有字符： 含有回车换行 和 <script> </script> -->
+		<regex><![CDATA[[[.&[^a]]|[|a|\n|\r\n|\r|\u0085|\u2028|\u2029]]*<script>.*</script>[[.&[^a]]|[|a|\n|\r\n|\r|\u0085|\u2028|\u2029]]*]]></regex>
+	</regexList>
+</XSSConfig>

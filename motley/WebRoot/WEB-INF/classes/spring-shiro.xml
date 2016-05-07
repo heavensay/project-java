@@ -25,6 +25,8 @@
 				/user/* = anon
 				/product/* = anon
 				/common/* = anon
+				/xss/* = anon
+				/page/* = anon
 				/**/** = authc
 			</value>
 		</property>

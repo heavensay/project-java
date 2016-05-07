@@ -8,11 +8,31 @@
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<context:component-scan base-package="*"></context:component-scan>
-	<!--  
+	  
 	<import resource="spring-ds-slave.xml"/>
+	<!--
 	<import resource="spring-ds-master.xml"/>
  	-->
  	
- 	<!-- jta 测试 -->
+ 	<!-- jta 测试 
  	<import resource="spring-ds-jta.xml"/>
+ 	-->
+ 	
+ 	<!--支持上传文件 100M 1024 * 1024 * 100  -->
+<!--  
+	<bean id="filterMultipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="104857600"></property>
+		<property name="resolveLazily" value="true"></property>
+	</bean>
+	
+	-->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="104857600"></property>
+		<property name="resolveLazily" value="true"></property>
+	</bean>
+	
+	
+	
 </beans>  

@@ -31,7 +31,10 @@
     
 	<!-- sqlSessionFactoryBeanName/sqlSessionTemplateBeanName  -->  
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
-        <property name="basePackage" value="com.myhexin.dao.product" />  
+    	<!-- 
+        <property name="basePackage" value="com.myhexin.dao.product" />
+         -->
+        <property name="basePackage" value="com.myhexin.dao" />  
         <property name="sqlSessionFactoryBeanName" value="slaveSqlSessionFactory"/>
     </bean>      
     
