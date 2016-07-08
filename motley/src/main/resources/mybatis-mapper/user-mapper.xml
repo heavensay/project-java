@@ -7,51 +7,51 @@
 	<resultMap type="com.myhexin.entity.PermissionDTO" id="permissionDTO">
 	</resultMap>
 
- 	<resultMap type="com.myhexin.entity.TResource" id="tresource"/>
+ 	<resultMap type="com.myhexin.entity.TResource" id="perms_resource"/>
  
-	<resultMap type="com.myhexin.entity.TResourceTreeDTO" id="tResourceTreeDTO">
+	<resultMap type="com.myhexin.entity.TResourceTreeDTO" id="perms_resourceTreeDTO">
 		<result column="id" property="id" javaType="int"/>
 		<association property="children"  column="id" select="queryChildPermissionById"/>
 	</resultMap>
 
-    <select id="queryPermissionByPage"  resultMap="tresource" parameterType="page"> 
+    <select id="queryPermissionByPage"  resultMap="perms_resource" parameterType="page"> 
 		select * 
-			from tresource
+			from perms_resource
     </select>       
 
-    <select id="getUserById" parameterType="int" resultType="User">  
+    <select id="geusr_mainById" parameterType="int" resultType="User">  
         SELECT *   
-        FROM tuser  
+        FROM usr_main  
         WHERE id = #{id}  
     </select>  
     
     <select id="authenticationUser"  resultType="User">  
         SELECT *   
-        FROM tuser  
-        WHERE name = #{name} and password=#{password}  
+        FROM usr_main  
+        WHERE name = #{name} and pwd=#{password}  
     </select>      
     
     <select id="queryUserPermission"  resultMap="permissionDTO"> 
-		select d.id,c.roleid,c.resourceid,d.resourcecode,d.resourcename from
-			tuser a,tuser_role b,trole_resource c,tresource d
-		where a.name=#{name} and a.id=b.userid and b.roleid=c.roleid and c.resourceid=d.id
-    </select>          
+		select d.resourceid id,c.roleid,c.resourceid,d.resourcecode,d.resourcename from
+			usr_main a,usr_role b,perms_role_resource c,perms_resource d
+		where a.name=#{name} and a.userid=b.userid and b.roleid=c.roleid and c.resourceid=d.resourceid
+    </select>
     
 
-    <select id="queryPermissionTreeById"  parameterType="Integer" resultMap="tResourceTreeDTO">
-		select id,resourcename text 
-			from tresource 
-		where id=#{id}
+    <select id="queryPermissionTreeById"  parameterType="Integer" resultMap="perms_resourceTreeDTO">
+		select resourceid id,resourcename text 
+			from perms_resource 
+		where resourceid=#{id}
     </select>         
     
-    <select id="queryChildPermissionById" parameterType="Integer" resultMap="tResourceTreeDTO">
+    <select id="queryChildPermissionById" parameterType="Integer" resultMap="perms_resourceTreeDTO">
 		select id,resourcename text 
-		 from tresource 
+		 from perms_resource 
 		where pid=#{id}
     </select>         
     
-    <insert id="insertTUser" parameterType="User">
-    	insert into tuser(name,password)
+    <insert id="insertusr_main" parameterType="User">
+    	insert into usr_main(name,password)
     	values(#{name},#{password})
     </insert>    
     	

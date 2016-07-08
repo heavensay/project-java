@@ -20,7 +20,7 @@
 	
     <plugins>  
        <plugin interceptor="PageInterceptor">  
-           <property name="databaseType" value="Oracle"/>  
+           <property name="databaseType" value="mysql"/>  
        </plugin>  
     </plugins>  	
 	

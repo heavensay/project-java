@@ -15,7 +15,7 @@ import com.myhexin.entity.User;
 @Transactional("transactionManager") //jta测试
 public class ProductService {
 	
-	@Autowired
+	@Autowired(required=false)
 	IProductDao iproductDao;
 	
 	@Autowired

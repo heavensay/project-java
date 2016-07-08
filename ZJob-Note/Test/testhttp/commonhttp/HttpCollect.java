@@ -1,4 +1,4 @@
-package testhttp.httpclient;
+package testhttp.commonhttp;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;

@@ -16,10 +16,11 @@ import redis.clients.jedis.SortingParams;
 public class TestRedis {
 	
 	
+	private String REIDS_IP = "192.168.51.95";
 	
 	@Test
 	public void test1(){
-		Jedis jedis = new Jedis("192.168.0.11");  
+		Jedis jedis = new Jedis(REIDS_IP);  
 		String keys = "name";  
 		// 存数据  
 		jedis.set(keys, "ths");  

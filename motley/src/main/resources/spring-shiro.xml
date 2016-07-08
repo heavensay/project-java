@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd "
+	
 	default-lazy-init="true">
 
 	<description>Shiro Configuration</description>
@@ -11,17 +12,14 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login.jsp" />
 		<property name="successUrl" value="/index.html" />
-	    <property name="unauthorizedUrl" value="login.jsp" /> 
-	    <!-- 
-		<property name="filters">
-			<map>
-				<entry key="myuserfilter" value-ref="myuserfilter"></entry>
-				<entry key="userIndexFilter" value-ref="userIndexFilter"></entry>
-			</map>
-		</property>
-		 -->
+		<property name="unauthorizedUrl" value="login.jsp" />
+		<!--
+			<property name="filters"> <map> <entry key="myuserfilter"
+			value-ref="myuserfilter"></entry> <entry key="userIndexFilter"
+			value-ref="userIndexFilter"></entry> </map> </property>
+		-->
 		<property name="filterChainDefinitions">
-			<value>
+			<value >
 				/user/* = anon
 				/product/* = anon
 				/common/* = anon
@@ -31,15 +29,89 @@
 			</value>
 		</property>
 	</bean>
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	
+	<!-- 安全管理器 -->  
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">  
+        <property name="realm" ref="myRealm"/>  
+        <property name="sessionManager" ref="sessionManager"/>  
+        <property name="cacheManager" ref="cacheManager"/>  
+        <property name="rememberMeManager" ref="rememberMeManager"/>  
+    </bean>  
 
-		<property name="realm" ref="myRealm" />
+
+	<!--Session集群配置-->
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="globalSessionTimeout" value="3600000" />
+		<property name="sessionDAO" ref="sessionDAO" />
+		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
+		<property name="sessionValidationSchedulerEnabled" value="true" />
+		<property name="sessionIdCookie" ref="sessionIdCookie" />
+		
+		<property name ="sessionListeners">
+			<list>
+				<ref bean="countSessionListener"/>
+			</list>  
+     	</property>
 	</bean>
+
+
+
+ 	<bean id="countSessionListener" class="com.myhexin.shiro.CountSessionListener"/>
+
 	<bean id="myRealm" class="com.myhexin.shiro.UserRealm">
-		<!-- 如果需要md5加密，把注释去掉 
-		<property name="credentialsMatcher" ref="md5CredentialsMatcher"></property>
+		<!--
+			如果需要md5加密，把注释去掉 <property name="credentialsMatcher"
+			ref="md5CredentialsMatcher"></property>
 		-->
 		<property name="cachingEnabled" value="false" />
 	</bean>
 	<bean id="md5CredentialsMatcher" class="org.apache.shiro.authc.credential.Md5CredentialsMatcher"></bean>
+
+
+	<!-- 会话ID生成器 -->
+	<bean id="sessionIdGenerator"
+		class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
+
+	<!-- 会话Cookie模板 -->
+	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="sid" />
+		<property name="httpOnly" value="true" />
+		<property name="maxAge" value="180000" />
+	</bean>
+
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="rememberMe" />
+		<property name="httpOnly" value="true" />
+		<property name="maxAge" value="2592000" />
+		<!-- 30天 -->
+	</bean>
+
+	<!-- rememberMe管理器 -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<property name="cipherKey"
+			value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
+		<property name="cookie" ref="rememberMeCookie" />
+	</bean>
+
+	<!-- 会话DAO -->
+	<bean id="sessionDAO"
+		class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
+	</bean>
+
+	<!-- 会话验证调度器 -->  
+    <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">  
+        <property name="sessionValidationInterval" value="1800000"/>  
+        <property name="sessionManager" ref="sessionManager"/>  
+    </bean>  
+  
+      <!-- 缓存管理器 使用Ehcache实现-->
+      <!--   
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">  
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>  
+    </bean>
+     -->  
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>  
 </beans>

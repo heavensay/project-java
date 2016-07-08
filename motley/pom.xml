@@ -13,7 +13,6 @@
 		<activiti5.version>5.10</activiti5.version>
 		<mysql.version>5.1.21</mysql.version>
 		<shiro.version>1.2.1</shiro.version>
-		
 	</properties>  
   
   
@@ -159,6 +158,19 @@
   			<artifactId>shiro-core</artifactId>
   			<version>${shiro.version}</version>
 		</dependency>
+		
+    	<dependency>
+  			<groupId>org.apache.shiro</groupId>
+  			<artifactId>shiro-quartz</artifactId>
+  			<version>${shiro.version}</version>
+		</dependency>		
+		
+    	<dependency>
+  			<groupId>org.quartz-scheduler</groupId>
+  			<artifactId>quartz</artifactId>
+  			<version>1.8.4</version>
+		</dependency>		
+		
 		<dependency>
   			<groupId>org.apache.shiro</groupId>
   			<artifactId>shiro-spring</artifactId>
