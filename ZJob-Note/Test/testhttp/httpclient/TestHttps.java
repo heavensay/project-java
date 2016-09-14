@@ -10,6 +10,8 @@ import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -197,5 +199,28 @@ public class TestHttps {
 
 		httpclient.getConnectionManager().shutdown();
 	}
+	
+	/**
+	 * Get the list of all supported cipher suites.
+	 */
+	@Test
+	public void test4GetSupportedCipher() throws Exception{
+		// Get the SSLServerSocket
+		SSLServerSocketFactory ssl;
+		SSLServerSocket sslServerSocket;
+		ssl = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+		sslServerSocket = (SSLServerSocket) ssl.createServerSocket();
+
+		// Get the list of all supported cipher suites.
+		String[] cipherSuites = sslServerSocket.getSupportedCipherSuites();
+		for (String suite : cipherSuites)
+		  System.out.println(suite);
+
+		// Get the list of all supported protocols.
+		String[] protocols = sslServerSocket.getSupportedProtocols();
+		for (String protocol : protocols)
+		  System.out.println(protocol);
+	}
+	
 	
 }
