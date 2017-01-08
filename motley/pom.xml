@@ -25,7 +25,7 @@
             <scope>provided</scope>
 		</dependency>      
   
-   
+
 		<!-- 不幸的是由于二进制许可 binary license的限制， 没有任何一个公共的repository可以包含oracle 的jdbc driver。
 		我们的很多依赖都面对同样的问题，这不是Maven的错。即使你偶然发现了某个公共的repository可以包含这个JAR，那么那一定是违法的
 		<dependency>
