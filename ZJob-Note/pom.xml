@@ -186,17 +186,6 @@
 		<!--
 			测试文件源文件夹。这里与src文件 夹的定义是相同的。在打包时有区别，打包时，test文件夹下的源文件和资源文件都不被打到war包里面。
 		-->
-		<plugins>
-			<plugin>
-				<!-- 设置javac编译器的版本和编码字符 -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>utf8</encoding><!-- 编译器编码 -->
-				</configuration> 
-			</plugin>
-		</plugins>
+
 	</build>	
 </project>
