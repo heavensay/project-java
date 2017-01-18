@@ -1,3 +1,0 @@
-{"data":[{"code":"000322","date":"2013-01-01","buy":5.2,"name":null,
-"orgid":null,"net":null,"totalnet":null,"date1":null,"net1":null,"totalnet1":null,
-"range":null,"rate":null,"mark":null}],"error":{"id":1,"msg":"ok"}}

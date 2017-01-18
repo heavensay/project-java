@@ -20,12 +20,20 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
@@ -186,8 +194,8 @@ public class TestHttps {
 		SchemeRegistry sr = ccm.getSchemeRegistry();
 		sr.register(new Scheme("https", 443, ssf));
 
-		HttpGet getReq = new HttpGet(
-				"https://127.0.0.1:8443/webfront/data/queryResourceTree");
+		String httpsUrl = "https://www.baidu.com/";
+		HttpGet getReq = new HttpGet(httpsUrl);
 		HttpResponse response = httpclient.execute(getReq);
 
 		HttpEntity entity = response.getEntity();
@@ -222,5 +230,48 @@ public class TestHttps {
 		  System.out.println(protocol);
 	}
 	
-	
+	@Test
+	public void httpsTest() throws Exception {
+//		SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null,
+//				new TrustStrategy() {
+//					// 信任所有
+//					public boolean isTrusted(X509Certificate[] chain,
+//							String authType) throws CertificateException {
+//						return true;
+//					}
+//				}).build();
+		
+//		SSLContext ctx = SSLContext.getInstance("SSL");
+//		//信任所有 
+//		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+//
+//			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+//				return null;
+//			}
+//
+//			public void checkClientTrusted(X509Certificate[] chain,
+//					String authType) throws CertificateException {
+//			}
+//
+//			public void checkServerTrusted(X509Certificate[] chain,
+//					String authType) throws CertificateException {
+//			}
+//		} };
+//		ctx.init(null, trustAllCerts, null);
+		
+		
+		Registry<ConnectionSocketFactory> socketFactoryRegistry = 
+			RegistryBuilder.<ConnectionSocketFactory>create().register("http", PlainConnectionSocketFactory.INSTANCE).register("https", socketFactory).build();
+		
+		
+		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+				ctx);
+		HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf)
+				.build();
+		String httpsUrl = "https://www.baidu.com/";
+		HttpGet getReq = new HttpGet(httpsUrl);
+		HttpResponse response = httpClient.execute(getReq);
+		String result = EntityUtils.toString(response.getEntity());
+		System.out.println(result);
+	}
 }

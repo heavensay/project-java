@@ -17,7 +17,7 @@ public class RedisUtil {
 
 	
 	// Redis服务器IP
-	private static String ADDR_ARRAY = "192.168.0.11";
+	private static String ADDR_ARRAY = "192.168.51.95";
 	private static int PORT = 6379;
 
 	// 可用连接实例的最大数目，默认值为8；
