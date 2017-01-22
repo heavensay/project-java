@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -33,6 +36,7 @@ import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
@@ -47,7 +51,11 @@ public class HttpUtil {
 
 	private static PoolingHttpClientConnectionManager cm;
 	private static CloseableHttpClient httpClient;
-	private static String CHAR_SET = "UTF-8";
+	
+	/**
+	 * request&response内容默认的字符编码
+	 */
+	private static String DEFAULT_CHAR_SET = "UTF-8";
 
     /**
      * 最大连接数400 
@@ -160,7 +168,7 @@ public class HttpUtil {
 	 */
 	public static String get(String url) {
 		HttpGet httpGet = new HttpGet(url);
-		return getResult(httpGet);
+		return format2String(httpGet);
 	}
 
 	public static String get(String url, Map<String, Object> params)
@@ -171,35 +179,36 @@ public class HttpUtil {
 		ub.addParameters(pairs);
 
 		HttpGet httpGet = new HttpGet(ub.build());
-		return getResult(httpGet);
+		return format2String(httpGet);
 	}
 
 	public static String get(String url,
 			Map<String, Object> headers, Map<String, Object> params)
-			throws URISyntaxException {
+			{
 		URIBuilder ub = new URIBuilder(new URI(url));
 
 		ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
 		ub.addParameters(pairs);
 
 		HttpGet httpGet = new HttpGet(ub.build());
+		
 		for (Map.Entry<String, Object> param : headers.entrySet()) {
 			httpGet.addHeader(param.getKey(), String.valueOf(param.getValue()));
 		}
-		return getResult(httpGet);
+		return format2String(httpGet);
 	}
 
 	public static String post(String url) {
 		HttpPost httpPost = new HttpPost(url);
-		return getResult(httpPost);
+		return format2String(httpPost);
 	}
 
 	public static String post(String url, Map<String, Object> params)
 			throws UnsupportedEncodingException {
 		HttpPost httpPost = new HttpPost(url);
 		ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
-		httpPost.setEntity(new UrlEncodedFormEntity(pairs, CHAR_SET));
-		return getResult(httpPost);
+		httpPost.setEntity(new UrlEncodedFormEntity(pairs, DEFAULT_CHAR_SET));
+		return format2String(httpPost);
 	}
 
 	public static String post(String url,
@@ -213,9 +222,9 @@ public class HttpUtil {
 		}
 
 		ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
-		httpPost.setEntity(new UrlEncodedFormEntity(pairs, CHAR_SET));
+		httpPost.setEntity(new UrlEncodedFormEntity(pairs, DEFAULT_CHAR_SET));
 
-		return getResult(httpPost);
+		return format2String(httpPost);
 	}
 
 	private static ArrayList<NameValuePair> covertParams2NVPS(
@@ -230,36 +239,87 @@ public class HttpUtil {
 	}
 
 	/**
-	 * 处理Http请求
+	 * 以String类型获取reposne内容
 	 * 
 	 * @param request
-	 * @return
+	 * @return String 
 	 */
-	private static String getResult(HttpRequestBase request){
-		// CloseableHttpClient httpClient = HttpClients.createDefault();
+	private static String format2String(HttpRequestBase request){
 		String result = null;
 		CloseableHttpResponse response =null; 
 		try {
 			response = httpClient.execute(request);
-			// response.getStatusLine().getStatusCode();
 			HttpEntity entity = response.getEntity();
-			Header header  = entity.getContentEncoding();
+			
 			if (entity != null) {
-				result = EntityUtils.toString(entity,CHAR_SET);
+				
+				/**
+				 * 智能编码获取网页内容
+				 * 1优先使用头信息header content-type  
+				 * 2使用html内容中mta标签编码，meta:content-type(<meta http-equiv=content-type content=text/html;charset=utf-8>)
+				 */
+				final ContentType contentType = ContentType.get(entity);
+                if (contentType != null && contentType.getCharset() != null) {
+                  	result = EntityUtils.toString(entity);
+                }else{
+                	byte[] bytes = EntityUtils.toByteArray(entity);
+                	if(bytes!=null && bytes.length>0){
+                		String metaCharset = findChartsetByBody(bytes);
+                		result = new String(bytes,metaCharset != null?metaCharset:DEFAULT_CHAR_SET);
+                	}
+                }
+                
+//				/**
+//				 * 1优先使用header:content-type.charset来编码返回的html
+//				 * 2默认使用DEFAULT_CHAR_SET来编码返回的html
+//				 */
+//                result = EntityUtils.toString(entity,DEFAULT_CHAR_SET);
+                
+    			EntityUtils.consume(entity);
 			}
+
 		} catch (IOException e) {
 			System.out.println(e);
 		} finally{
-			//释放连接  
-            if(response != null) {   
-                try {
-                    EntityUtils.consume(response.getEntity());//会自动释放连接  
-                    response.close();
-                } catch (IOException e) {  
-                    e.printStackTrace();  
-                }   
-            }  
+			close(response);
 		}
 		return result;
+	}
+	
+	
+	/**
+	 * 尝试关闭response
+	 * 
+	 * @param resp HttpResponse对象
+	 */
+	private static void close(CloseableHttpResponse resp) {
+		try {
+			if(resp == null) return;
+			
+			EntityUtils.consume(resp.getEntity());//会自动释放连接  
+			resp.close();
+		} catch (IOException e) {
+			logger.error("aa",e);
+		}
+	}
+	
+	/**
+	 * 在html meta标签中获取服务端返回给客户端使用的字符编码：
+	 * www.baidu.com返回的内容字符编码在meta标签中. <meta http-equiv=content-type content=text/html;charset=utf-8>
+	 * @param htmlBytes html内容byte形式
+	 * @return
+	 */
+	private static String findChartsetByBody(byte[] htmlBytes) {
+		String html = new String(htmlBytes);// 默认编码转成字符串，因为我们的匹配中无中文，所以串中可能的乱码对我们没有影响
+		String charset = null;
+		String regEx = "<meta.*?charset=([[a-z]|[A-Z]|[0-9]|-]*)>";
+		Pattern p = Pattern.compile(regEx, Pattern.CASE_INSENSITIVE);
+		System.out.println(html);
+		Matcher m = p.matcher(html);
+		if (m.groupCount() > 0) {
+			m.find();
+			charset = m.group(1);
+		}
+		return charset;
 	}
 }

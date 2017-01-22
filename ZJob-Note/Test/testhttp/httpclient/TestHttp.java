@@ -10,6 +10,8 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -28,6 +30,7 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -93,7 +96,7 @@ public class TestHttp {
 	}
 	
 	/**
-	 * 
+	 * request uri 参数拼接测试
 	 * @throws Exception
 	 */
 	@Test
@@ -130,5 +133,50 @@ public class TestHttp {
 		Assert.assertEquals("url拼接错误", rightUrl,u3.toString());
 	}
 	
+	@Test
+	public void paramTest(){
+		
+		
+	}
+	
+	/**
+	 * 
+	 * html response返回给客户端的编码：
+	 * 1 header:content-type 优先获取
+	 * 2 html内容中获取meta:content-type.charset    i.e. <meta http-equiv=content-type content=text/html;charset=utf-8>
+	 * 
+	 * www.baidu.com返回的内容字符编码在meta标签中.
+	 * @param html
+	 * @return
+	 */
+	@Test
+	public void findChartsetByBodyTest() throws Exception {
+		HttpClient httpclient = new DefaultHttpClient();// 创建一个客户端，类似打开一个浏览器
+		HttpGet getReq = new HttpGet("http://www.baidu.com");
+
+		HttpResponse response = httpclient.execute(getReq);
+
+		HttpEntity entity = response.getEntity();
+
+		ContentType contentType = ContentType.get(entity);
+		
+		if(contentType.getCharset() == null){
+			byte[] bytes = EntityUtils.toByteArray(entity);
+			String html = new String(bytes);
+			
+			String charset = null;
+			String regEx = "<meta.*?charset=([[a-z]|[A-Z]|[0-9]|-]*)>";
+			Pattern p = Pattern.compile(regEx, Pattern.CASE_INSENSITIVE);
+			System.out.println(html);
+			Matcher m = p.matcher(html); // 默认编码转成字符串，因为我们的匹配中无中文，所以串中可能的乱码对我们没有影响
+			if (m.groupCount() > 0) {
+				m.find();
+				charset = m.group(1);
+			}
+			System.out.println("meta charset:"+charset);
+			System.out.println("default charset html:"+new String(bytes));
+			System.out.println("right charset html:"+new String(bytes,charset));
+		}
+	}
 	
 }

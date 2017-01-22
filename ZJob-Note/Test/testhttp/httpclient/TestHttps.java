@@ -1,5 +1,6 @@
 package testhttp.httpclient;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -8,10 +9,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -28,12 +26,15 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
@@ -50,43 +51,53 @@ import org.junit.Test;
  */
 public class TestHttps {
 	
+	/**
+	 * 加载证书到证书库中
+	 * @throws Exception
+	 */
 	@Test
-	public void test0xnjks() throws Exception {
-		InputStream ins = new FileInputStream("E:/store/all/xn.cer");
+	public void httpsLoadCerTest() throws Exception {
+		InputStream ins = new FileInputStream("E:/store/crm/crm8002.cer");
 		// 读取证书
 		CertificateFactory cerFactory = CertificateFactory.getInstance("X.509"); // 问1
 		Certificate cer = cerFactory.generateCertificate(ins);
 		// 创建一个证书库，并将证书导入证书库
 		KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType()); // 问2
 		keyStore.load(null, null);
-		keyStore.setCertificateEntry("trust", cer);
-		
+		keyStore.setCertificateEntry("trust-test", cer);
 		
         SSLSocketFactory socketFactory = new SSLSocketFactory(keyStore);  
         //不校验域名  
         socketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);  
         Scheme sch = new Scheme("https", socketFactory, 443);  
 
-        
-        HttpClient httpclient = new DefaultHttpClient();// 创建一个客户端，类似打开一个浏览器
-        httpclient.getConnectionManager().getSchemeRegistry().register(sch);
+        HttpClient httpClient = new DefaultHttpClient();// 创建一个客户端，类似打开一个浏览器
+        httpClient.getConnectionManager().getSchemeRegistry().register(sch);
 		
-		HttpGet getReq = new HttpGet("https://127.0.0.1:8443/webfront/data/queryResourceTree");
-		HttpResponse response = httpclient.execute( getReq);
+		String httpsAauthorityCerUrl = "https://www.baidu.com/";//权威认证证书
+		String httpsCustomCerUrl = "https://172.20.200.8:8002/hexin-crm/rs/rs.do?method=staffHasTask&jobnum=T123";//服务器使用keytool工具生产的自制证书
+		String[] urls = new String[]{httpsAauthorityCerUrl,httpsCustomCerUrl};
 		
-        HttpEntity entity = response.getEntity();
-        
-        System.out.println(response);
-        System.out.println("----------------------------------------");
-        System.out.println(response.getStatusLine()+","+entity.getContent());
-        System.out.println(EntityUtils.toString(entity));
-        
-        System.out.println(entity.toString());
-		
-        httpclient.getConnectionManager().shutdown();
+		for (String url : urls) {
+			String result = null;
+			try{
+				HttpGet getReq = new HttpGet(url);
+				HttpResponse response = httpClient.execute(getReq);
+				result = EntityUtils.toString(response.getEntity(),"UTF-8");
+				System.out.println("url:"+url+"访问成功 result:"+result);
+			}catch(Exception e){
+				System.out.println("url:"+url+"访问失败:"+e);
+				e.printStackTrace(System.out);
+			}
+		}
 	}
+	
+	/**
+	 * pkcs12库测试
+	 * @throws Exception
+	 */
 	@Test
-	public void test0xnbks() throws Exception {
+	public void pkcsTest() throws Exception {
 		InputStream ins = new FileInputStream("E:/store/all/xn.cer");
 		// 读取证书
 		CertificateFactory cerFactory = CertificateFactory.getInstance("X.509"); // 问1
@@ -121,64 +132,23 @@ public class TestHttps {
         httpclient.getConnectionManager().shutdown();
 	}
 	
-	@Test
-	public void test1httpsdx() throws Exception {
-		InputStream ins = new FileInputStream("D:/tomcat_ca.cer");
-		// 读取证书
-		CertificateFactory cerFactory = CertificateFactory.getInstance("X.509"); // 问1
-		Certificate cer = cerFactory.generateCertificate(ins);
-		// 创建一个证书库，并将证书导入证书库
-		KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType()); // 问2
-		keyStore.load(null, null);
-		keyStore.setCertificateEntry("trust", cer);
-		
-		
-        SSLSocketFactory socketFactory = new SSLSocketFactory(keyStore);  
-        //不校验域名  
-        socketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);  
-        Scheme sch = new Scheme("https", socketFactory, 443);  
-
-        
-        HttpClient httpclient = new DefaultHttpClient();// 创建一个客户端，类似打开一个浏览器
-        httpclient.getConnectionManager().getSchemeRegistry().register(sch);
-		
-		HttpGet getReq = new HttpGet("https://127.0.0.1:8443/webfront/data/queryResourceTree");
-		HttpResponse response = httpclient.execute( getReq);
-		
-        HttpEntity entity = response.getEntity();
-        
-        System.out.println(response);
-        System.out.println("----------------------------------------");
-        System.out.println(response.getStatusLine()+","+entity.getContent());
-        System.out.println(EntityUtils.toString(entity));
-        
-        System.out.println(entity.toString());
-		
-        httpclient.getConnectionManager().shutdown();
-	}
-	
 	/**
-	 * 不验证证书，即信任所有服务器下发的证书
+	 * 信任所有服务器下发的证书，即不验证证书，安全性降低(慎用)
 	 * @throws Exception
 	 */
 	@Test
-	public void test3httpsNoAuthCer() throws Exception {
+	public void httpsTrustAllCerTest() throws Exception {
 
 		// 初始化https连接环境
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-
 			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 				return null;
 			}
-
 			public void checkClientTrusted(X509Certificate[] chain,
-					String authType) throws CertificateException {
-			}
-
+					String authType) throws CertificateException {}
 			public void checkServerTrusted(X509Certificate[] chain,
-					String authType) throws CertificateException {
-			}
+					String authType) throws CertificateException {}
 		} };
 		
 		HttpClient httpclient = new DefaultHttpClient();
@@ -209,69 +179,78 @@ public class TestHttps {
 	}
 	
 	/**
-	 * Get the list of all supported cipher suites.
+	 * 访问自定义证书网站，客户端加载的证书库信任自定义证书
+	 * 
+	 * myhexin.keystore已经加载了https://172.20.200.8:8002网站的证书，不包括其他证书
+	 * 访问https://www.baidu.com/报错:javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	 * 访问https://172.20.200.8:8002，没问题
+	 * 
+	 * @throws Exception
 	 */
 	@Test
-	public void test4GetSupportedCipher() throws Exception{
-		// Get the SSLServerSocket
-		SSLServerSocketFactory ssl;
-		SSLServerSocket sslServerSocket;
-		ssl = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-		sslServerSocket = (SSLServerSocket) ssl.createServerSocket();
-
-		// Get the list of all supported cipher suites.
-		String[] cipherSuites = sslServerSocket.getSupportedCipherSuites();
-		for (String suite : cipherSuites)
-		  System.out.println(suite);
-
-		// Get the list of all supported protocols.
-		String[] protocols = sslServerSocket.getSupportedProtocols();
-		for (String protocol : protocols)
-		  System.out.println(protocol);
+	public void httpsLoadCustomKeyStoreTest() throws Exception {
+		File keyStoreFile = new File("E:/store/crm/myhexin.keystore");
+        SSLContext sc = SSLContexts.custom().loadTrustMaterial(keyStoreFile, "123456".toCharArray()).build();
+        //NoopHostnameVerifier  https//不校验域名
+        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(  
+                sc,NoopHostnameVerifier.INSTANCE);
+		HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory)
+				.build();
+		String httpsAauthorityCerUrl = "https://www.baidu.com/";//权威认证证书
+		String httpsCustomCerUrl = "https://172.20.200.8:8002/hexin-crm/rs/rs.do?method=staffHasTask&jobnum=T123";//服务器使用keytool工具生产的自制证书
+		String[] urls = new String[]{httpsAauthorityCerUrl,httpsCustomCerUrl};
+		
+		for (String url : urls) {
+			String result = null;
+			try{
+				HttpGet getReq = new HttpGet(url);
+				HttpResponse response = httpClient.execute(getReq);
+				result = EntityUtils.toString(response.getEntity(),"UTF-8");
+				System.out.println("url:"+url+"访问成功 result:"+result);
+			}catch(Exception e){
+				System.out.println("url:"+url+"访问失败:"+e);
+				e.printStackTrace(System.out);
+			}
+		}
 	}
 	
+	/**
+	 * 访问自定义证书网站，客户端加载的证书库信任自定义证书
+	 * 测试结果来看实际使用的是第一次调用loadTrustMaterial中的keystore
+	 * @throws Exception
+	 */
 	@Test
-	public void httpsTest() throws Exception {
-//		SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null,
-//				new TrustStrategy() {
-//					// 信任所有
-//					public boolean isTrusted(X509Certificate[] chain,
-//							String authType) throws CertificateException {
-//						return true;
-//					}
-//				}).build();
-		
-//		SSLContext ctx = SSLContext.getInstance("SSL");
-//		//信任所有 
-//		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-//
-//			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-//				return null;
-//			}
-//
-//			public void checkClientTrusted(X509Certificate[] chain,
-//					String authType) throws CertificateException {
-//			}
-//
-//			public void checkServerTrusted(X509Certificate[] chain,
-//					String authType) throws CertificateException {
-//			}
-//		} };
-//		ctx.init(null, trustAllCerts, null);
-		
-		
-		Registry<ConnectionSocketFactory> socketFactoryRegistry = 
-			RegistryBuilder.<ConnectionSocketFactory>create().register("http", PlainConnectionSocketFactory.INSTANCE).register("https", socketFactory).build();
-		
-		
-		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
-				ctx);
-		HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf)
+	public void httpsLoadMulKeyStoreTest() throws Exception {
+		File keyStoreFile = new File("E:/store/crm/myhexin.keystore");
+		File jvmDefaultStoreFile = new File("E:/banana/software/jdk1.7.0_07/jre/lib/security/cacerts");
+
+		//测试结果来看实际使用的是第一次调用loadTrustMaterial中的keystore
+        SSLContext sc = SSLContexts.custom()
+        				.loadTrustMaterial(jvmDefaultStoreFile, "changeit".toCharArray())
+        				.loadTrustMaterial(keyStoreFile, "123456".toCharArray())
+        				.build();
+        
+        //NoopHostnameVerifier  https//不校验域名
+        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(  
+                sc,NoopHostnameVerifier.INSTANCE);
+		HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory)
 				.build();
-		String httpsUrl = "https://www.baidu.com/";
-		HttpGet getReq = new HttpGet(httpsUrl);
-		HttpResponse response = httpClient.execute(getReq);
-		String result = EntityUtils.toString(response.getEntity());
-		System.out.println(result);
+		String httpsAauthorityCerUrl = "https://www.baidu.com/";//权威认证证书
+		String httpsCustomCerUrl = "https://172.20.200.8:8002/hexin-crm/rs/rs.do?method=staffHasTask&jobnum=T123";//服务器使用keytool工具生产的自制证书
+		String[] urls = new String[]{httpsAauthorityCerUrl,httpsCustomCerUrl};
+		
+		for (String url : urls) {
+			String result = null;
+			try{
+				HttpGet getReq = new HttpGet(url);
+				HttpResponse response = httpClient.execute(getReq);
+				result = EntityUtils.toString(response.getEntity(),"UTF-8");
+				System.out.println("url:"+url+"访问成功 result:"+result);
+			}catch(Exception e){
+				System.out.println("url:"+url+"访问失败:"+e);
+				e.printStackTrace(System.out);
+			}
+		}
 	}
+
 }
