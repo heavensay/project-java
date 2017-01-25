@@ -1,5 +1,7 @@
 package testjson;
 
+import java.sql.Timestamp;
+
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 //@JsonIgnoreProperties({"name"})//name元素不会参数转化
@@ -10,6 +12,8 @@ public class Bean {
 //	@JsonProperty("area") //object->jsonstr，i.e. {"id":5,"name":"tom","area":"深圳福田区"}
 	private String addr;
 
+	private Timestamp time;
+	
 	public int getId() {
 		return id;
 	}
@@ -32,6 +36,14 @@ public class Bean {
 
 	public void setAddr(String addr) {
 		this.addr = addr;
+	}
+
+	public Timestamp getTime() {
+		return time;
+	}
+
+	public void setTime(Timestamp time) {
+		this.time = time;
 	}
 
 }

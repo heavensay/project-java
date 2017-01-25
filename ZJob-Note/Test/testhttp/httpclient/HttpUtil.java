@@ -99,7 +99,7 @@ public class HttpUtil {
                     SSLContextBuilder sslContextBuilder = new SSLContextBuilder();  
                     try {
                         sslContextBuilder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-                        //NoopHostnameVerifier  https即不验证主机名
+                        //NoopHostnameVerifier  不验证证书域名与实际访问域名
                         SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(  
                                 sslContextBuilder.build(),NoopHostnameVerifier.INSTANCE);  
                         
@@ -183,7 +183,7 @@ public class HttpUtil {
 	}
 
 	public static String get(String url,
-			Map<String, Object> headers, Map<String, Object> params)
+			Map<String, Object> headers, Map<String, Object> params) throws URISyntaxException
 			{
 		URIBuilder ub = new URIBuilder(new URI(url));
 

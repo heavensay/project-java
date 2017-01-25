@@ -19,6 +19,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializerProvider;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Assert;
 import org.junit.Before;
@@ -224,11 +225,36 @@ public class TestJson {
 					JsonProcessingException {
 				jgen.writeString("");  
 			}  
-        }); 
+        });
 		
 		String jsonstr = mapper.writeValueAsString(bean1);
 		
 		System.out.println(jsonstr);
+	}
+	
+	@Test
+	public void dateTest() throws Exception{
+		Bean bean = new Bean();
+		bean.setName("tom");
+		ObjectMapper mapper = new ObjectMapper();
+//		mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+		// 空值处理为空串 null->"";  
+		mapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>()  
+        {
+			@Override
+			public void serialize(Object value, JsonGenerator jgen,
+					SerializerProvider provider) throws IOException,
+					JsonProcessingException {
+				jgen.writeString((String)null);  
+			}  
+        });
+		String json = mapper.writeValueAsString(bean);
+		System.out.println(json);
+		Bean deserialBean = mapper.readValue(json, Bean.class);
+		
+		Assert.assertEquals("tom", deserialBean.getName());
+		Assert.assertNull(deserialBean.getTime());
+		
 	}
 }
 

@@ -137,7 +137,7 @@ public class TestHttps {
 	 * @throws Exception
 	 */
 	@Test
-	public void httpsTrustAllCerTest() throws Exception {
+	public void httpsTrustAllCerByTrustManagerTest() throws Exception {
 
 		// 初始化https连接环境
 		// Create a trust manager that does not validate certificate chains
@@ -177,6 +177,46 @@ public class TestHttps {
 
 		httpclient.getConnectionManager().shutdown();
 	}
+	
+	/**
+	 * 信任所有服务器下发的证书，即不验证证书，安全性降低(慎用)
+	 * 
+	 * 认证策略逻辑为不认证
+	 * @throws Exception
+	 */
+	@Test
+	public void httpsTrustAllCerByTrustStrategyTest() throws Exception {
+        SSLContext sc = SSLContexts.custom().loadTrustMaterial(null, new TrustStrategy(){
+			@Override
+			public boolean isTrusted(X509Certificate[] chain, String authType)
+					throws CertificateException {
+				// TODO Auto-generated method stub
+				return true;
+			}
+        }).build();
+        //NoopHostnameVerifier  https//不校验域名
+        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(  
+                sc,NoopHostnameVerifier.INSTANCE);
+		HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory)
+				.build();
+		String httpsAauthorityCerUrl = "https://www.baidu.com/";//权威认证证书
+		String httpsCustomCerUrl = "https://172.20.200.8:8002/hexin-crm/rs/rs.do?method=staffHasTask&jobnum=T123";//服务器使用keytool工具生产的自制证书
+		String[] urls = new String[]{httpsAauthorityCerUrl,httpsCustomCerUrl};
+		
+		for (String url : urls) {
+			String result = null;
+			try{
+				HttpGet getReq = new HttpGet(url);
+				HttpResponse response = httpClient.execute(getReq);
+				result = EntityUtils.toString(response.getEntity(),"UTF-8");
+				System.out.println("url:"+url+"访问成功 result:"+result);
+			}catch(Exception e){
+				System.out.println("url:"+url+"访问失败:"+e);
+				e.printStackTrace(System.out);
+			}
+		}
+	}
+	
 	
 	/**
 	 * 访问自定义证书网站，客户端加载的证书库信任自定义证书
