@@ -2,11 +2,14 @@ package testprocess;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.sql.Timestamp;
 import java.util.Date;
 
-
-public class ProcessTest {
+public class CopyOfProcessTestbackup {
  
 	public static void main(String[] args) throws Exception{
 		
@@ -16,8 +19,25 @@ public class ProcessTest {
 		System.out.println("after :"+new Date());
 	}
 	
-	public void destoryTest(){
-		
+	public static void f1(){
+		StringBuffer command =  new StringBuffer("/bin/sh ");
+		command.append(" start-kaoqin-bc-job.sh ");
+		command.append(" -b 2016-04-14 ");
+		command.append(" -e 2016-04-14 ");
+		try {
+			
+			System.out.println("begin exec collection attendance command："+command.toString());
+			Process process = Runtime.getRuntime().exec(command.toString());
+			
+//			int signCode = process.exitValue();
+			
+//			System.out.println("collection attendance script sign return："+signCode);
+//			Thread.sleep(1000);//sleep.sh 马上能执行完，
+//			process.destroy();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -97,6 +117,59 @@ public class ProcessTest {
 		}
 	}
 	
+	public static void f3(){
+		StringBuffer command =  new StringBuffer("/bin/sh ");
+		command.append(" start-sleep.sh ");
+		final BufferedReader  errorReader ;
+		final BufferedReader normalReader;
+		try {
+			
+			System.out.println("step1："+command.toString());
+			Process process = Runtime.getRuntime().exec(command.toString());
+			
+			//错误信息流打印
+			errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+			
+					try{
+						String line;
+						StringBuffer errorLines = new StringBuffer();
+						while ( (line = errorReader.readLine())!=null) {
+							errorLines.append(line).append("\n");
+						}
+						if(errorLines.length()>0){
+							System.out.println("step2："+errorLines.substring(0,errorLines.length()-1));				
+						}
+						errorReader.close();
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+			
+			
+			//正常信息流打印
+			
+			normalReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+					try{
+						String line;
+						StringBuffer normalLines = new StringBuffer();
+						while ( (line = normalReader.readLine())!=null) {
+							normalLines.append(line).append("\n");
+						}
+						if(normalLines.length()>0){
+							System.out.println("step3："+normalLines.substring(0,normalLines.length()-1));				
+						}
+						normalReader.close();
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+
+			int signCode = process.waitFor();
+			System.out.println("step4："+signCode);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * ProcessBuilder来构建执行cmd
@@ -135,6 +208,31 @@ public class ProcessTest {
 		
 		int signCode = process.waitFor();
 		System.out.println("step4："+signCode);
+	}
+	
+	
+	/**
+	 * 终端bio阻塞进程关闭
+	 */
+	public void interrecptReadTest(){
+		
+		try{
+			Socket socket = new Socket("61.135.169.121", 80);
+			InputStream inputStream = socket.getInputStream();
+			
+			byte[] bs = new byte[1024];
+			int num = -1;
+			while( (num = inputStream.read(bs)) > 0 ){
+				System.out.println("read num:"+num);
+				System.out.println(new String(bs,0,num));
+			}
+			
+			inputStream.close();
+			socket.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

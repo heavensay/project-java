@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * 测试守护进程、用户进程区别(thread daemon测试)
  * 
  * 
- * result：只要当前JVM实例中尚存在任何一个非守护线程没有结束，守护线程就全部工作；
+ * 结论：只要当前JVM实例中尚存在任何一个非守护线程没有结束，守护线程就全部工作；
  *         只有当最后一个非守护线程结束时，守护线程随着JVM一同结束工作。
  * @author admin
  *
@@ -18,7 +18,8 @@ public class DaemonThreadTest {
 	
 	public static void main(String[] args){
 		DaemonThreadTest daemonThreadTest = new DaemonThreadTest();
-		daemonThreadTest.deamonThreadTest();
+		daemonThreadTest.deamonThreadTest(); //守护进程测试
+//		daemonThreadTest.userThreadTest();	//用户进程测试
 	}
 	
 	/**
