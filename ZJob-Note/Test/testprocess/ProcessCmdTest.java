@@ -9,6 +9,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * windows bat shell脚本测试
+ * @author ljy
+ *
+ */
 public class ProcessCmdTest {
  
 	private static Logger logger = LoggerFactory.getLogger(ProcessCmdTest.class);
@@ -43,11 +48,12 @@ public class ProcessCmdTest {
 	}
 	
 	/**
+	 * 测试a.shell->b.shell，关闭a.shell产生的进程，查看b.shell产品的进程(或跟a.shell进程共用)是否执行顺利
 	 * 
-	 * start-sleep.bat->sleep.bat
+	 * start-sleep.bat(不费时)->sleep.bat(执行10秒)
 	 * note:sleep.bat是以start方式运行，会开启一个新的进程；
-	 * result:1 start sleep.bat:马上执行完成，退出进程；sleep.bat进程还会继续运行；两个脚本各自启动一个进程
-	 *        2 call sleep.bat:马上执行完成，退出进程；sleep.bat没有执行完；两个脚本公用一个进程
+	 * result:1 start sleep.bat产生的进程destory；sleep.bat进程还会继续运行；两个脚本各自启动一个进程
+	 *        2 call sleep.bat:产生的进程destory；sleep.bat没有执行完；两个脚本共用一个进程
 	 *        
 	 */   
 	@Test
@@ -97,13 +103,9 @@ public class ProcessCmdTest {
 				public void run() {
 					try{
 						String line;
-						StringBuffer errorLines = new StringBuffer();
 						logger.debug("step2 errorReader read");
 						while ( (line = errorReader.readLine())!=null) {
-							errorLines.append(line).append("\n");
-						}
-						if(errorLines.length()>0){
-							logger.debug("step2.1 errorReader content："+errorLines.substring(0,errorLines.length()-1));				
+							logger.debug("step2.1 line："+line);
 						}
 						logger.debug("step2.2 errorReader end");
 					}catch(Exception e){
@@ -128,13 +130,9 @@ public class ProcessCmdTest {
 				public void run() {
 					try{
 						String line;
-						StringBuffer normalLines = new StringBuffer();
 						logger.debug("step3 normalReader read");
 						while ( (line = normalReader.readLine())!=null) {
-							normalLines.append(line).append("\n");
-						}
-						if(normalLines.length()>0){
-							logger.debug("step3.1 normalReader content："+normalLines.substring(0,normalLines.length()-1));				
+							logger.debug("step3.1 line："+line);
 						}
 						logger.debug("step3.2 normalReader end");
 					}catch(Exception e){
@@ -217,13 +215,9 @@ public class ProcessCmdTest {
 				public void run() {
 					try{
 						String line;
-						StringBuffer normalLines = new StringBuffer();
 						logger.debug("step3 normalReader read");
 						while ( (line = normalReader.readLine())!=null) {
-							normalLines.append(line).append("\n");
-						}
-						if(normalLines.length()>0){
-							logger.debug("step3.1 normalReader content："+normalLines.substring(0,normalLines.length()-1));				
+							logger.debug("step3.1 line："+line);
 						}
 						logger.debug("step3.2 normalReader end");
 					}catch(Exception e){
@@ -296,14 +290,19 @@ public class ProcessCmdTest {
 	
 	
 	/**
-	 * start-sleep.sh->sleep.sh会睡眠20秒
-	 * t1会卡住，一直到sleep.sh执行完为止。其他步骤都是直接完成。
-	 * 这样不合理，本身start-sleep进程不会阻塞，直接运行完毕。可能在于start-sleep进程关闭，但是jvm的errorstream流还一直保持着
-	 * 使用ProcessBuilder，就不会有上述问题。
+	 * start-sleep.sh(t1)->sleep.sh(t2，执行20秒)
+	 * t1直接完成，t2继续执行
+	 * 
+	 * inputsteam,errorstream要等两个进程都结束之后，才会终结
 	 */
-	public static void mulThreadReadProcessTest(){
-		StringBuffer command =  new StringBuffer("/bin/sh ");
-		command.append(" start-sleep.sh ");
+	@Test
+	public void mulThreadReadProcessTest(){
+//		StringBuffer command =  new StringBuffer("/bin/sh ");
+//		command.append(" start-sleep.sh ");
+		
+		StringBuffer command =  new StringBuffer(scriptPath);
+		command.append("start-sleep.bat ");
+		
 		final BufferedReader  errorReader ;
 		final BufferedReader normalReader;
 		try {
@@ -320,12 +319,8 @@ public class ProcessCmdTest {
 				public void run() {
 					try{
 						String line;
-						StringBuffer errorLines = new StringBuffer();
 						while ( (line = errorReader.readLine())!=null) {
-							errorLines.append(line).append("\n");
-						}
-						if(errorLines.length()>0){
-							logger.debug("step2："+errorLines.substring(0,errorLines.length()-1));				
+							logger.debug("step2："+line);
 						}
 						logger.debug("step2.1 errorReader end");
 						errorReader.close();
@@ -345,12 +340,8 @@ public class ProcessCmdTest {
 				public void run() {
 					try{
 						String line;
-						StringBuffer normalLines = new StringBuffer();
 						while ( (line = normalReader.readLine())!=null) {
-							normalLines.append(line).append("\n");
-						}
-						if(normalLines.length()>0){
-							logger.debug("step3："+normalLines.substring(0,normalLines.length()-1));				
+							logger.debug("step3 line："+line);
 						}
 						logger.debug("step3.1 normalReader end");
 						normalReader.close();
@@ -363,9 +354,12 @@ public class ProcessCmdTest {
 			t2.start();
 
 			int signCode = process.waitFor();
-			logger.debug("step4："+signCode);
+			logger.debug("step4.1："+signCode);
 			
-			
+			Thread.sleep(30000L);
+			signCode = process.waitFor();
+			logger.debug("step4.2："+signCode);
+			logger.debug("step5 main process over");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -391,12 +385,8 @@ public class ProcessCmdTest {
 			public void run() {
 				try{
 					String line;
-					StringBuffer normalLines = new StringBuffer();
 					while ( (line = inputReader.readLine())!=null) {
-						normalLines.append(line).append("\n");
-					}
-					if(normalLines.length()>0){
-						logger.debug("step3："+normalLines.substring(0,normalLines.length()-1));				
+						logger.debug("step3：line "+line);
 					}
 					logger.debug("step3.1 normal+error Reader end");
 					inputReader.close();

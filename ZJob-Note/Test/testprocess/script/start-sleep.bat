@@ -7,9 +7,9 @@ rem¡¡¡¡:begin
 
 echo parent start
 
-rem start /b  C:/Users/admin/git/project-java/ZJob-Note/Test/testprocess/script/sleep.bat
- call C:/Users/admin/git/project-java/ZJob-Note/Test/testprocess/script/sleep.bat
+start /b  C:/Users/admin/git/project-java/ZJob-Note/Test/testprocess/script/sleep.bat
+rem call C:/Users/admin/git/project-java/ZJob-Note/Test/testprocess/script/sleep.bat
 
 echo parent end
 
-exit /b 3
+exit 3
