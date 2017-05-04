@@ -14,7 +14,7 @@ public class EhcacheTest {
 
 	@Test
 	public void test1(){
-		CacheManager cacheManager = new CacheManager("ehcache-conf.xml");
+		CacheManager cacheManager = new CacheManager("bin/testdatabase/ehcache-conf.xml");
 		Cache cache = cacheManager.getCache("cache-maxelement-test");
 
 		Element element1 = new Element("no1","v1");
