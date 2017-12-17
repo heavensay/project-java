@@ -3,6 +3,7 @@
 	<groupId>ZJob-Note</groupId>
 	<artifactId>ZJob-Note</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<!-- 
 	<repositories>
 		<repository>    
 	       <id>center</id>    
@@ -16,7 +17,7 @@
 	        </snapshots>    
     	</repository>  
 	</repositories>
-	
+	 -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.0.5.RELEASE</spring.version>
@@ -107,12 +108,15 @@
 			<version>6.0</version>
 		</dependency>
 		-->
-		<!-- fastdfs分布式文件服务 -->
+		<!-- fastdfs分布式文件服务 
+		maven中心已经收不到了，暂时屏蔽；可以从网络下直接下载
+		
 		<dependency>
 			<groupId>org.csource</groupId>
 			<artifactId>fastdfs</artifactId>
 			<version>1.24</version>
-		</dependency>		
+		</dependency>
+		-->		
 		<!-- 
 	    <dependency>
 	      <groupId>org.csource</groupId>
@@ -165,6 +169,14 @@
 			<artifactId>jedis</artifactId>
 			<version>2.7.3</version>
 		</dependency>		
+					 
+		<!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core -->
+		<dependency>
+		    <groupId>com.netflix.hystrix</groupId>
+		    <artifactId>hystrix-core</artifactId>
+		    <version>1.5.12</version>
+		</dependency>
+					 
 					 
 	</dependencies>
 	
