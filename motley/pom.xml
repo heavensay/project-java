@@ -9,7 +9,7 @@
   
   
 	<properties>
-		<spring.version>3.0.5.RELEASE</spring.version>
+		<spring.version>4.3.8.RELEASE</spring.version>
 		<activiti5.version>5.10</activiti5.version>
 		<mysql.version>5.1.21</mysql.version>
 		<shiro.version>1.2.1</shiro.version>
@@ -79,6 +79,7 @@
       <groupId>javax.servlet.jsp</groupId>
       <artifactId>jsp-api</artifactId>
       <version>2.1</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>javax.faces</groupId>
@@ -92,7 +93,6 @@
       <groupId>cglib</groupId>
       <artifactId>cglib-nodep</artifactId>
       <version>2.2</version>
-      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>aopalliance</groupId>
@@ -106,7 +106,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -203,10 +202,27 @@
 		</dependency>		
 		
 		<dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-core</artifactId>
+             <version>2.7.5</version>
+       </dependency>		
+		<dependency>
+		      <groupId>com.fasterxml.jackson.core</groupId>
+		      <artifactId>jackson-annotations</artifactId>
+		      <version>2.7.5</version>
+		</dependency>
+		<dependency>
+		      <groupId>com.fasterxml.jackson.core</groupId>
+		      <artifactId>jackson-databind</artifactId>
+		      <version>2.7.5</version>
+		</dependency>		
+		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.8</version>
 		</dependency>		
+		
+		
 		        
 		<dependency>
 			<groupId>commons-lang</groupId>

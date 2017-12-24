@@ -15,8 +15,12 @@
 #project
 /motley/WebRoot/htmltest/
 WebRoot/classes/
-/*/target/*
-/ZJob-Note/bin/
+# Build Artifacts 
+.gradle/
+build/
+target/
+bin/
+
 
 
 

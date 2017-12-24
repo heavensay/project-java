@@ -92,8 +92,8 @@ public class UTF8StringHttpMessageConverter extends
     }
 
     private Charset getContentTypeCharset(MediaType contentType) {
-        if (contentType != null && contentType.getCharSet() != null) {
-            return contentType.getCharSet();
+        if (contentType != null && contentType.getCharset() != null) {
+            return contentType.getCharset();
         } else {
             return DEFAULT_CHARSET;
         }
