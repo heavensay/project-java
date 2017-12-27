@@ -1,4 +1,4 @@
-package testjunit;
+package testtesttool.junit;
 
 public class Process {
 

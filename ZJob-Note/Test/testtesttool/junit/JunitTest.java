@@ -1,4 +1,4 @@
-package testjunit;
+package testtesttool.junit;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;

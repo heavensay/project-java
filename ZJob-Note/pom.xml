@@ -66,6 +66,13 @@
 	</dependency>	
 	
 
+	<!-- 单元测试 -->
+	<dependency>
+	    <groupId>org.jmockit</groupId>
+	    <artifactId>jmockit</artifactId>
+	    <version>1.37</version>
+	    <scope>test</scope>
+	</dependency>	
 	<dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
@@ -84,6 +91,12 @@
 		<artifactId>hamcrest-all</artifactId>
 		<version>1.3</version>
 	</dependency>		 
+	<!-- https://mvnrepository.com/artifact/org.jmockit/jmockit 
+		object mock
+	-->
+
+		 
+		 
 		 
 		<!-- 引入Spring-AOP等相关Jar
 
