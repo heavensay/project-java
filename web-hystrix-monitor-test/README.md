@@ -10,3 +10,12 @@
  <img src="doc/images/hystrix-stream.png" width = "50%" height = "50%" />
 </p>
 
+
+
+
+
+
+### 使用gradle来编译运行脚本
+执行以下两步，就能直接访问服务
+- gradle build
+- gradle tomcatRunWar

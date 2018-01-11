@@ -7,24 +7,90 @@
  */
 
 // Apply the java-library plugin to add support for Java Library
+
+
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+		classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'	      
+    }
+}
+
+
+
+
 apply plugin: 'java-library'
-apply plugin: 'war' 
+apply plugin: 'war'  //用来生成war
+apply plugin: 'com.bmuschko.tomcat'
+//version = '1.0' //项目版本
 
-// In this section you declare where to find the dependencies of your project
-repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+
+// Uses JDK 8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+webAppDirName = 'WebContent'// 设置 WebApp 根目录
+// 设置 Java 源码所在目录  
+sourceSets{
+	main{
+		java{
+			srcDir {
+				'src/main/java'
+			}//设置源文件夹路径
+			resources{
+				srcDir 'src/main/resources'
+			}
+		}
+	}
 }
 
-dependencies {
 
-    // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
-    
-    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
-    
-    compile "com.netflix.hystrix:hystrix-core:1.5.12"
-    compile "com.netflix.hystrix:hystrix-metrics-event-stream:1.5.12"
-}
+	// In this section you declare where to find the dependencies of your project
+	repositories {
+	    // Use jcenter for resolving your dependencies.
+	    // You can declare any Maven/Ivy/file repository here.
+	    jcenter()
+	}
+	
+	
+	dependencies {
+	    // Use JUnit test framework
+	    testImplementation 'junit:junit:4.12'
+	    
+	    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
+	    
+	    compile "com.netflix.hystrix:hystrix-core:1.5.12"
+	    compile "com.netflix.hystrix:hystrix-metrics-event-stream:1.5.12"
+	    
+	}
+	
+	/**
+	* gradle build
+	* gradle tomcatRunWar 程序已经部署运行
+	**/
+	//支持war包部署到tomcat上
+	dependencies {
+	    def tomcatVersion = '7.0.59'
+	    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+	           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+	           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+	           
+	}
+	tomcatRun.contextPath = '/web-hystrix-monitor-test'
+	tomcatRunWar.contextPath = '/web-hystrix-monitor-test'	
+
+	
+	//解决Gradle编译时出现： 编码GBK的不可映射字符
+	tasks.withType(JavaCompile) {
+	    options.encoding = "UTF-8"
+	}	
+
+
+
+
 
