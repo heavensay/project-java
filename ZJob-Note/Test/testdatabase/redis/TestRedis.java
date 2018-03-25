@@ -13,10 +13,15 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.SortingParams;
 
+/**
+ * redis基本使用
+ * @author banana
+ *
+ */
 public class TestRedis {
 	
 	
-	private String REIDS_IP = "192.168.51.95";
+	private String REIDS_IP = "127.0.0.1";
 	
 	@Test
 	public void test1(){
@@ -241,7 +246,8 @@ public class TestRedis {
         System.out.println(jedis.sdiff("sets1", "sets2"));  
     }  
   
-    public static void sortedSet() {  
+    @Test
+    public  void testSortedSet() {  
         System.out.println("==SoretedSet==");  
         Jedis jedis = RedisUtil.getJedis();  
         try {  
