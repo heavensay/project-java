@@ -16,6 +16,7 @@ public class TestDate {
 		Timestamp t = new Timestamp(date.getTime());
 		System.out.println(date.equals(t));
 		System.out.println(t.equals(date));
+        System.out.println(3);
 	}
 	@Test
 	public void test2() throws Exception{

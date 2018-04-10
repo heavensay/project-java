@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 public class PoxyTest extends TestCase{
 	public void test1(){
-		IDemo dp = ProxyFactory.getDemoProxy(Demo.class);
+		IDemo dp = ProxyFactory.getDemoProxy(IDemo.class);
 		dp.dosomething();
 	}
 	
