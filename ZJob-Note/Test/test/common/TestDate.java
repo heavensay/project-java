@@ -14,6 +14,7 @@ public class TestDate {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd HHmmss");
 		Date date = sdf.parse("20110101 102030");
 		Timestamp t = new Timestamp(date.getTime());
+		System.out.println("123444555666");
 		System.out.println(date.equals(t));
 		System.out.println(t.equals(date));
 	}
@@ -37,7 +38,7 @@ public class TestDate {
 	public void test3() throws Exception{
 		System.out.println(new Date(2012,6,11).getTime());
 		java.sql.Date sqlDate=java.sql.Date.valueOf("2012-06-11");
-		
+
 		System.out.println(sqlDate.getTime());
 		System.out.println(new Date(1339344000000L));
 	}

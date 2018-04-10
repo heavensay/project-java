@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"  ?>
-	<!ELEMENT xml (bean)>
-	<!ELEMENT bean (referencepath)>
-	<!--the class's path-->
-	<!ATTLIST bean
-	path CDATA #REQUIRED>
-	<!ELEMENT referencepath   (#PCDATA)> 

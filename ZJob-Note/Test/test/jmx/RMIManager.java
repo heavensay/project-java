@@ -2,14 +2,12 @@ package test.jmx;
 
 import javax.management.Attribute;
 import javax.management.ObjectName;
-
-import com.sun.jdmk.comm.RmiConnectorAddress;
-import com.sun.jdmk.comm.RmiConnectorClient;
+import javax.management.remote.rmi.RmiConnector;
 
 public class RMIManager {
 
 	public static void main(String[] args) {
-		RmiConnectorClient client = new RmiConnectorClient();
+		RmiConnector client = new RmiConnector();
 		RmiConnectorAddress address = new RmiConnectorAddress();
 		try {
 			client.connect(address);

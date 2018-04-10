@@ -7,11 +7,11 @@ import java.rmi.RemoteException;
 
 public class RmiClient {
 
-	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
-		Hello hello = (Hello)Naming.lookup("hello");
-		Message message = hello.getMessage();
-		System.out.println(message);
-		System.out.println(message.getMessage());
-	}
+    public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+        Hello hello = (Hello) Naming.lookup("hello");
+        Message message = hello.getMessage();
+        System.out.println(message);
+        System.out.println(message.getMessage());
+    }
 
 }
