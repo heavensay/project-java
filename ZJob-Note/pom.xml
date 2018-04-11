@@ -235,8 +235,42 @@
         <version>3.4.11</version>
     </dependency>
 
-					 
-	</dependencies>
+
+	<!-- rabbitmq消息队列组件 -->
+	<dependency>
+	    <groupId>com.rabbitmq</groupId>
+	    <artifactId>amqp-client</artifactId>
+	    <version>5.0.0</version>
+	</dependency>
+
+
+	<!-- 工作流引擎 -->
+	<dependency>
+	    <groupId>org.activiti</groupId>
+	    <artifactId>activiti-engine</artifactId>
+	    <version>5.17.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>6.0.6</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/cglib/cglib -->
+	<dependency>
+		<groupId>cglib</groupId>
+		<artifactId>cglib</artifactId>
+		<version>3.2.6</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+	<dependency>
+		<groupId>dom4j</groupId>
+		<artifactId>dom4j</artifactId>
+		<version>1.6.1</version>
+	</dependency>
+
+</dependencies>
 	
 	<build>
 		<directory>target2</directory><!-- 这是打包的文件的路径。默认是该工程的根目录。 -->
@@ -256,6 +290,14 @@
 		<!--
 			测试文件源文件夹。这里与src文件 夹的定义是相同的。在打包时有区别，打包时，test文件夹下的源文件和资源文件都不被打到war包里面。
 		-->
-
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>	
 </project>

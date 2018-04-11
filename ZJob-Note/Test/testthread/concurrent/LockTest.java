@@ -26,7 +26,6 @@ class T implements Runnable{
 	T(LockTest lockTest){
 		this.lockTest = lockTest;
 	}
-	@Override
 	public void run() {
 		lockTest.f();
 	}

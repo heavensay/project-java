@@ -1,0 +1,87 @@
+<!--
+
+使用html+css进行上中下布局，中间高度自适应
+
+主要使用position属性结合top，bottom，left，right属性来进行布局，
+ -->
+
+<!DOCTYPE html>
+<html height="100%">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+
+	<div id="d0" >
+		<div id='d1'>
+				d1
+		</div>
+		
+		<div id='d2'>
+				d2--自适应高度
+		</div>
+
+		<div id='d3'>
+				d3
+		</div>	
+
+	</div>
+
+</body>
+<style>
+html {
+	height:100%;
+}
+body {
+	height:100%;
+	margin: 0px;
+	/** 滚动条显示设置	
+	overflow:hidden;
+	**/
+}
+
+#d0 {
+	height: 100%;
+	background-color: red;
+}
+
+#d1 {
+	position:absolute;
+	background-color:coral;
+	height: 150px;
+	width:80%;
+}
+
+#d2 {
+	position:absolute;
+	background-color:yellow;
+	width:50%;
+	top: 150px;  /* 与header高度一致 */
+	bottom: 100px; /* 与bottom高度一致 */
+}
+
+#d3 {
+	position:absolute;
+	background-color:lightblue;
+	height: 100px;
+	width:70%;
+	bottom: 0px;
+}
+
+</style>
+
+<script type="text/javascript">
+	//var next  = document.getElementById("d2").nextSibling.getAttribute('id');
+	var next  = document.getElementById("d2").nextElementSibling.getAttribute('id');
+	var ps=document.getElementById("d2").previousElementSibling.getAttribute('id');
+	//var next  = document.getElementById("d2").getAttribute('id');
+	//var next2  = document.getElementById("d2").nextSibling.id;
+	
+	//alert(next);
+	//alert(ps);
+</script>
+
+</html>
+

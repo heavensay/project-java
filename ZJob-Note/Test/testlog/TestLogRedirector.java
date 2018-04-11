@@ -8,8 +8,6 @@ import java.io.PrintStream;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.code.yanf4j.buffer.BufferDataException;
-
 public class TestLogRedirector {
 
 	String outPath = "bin/testlog/testlog-out.log";
