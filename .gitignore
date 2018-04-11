@@ -36,3 +36,7 @@ motley/.classpath
 pom.xml
 shiro-redis/.classpath
 shiro-redis/pom.xml
+
+#intellij idea
+*.iml
+.idea/
