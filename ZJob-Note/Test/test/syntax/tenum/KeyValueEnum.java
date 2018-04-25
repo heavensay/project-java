@@ -1,18 +1,18 @@
-package testjavalang.enumtest;
+package test.syntax.tenum;
 
-public enum KeyValue  {
+public enum KeyValueEnum  {
 
 	KV1(1,"tom"),KV2(2,"jack"),KV3;
 	
 	
 	public Integer key ;
 	public String value ;
-	
-	KeyValue(){
+
+	KeyValueEnum(){
 		
 	}
-	
-	KeyValue(Integer key,String value){
+
+	KeyValueEnum(Integer key,String value){
 		this.key = key;
 		this.value = value;
 	}
