@@ -1,4 +1,4 @@
-package testjavalang.enumtest;
+package test.syntax.tenum;
 
 public enum AnimalEnum {
 	DOG,
