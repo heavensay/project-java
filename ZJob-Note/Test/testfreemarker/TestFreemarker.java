@@ -6,11 +6,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.Writer;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
+import freemarker.cache.ClassTemplateLoader;
 import org.junit.Test;
 import org.junit.runners.JUnit4;
 
@@ -68,6 +66,48 @@ public class TestFreemarker{
 		Writer writer = new FileWriter(fileDir);
 		template.process(rootModel, writer);
 		writer.close();
+	}
+
+	@Test
+	public void test3() throws Exception{
+		Configuration cfg = new Configuration();
+		cfg.setDefaultEncoding("UTF-8");
+
+		File templatePath = new File("D:/work/yinhuotong/orig-2");
+		System.out.println(templatePath.getAbsolutePath());
+		cfg.setDirectoryForTemplateLoading(templatePath);
+		cfg.setObjectWrapper(new DefaultObjectWrapper());
+
+		/* 获取模板文件 */
+		Template template = cfg.getTemplate("multiple_installments_for_loan_yht.ftl");
+
+		/* 生成输出到文件 */
+		File fileDir = new File("D:/work/yinhuotong/orig-2/t-index3.html");
+		// 指定生成输出的文件
+		Writer writer = new FileWriter(fileDir);
+
+		HashMap params = new HashMap();
+		params.put("application_id","888777");
+
+		HashMap map = new HashMap();
+		map.put("model",params);
+		template.process(map, writer);
+		writer.flush();
+	}
+
+
+	@Test
+	public void test4() throws Exception{
+		//创建一个模版对象
+		Template t = new Template(null, new StringReader("用户名：${user};time:${(ctime?date?string('yyyy年MM月dd日'))!}," +
+				" 金额：${(money?string.currency)!\"￥___.00\"}"), null);
+		//创建插值的Map
+		Map map = new HashMap();
+		map.put("user", "lavasoft");
+		map.put("ctime", new Date());
+		map.put("money", 200.53);
+		//执行插值，并输出到指定的输出流中
+		t.process(map, new OutputStreamWriter(System.out));
 	}
 
 }
