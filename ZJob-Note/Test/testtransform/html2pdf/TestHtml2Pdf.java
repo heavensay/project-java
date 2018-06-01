@@ -15,8 +15,8 @@ public class TestHtml2Pdf
 
     @Test
     public void test() throws Exception{
-        String url = "D:/work/yinhuotong/orig-2/ttt.html";
-        String targetPath = "D:/work/yinhuotong/orig-2/111.pdf";
+        String url = "D:/work/借款协议/农发小贷/333.htm";
+        String targetPath = "D:/work/借款协议/农发小贷/111.pdf";
         String fontPath = "attach/font/simsun.ttc";
         File targetFile = new File(targetPath);
         if (targetFile.exists())

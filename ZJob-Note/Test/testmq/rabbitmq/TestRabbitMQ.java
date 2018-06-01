@@ -16,8 +16,8 @@ import com.rabbitmq.client.Envelope;
 public class TestRabbitMQ {
 
 	String host = "127.0.0.1";
-	String user = "banana";
-	String pwd = "banana";
+	String user = "guest";
+	String pwd = "guest";
 	Integer port = 5672;
 	
 	@Test

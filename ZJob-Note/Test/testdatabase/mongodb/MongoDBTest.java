@@ -1,6 +1,6 @@
 package testdatabase.mongodb;
 
-import com.mongodb.MongoClient;
+import com.mongodb.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -8,6 +8,10 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.*;
 
 public class MongoDBTest {
 
@@ -81,4 +85,65 @@ public class MongoDBTest {
 
     }
 
+    /**
+     * 连接测试
+     */
+    @Test
+    public void connectionReplicationTest(){
+        try{
+            // 连接到 mongodb 服务
+
+            ServerAddress serverAddress = new ServerAddress("127.0.0.1", 27018);
+            List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+            seeds.add(serverAddress);
+
+
+            MongoClientOptions.Builder builder = MongoClientOptions.builder();
+            builder.connectionsPerHost(50);
+            builder.threadsAllowedToBlockForConnectionMultiplier(50);
+            builder.maxWaitTime(1000*60*2);
+            builder.readPreference(ReadPreference.secondary());
+            builder.connectTimeout(1000*60*1);
+            MongoClientOptions mco = builder.build();
+
+            MongoCredential cred = MongoCredential
+                    .createScramSha1Credential("banana","diy2","banana".toCharArray());
+            List<MongoCredential> credentialsList = new ArrayList<MongoCredential>();
+            credentialsList.add(cred);
+
+            MongoClient mongoClient = new MongoClient( seeds,credentialsList,mco);
+
+            // 连接到数据库
+            MongoDatabase mongoDatabase = mongoClient.getDatabase("diy");
+            System.out.println("Connect to database successfully");
+
+            List<String> collectionNames = new ArrayList<>();
+            mongoDatabase.listCollectionNames().into(collectionNames);
+            collectionNames.stream().forEach( e -> System.out.println("collectionName:"+e));
+
+            System.out.println(mongoDatabase.getName());
+            MongoCollection<Document>  documents = mongoDatabase.getCollection("student");
+            Document student = documents.find().first();
+            System.out.println(student.get("name"));
+
+            Assert.assertNotNull(mongoDatabase);
+
+        }catch(Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+    }
+
+
+    @Test
+    public void ttttt() throws Exception{
+        Properties prop = new Properties();
+        prop.load(new FileInputStream(new File("D:/1")));
+
+        Iterator i = prop.entrySet().iterator();
+        while(i.hasNext()){
+            final Map.Entry entry = (Map.Entry) i.next();
+            System.out.println((String) entry.getKey());
+            System.out.println((String) entry.getValue());
+        }
+    }
 }
