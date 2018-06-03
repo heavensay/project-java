@@ -27,6 +27,7 @@ classes/
 *.ipr 
 *.iws 
 .idea/
+*.iml
 
 #other
 #jrebel
