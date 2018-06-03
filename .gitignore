@@ -24,10 +24,9 @@ classes/
 
 
 # IntelliJ IDEA Files 
-*.iml
 *.ipr 
 *.iws 
-*.idea
+.idea/
 
 #other
 #jrebel

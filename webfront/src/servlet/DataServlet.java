@@ -19,7 +19,6 @@ public class DataServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
 		String path = request.getRequestURI();
 		if(path.contains("queryResourceTree")){
 			getJsonTree(request, response);
@@ -28,7 +27,7 @@ public class DataServlet extends HttpServlet {
 	
 	public void getJsonTree(HttpServletRequest request,
 			HttpServletResponse response) throws IOException{
-		System.out.println("ddddddddddddd");
+		System.out.println("333");
 		//{"id":null,"text":"用户权限","state":"open","checked":false,"attributes":null,
 		//"children":[{"id":null,"text":"用户插入","state":"open","checked":false,"attributes":null,
 		//"children":[{"id":null,"text":"用户插入批量","state":"open","checked":false,"attributes":null,

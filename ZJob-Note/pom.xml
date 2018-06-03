@@ -3,7 +3,7 @@
 	<groupId>ZJob-Note</groupId>
 	<artifactId>ZJob-Note</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<!-- 
+	<!-- 	 -->
 	<repositories>
 		<repository>    
 	       <id>center</id>    
@@ -17,7 +17,7 @@
 	        </snapshots>    
     	</repository>	
 	</repositories>
-	 -->
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.0.5.RELEASE</spring.version>
@@ -77,6 +77,7 @@
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
 		<version>4.11</version>
+		<!--<scope>test</scope>-->
 	</dependency>
 	<!-- 
 	<dependency>
@@ -128,44 +129,40 @@
 		-->
 		<!-- fastdfs分布式文件服务 
 		maven中心已经收不到了，暂时屏蔽；可以从网络下直接下载
-
-	<dependency>
+		
+		<dependency>
 			<groupId>org.csource</groupId>
 			<artifactId>fastdfs</artifactId>
 			<version>1.24</version>
 		</dependency>
-
-
+		-->		
+		<!-- 
 	    <dependency>
 	      <groupId>org.csource</groupId>
 	      <artifactId>fastdfs-client-java</artifactId>
 	      <version>5.0.4</version>
-	    </dependency>
-	-->
-
-	<!--
-   <dependency>
-       <groupId>com.googlecode.xmemcached</groupId>
-       <artifactId>xmemcached</artifactId>
-       <version>2.0.0</version>
-   </dependency>
-
-   <dependency>
-       <groupId>javax.mail</groupId>
-       <artifactId>mail</artifactId>
-       <version>1.4.7</version>
-   </dependency>
-
-
-    -->
-
-	<dependency>
-		<groupId>com.whalin</groupId>
-		<artifactId>Memcached-Java-Client</artifactId>
-		<version>3.0.0</version>
-	</dependency>
-
-   <!-- 日志框架 -->
+	    </dependency>		
+		 -->
+		 
+		<dependency>
+			<groupId>com.googlecode.xmemcached</groupId>
+			<artifactId>xmemcached</artifactId>
+			<version>2.0.0</version>
+		</dependency>	
+		
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>		
+		
+		<dependency>
+			<groupId>com.whalin</groupId>
+			<artifactId>Memcached-Java-Client</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+					
+		<!-- 日志框架 -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -285,6 +282,38 @@
 		<groupId>org.dbunit</groupId>
 		<artifactId>dbunit</artifactId>
 		<version>2.4.9</version>
+	</dependency>
+
+	<!-- PDF related -->
+	<dependency>
+		<groupId>com.lowagie</groupId>
+		<artifactId>itext</artifactId>
+		<version>2.0.8</version>
+	</dependency>
+	<dependency>
+		<groupId>pdf</groupId>
+		<artifactId>core-renderer_WLD</artifactId>
+		<version>1.0</version>
+	</dependency>
+
+
+	<dependency>
+		<groupId>org.testng</groupId>
+		<artifactId>testng</artifactId>
+		<version>6.9.6</version>
+	</dependency>
+
+    <!-- mongodb -->
+    <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongo-java-driver</artifactId>
+        <version>3.2.2</version>
+    </dependency>
+
+	<dependency>
+		<groupId>commons-beanutils</groupId>
+		<artifactId>commons-beanutils</artifactId>
+		<version>1.9.3</version>
 	</dependency>
 
 
