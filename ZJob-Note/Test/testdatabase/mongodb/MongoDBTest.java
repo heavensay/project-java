@@ -82,7 +82,6 @@ public class MongoDBTest {
             System.out.println("id:"+student.getId());
             System.out.println("name:"+student.getName());
         }
-
     }
 
     /**
@@ -93,7 +92,7 @@ public class MongoDBTest {
         try{
             // 连接到 mongodb 服务
 
-            ServerAddress serverAddress = new ServerAddress("127.0.0.1", 27018);
+            ServerAddress serverAddress = new ServerAddress("127.0.0.1", 27017);
             List<ServerAddress> seeds = new ArrayList<ServerAddress>();
             seeds.add(serverAddress);
 
@@ -104,10 +103,11 @@ public class MongoDBTest {
             builder.maxWaitTime(1000*60*2);
             builder.readPreference(ReadPreference.secondary());
             builder.connectTimeout(1000*60*1);
+//            builder.requiredReplicaSetName("hqmongodb"); //不是集群的话，配置了就连接不上
             MongoClientOptions mco = builder.build();
 
             MongoCredential cred = MongoCredential
-                    .createScramSha1Credential("banana","diy2","banana".toCharArray());
+                    .createScramSha1Credential("banana","diy","banana".toCharArray());
             List<MongoCredential> credentialsList = new ArrayList<MongoCredential>();
             credentialsList.add(cred);
 
