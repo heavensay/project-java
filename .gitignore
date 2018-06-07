@@ -8,8 +8,8 @@
 #eclipse
 /*/.settings/
 .project
-
-
+.classpath
+.settings/
 
 
 #project
@@ -23,20 +23,12 @@ bin/
 classes/
 
 
-
-
-*.mymetadata
-*.myumldata
-.classpath
-.settings/org.eclipse.jdt.core.prefs
-.settings/org.maven.ide.eclipse.prefs
-ZJob-Note/.classpath
-ZJob-Note/.classpath.bak
-motley/.classpath
-pom.xml
-shiro-redis/.classpath
-shiro-redis/pom.xml
-
-#intellij idea
-*.iml
+# IntelliJ IDEA Files 
+*.ipr 
+*.iws 
 .idea/
+*.iml
+
+#other
+#jrebel
+rebel.xml
