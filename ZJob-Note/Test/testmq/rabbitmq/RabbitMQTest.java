@@ -8,13 +8,14 @@ import java.io.IOException;
 public class RabbitMQTest {
 
 	String host = "127.0.0.1";
-	String user = "guest";
-	String pwd = "guest";
+	String user = "welend";
+	String pwd = "welend";
 	Integer port = 5672;
-	
+	String vhost = "integration";
+
 	@Test
 	public void test1Consumer() throws Exception {
-		String QUEUE_NAME = "queue-test-1";
+		String QUEUE_NAME = "queue-test-2";
 		 //创建连接工厂
 		ConnectionFactory factory = null;
 
@@ -24,6 +25,7 @@ public class RabbitMQTest {
 		factory.setUsername(user);
 		factory.setPassword(pwd);
 		factory.setPort(port);
+		factory.setVirtualHost(vhost);
 		
         //创建一个新的连接
         Connection connection = factory.newConnection();
@@ -51,6 +53,40 @@ public class RabbitMQTest {
 //		}
 		System.out.println("end========");
 		System.in.read();
+	}
+
+
+	@Test
+	public void test2Producer() throws Exception {
+		String QUEUE_NAME = "queue-test-2";
+		//创建连接工厂
+		ConnectionFactory factory = null;
+
+		factory = new ConnectionFactory();
+		// 设置RabbitMQ相关信息
+		factory.setHost(host);
+		factory.setUsername(user);
+		factory.setPassword(pwd);
+		factory.setPort(port);
+		factory.setVirtualHost(vhost);
+
+		//创建一个新的连接
+		Connection connection = factory.newConnection();
+
+		//创建一个通道
+		Channel channel = connection.createChannel();
+
+		// 声明一个队列
+		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+
+		//发送消息到队列中
+		String message = "Hello RabbitMQ:"+System.currentTimeMillis();
+		channel.basicPublish("welab.event.exchange", QUEUE_NAME, null, message.getBytes("UTF-8"));
+		System.out.println("Producer Send +'" + message + "'");
+
+		//关闭通道和连接
+		channel.close();
+		connection.close();
 	}
 
 }

@@ -24,7 +24,7 @@ public class TestRedis {
 	private String REIDS_IP = "127.0.0.1";
 	
 	@Test
-	public void test1(){
+	public void testSimple(){
 		Jedis jedis = new Jedis(REIDS_IP);  
 		String keys = "name";  
 		// 存数据  
@@ -37,55 +37,9 @@ public class TestRedis {
 		System.out.println(jedis.get(keys));
 	}
 	
-    /** 
-     * 在不同的线程中使用相同的Jedis实例会发生奇怪的错误。但是创建太多的实现也不好因为这意味着会建立很多sokcet连接， 
-     * 也会导致奇怪的错误发生。单一Jedis实例不是线程安全的。为了避免这些问题，可以使用JedisPool, 
-     * JedisPool是一个线程安全的网络连接池。可以用JedisPool创建一些可靠Jedis实例，可以从池中拿到Jedis的实例。 
-     * 这种方式可以解决那些问题并且会实现高效的性能 
-     */  
-  
-    public static void main(String[] args) {  
-  
-        // ...when closing your application:  
-        RedisUtil.getPool().destroy();  
-  
-    }  
-  
-    public static void Hello() {  
-        Jedis jedis = RedisUtil.getJedis();  
-        try {  
-            // 向key-->name中放入了value-->minxr  
-            jedis.set("name", "minxr");  
-            String ss = jedis.get("name");  
-            System.out.println(ss);  
-  
-            // 很直观，类似map 将jintao append到已经有的value之后  
-            jedis.append("name", "jintao");  
-            ss = jedis.get("name");  
-            System.out.println(ss);  
-  
-            // 2、直接覆盖原来的数据  
-            jedis.set("name", "jintao");  
-            System.out.println(jedis.get("jintao"));  
-  
-            // 删除key对应的记录  
-            jedis.del("name");  
-            System.out.println(jedis.get("name"));// 执行结果：null  
-  
-            /** 
-             * mset相当于 jedis.set("name","minxr"); jedis.set("jarorwar","aaa"); 
-             */  
-            jedis.mset("name", "minxr", "jarorwar", "aaa");  
-            System.out.println(jedis.mget("name", "jarorwar"));  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        } finally {  
-            RedisUtil.getPool().returnResource(jedis);  
-        }  
-  
-    }  
-  
-    private void testKey() {  
+
+	@Test
+    public void testKey() {
         Jedis jedis = RedisUtil.getJedis();  
         System.out.println("=============key==========================");  
         // 清空数据  
