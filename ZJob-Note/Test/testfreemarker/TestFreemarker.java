@@ -184,6 +184,22 @@ public class TestFreemarker{
 	}
 
 	/**
+	 * 逻辑运算2
+	 * @throws Exception
+	 */
+	@Test
+	public void testAssign2() throws Exception{
+//		String html = "<br>${10 + num2}</br>";//${customnum?''}
+		String html = "<br>${(10 + num2)}</br>";//${customnum?''}
+		Map map = new HashMap();
+		map.put("num1",4);
+		map.put("num2",new BigDecimal(5.5));
+//		map.put("num2","5");
+		Template t = new Template(null,html,null);
+		t.process(map,new OutputStreamWriter(System.out));
+	}
+
+	/**
 	 * 如何assign一个object(目前没试验成功)
 	 * 赋值一个object失败，一致都是变为string
 	 * @throws Exception
@@ -210,7 +226,7 @@ public class TestFreemarker{
 		user1.setName("tom");
 
 		User user2 = new User();
-		user2.setId(1);
+		user2.setId(2);
 		user2.setName("Jerry");
 		List list =new ArrayList();
 		list.add(user1);

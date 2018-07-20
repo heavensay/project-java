@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -19,9 +21,9 @@ public class TestPostgres {
 	
 	@Before
 	public void before() throws Exception{
-		String url = "jdbc:postgresql://127.0.0.1:5432/test";
-		String name = "test";
-		String pwd = "test";
+		String url = "jdbc:postgresql://116.62.238.6:5432/jrocketdb";
+		String name = "jrocket";
+		String pwd = "jrocket";
 		Class.forName( "org.postgresql.Driver");
 		conn   =   DriverManager.getConnection(url,name,pwd);
 	}
@@ -55,6 +57,54 @@ public class TestPostgres {
 		stmt.close();
 		conn.close();
 	}
+
+	/**
+	 *简单的查询示例
+	 */
+	@Test
+	public void selectSimpleTest2() throws Exception {
+		String sql = " select id,created_at from loan_applications where id=4894";
+
+		PreparedStatement stmt = conn.prepareStatement(sql);
+
+		ResultSet result = stmt.executeQuery();
+		Timestamp date = null;
+		while(result.next()){
+			System.out.println(result.getInt("id"));
+			date = result.getTimestamp("created_at");
+			System.out.println(result.getDate("created_at"));
+		}
+		result.close();
+		stmt.close();
+		conn.close();
+
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+		System.out.println(format.format(date));
+	}
+
+
+	/**
+	 *简单的查询示例
+	 */
+	@Test
+	public void insert() throws Exception {
+		String sql = " INSERT  into loan_applications(created_at,updated_at) values(?,?) ";
+
+		PreparedStatement stmt = conn.prepareStatement(sql);
+
+		stmt.setTimestamp(1,new Timestamp(System.currentTimeMillis()));
+		stmt.setTimestamp(2,new Timestamp(System.currentTimeMillis()));
+		Timestamp date = null;
+
+		stmt.executeUpdate();
+
+		stmt.close();
+		conn.close();
+
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+		System.out.println(format.format(date));
+	}
+
 
 
 }

@@ -5,14 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javax.validation.ValidationException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class TestValidation {

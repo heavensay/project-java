@@ -65,8 +65,7 @@ public class JmockitTest {
 	        	result = "jack";minTimes=0;
 	        	userDao.getUser("ddd");
 	        	result = new User();minTimes=0;
-	        	
-	        }  
+	        }
 	    };
 
 	    System.out.println(userDao.getUserName(5));
@@ -93,8 +92,7 @@ public class JmockitTest {
 	public void testTestedByInjectTable() {
 	    new Expectations() {//录制预期模拟行为
 	        {
-	        	
-	        	//声明要Mock的方法(注：其它方法按照正常的业务逻辑运行)  
+	        	//声明要Mock的方法(注：其它方法按照正常的业务逻辑运行)
 	        	userDaoByInjectTableForTested.getUserName(6);
 	        	//期望方法返回的结果  
 	        	result = "tom";
@@ -157,4 +155,24 @@ public class JmockitTest {
 		System.out.println(service.getBedroom("jack")); //output：bedroom 001:jack   执行的是UserService的源方法逻辑
 	}
 
+
+	UserService userService2 = new UserService();
+
+	/**
+	 * 使用与spinrg已经包装好bean，我们模拟其中请求的逻辑
+	 */
+	@Test
+	public void testMockClassMethod() {
+		new MockUp<UserService>() {
+			// 需要使用@Mock标记,否则jmockit不会处理;
+			// 而且方法的签名必须与接口中方法签名一致，否则jmockit会报错
+			////未mock函数不受影响
+			@Mock
+			public String getUserName(Integer id) {
+				return "default" + id;
+			}
+		};
+
+		System.out.println(userService2.getUserName(3));//output:default3    执行的是mock之后的返回值
+	}
 }

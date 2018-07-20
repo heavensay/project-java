@@ -2,12 +2,16 @@ package testjson;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
@@ -43,6 +47,7 @@ public class TestJson {
 		bean.setId(5);
 		bean.setName("tom");
 		bean.setAddr("深圳福田区");
+		bean.setExist(false);
 		list.add(bean);
 	}
 	
@@ -254,7 +259,21 @@ public class TestJson {
 		
 		Assert.assertEquals("tom", deserialBean.getName());
 		Assert.assertNull(deserialBean.getTime());
-		
+	}
+
+	@Test
+	public void test() throws Exception{
+		final com.fasterxml.jackson.databind.ObjectMapper result = new com.fasterxml.jackson.databind.ObjectMapper();
+		result.configure(SerializationFeature.INDENT_OUTPUT, false);
+		result.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+		result.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"));
+		result.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		result.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
+		result.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+		String jsonstr = result.writeValueAsString(bean);
+		System.out.println(jsonstr);
+
 	}
 }
 

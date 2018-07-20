@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 /**
@@ -29,8 +31,11 @@ public class StreamTest {
     }
 
 
+    /**
+     * filter简单测试
+     */
     @Test
-    public void test1(){
+    public void testFilter(){
         lists.stream().filter( s-> s.startsWith("a")).forEach(System.out::println);
 
         String first = lists.stream().filter( s-> s.startsWith("a")).findFirst().orElse("z1");
@@ -43,6 +48,19 @@ public class StreamTest {
         System.out.println("=================");
         lists.stream().map(  s -> s.toUpperCase()).forEach(System.out::println);
 //        lists.stream().map( s -> System.out::println );
+    }
+
+    /**
+     * 空list，能否map
+     */
+    @Test
+    public void testEmptyListForMap(){
+        List emptyList = new ArrayList();
+        emptyList.stream().map( e -> {
+            System.out.println("map");
+            System.out.println(e);
+            return e;
+        }).collect(Collectors.toList());
     }
 
 }

@@ -13,7 +13,9 @@ public class Bean {
 	private String addr;
 
 	private Timestamp time;
-	
+
+	private boolean exist;
+
 	public int getId() {
 		return id;
 	}
@@ -46,4 +48,11 @@ public class Bean {
 		this.time = time;
 	}
 
+	public boolean isExist() {
+		return exist;
+	}
+
+	public void setExist(boolean exist) {
+		this.exist = exist;
+	}
 }
