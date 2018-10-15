@@ -20,7 +20,6 @@ public class Bean2 {
 	public String getName() {
 		return name;
 	}
-	@JsonProperty("sir")
 	public void setName(String name) {
 		this.name = name;
 	}

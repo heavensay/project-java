@@ -188,10 +188,11 @@ public class TestJson {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonstr = mapper.writeValueAsString(bean2);
 		
-		Bean2 ub2 = mapper.readValue(new File("Test/testhttp/json2.txt"), Bean2.class);
+		Bean2 ub2 = mapper.readValue(new File("Test/testjson/json2.txt"), Bean2.class);
 		
 		System.out.println(jsonstr);
 		Assert.assertNotNull(ub2.getName());
+		Assert.assertEquals("tom",ub2.getName());
 	}
 	
 	@Test
