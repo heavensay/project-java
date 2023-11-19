@@ -11,41 +11,41 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlAccessType;
 
 
-@XmlRootElement(name="Annex")  
-@XmlAccessorType(XmlAccessType.FIELD)  
-@XmlType(name="Annex")
+@XmlRootElement(name = "Annex")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Annex")
 public class Annex {
-	
-	@XmlMimeType("application/octet-stream")  
-	private DataHandler annexData;
-	
-	@XmlElement  
+
+    @XmlMimeType("application/octet-stream")
+    private DataHandler annexData;
+
+    @XmlElement
     private String name;
 
-	private List<String> paths;
-	
-	public DataHandler getAnnexData() {
-		return annexData;
-	}
+    private List<String> paths;
 
-	public void setAnnexData(DataHandler annexData) {
-		this.annexData = annexData;
-	}
+    public DataHandler getAnnexData() {
+        return annexData;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setAnnexData(DataHandler annexData) {
+        this.annexData = annexData;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<String> getPaths() {
-		return paths;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPaths(List<String> paths) {
-		this.paths = paths;
-	} 
-	
+    public List<String> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<String> paths) {
+        this.paths = paths;
+    }
+
 }

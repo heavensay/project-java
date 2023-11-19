@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-  
-<mapper namespace="com.myhexin.dao.user.IUserDao">  <!--mybatis的namespace是必须的-->  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<resultMap type="com.myhexin.entity.PermissionDTO" id="permissionDTO">
-	</resultMap>
+<mapper namespace="com.myhexin.dao.user.IUserDao">  <!--mybatis的namespace是必须的-->
 
- 	<resultMap type="com.myhexin.entity.TResource" id="perms_resource"/>
- 
-	<resultMap type="com.myhexin.entity.TResourceTreeDTO" id="perms_resourceTreeDTO">
-		<result column="id" property="id" javaType="int"/>
-		<association property="children"  column="id" select="queryChildPermissionById"/>
-	</resultMap>
+    <resultMap type="com.myhexin.entity.PermissionDTO" id="permissionDTO">
+    </resultMap>
 
-    <select id="queryPermissionByPage"  resultMap="perms_resource" parameterType="page"> 
-		select * 
-			from perms_resource
-    </select>       
+    <resultMap type="com.myhexin.entity.TResource" id="perms_resource"/>
 
-    <select id="geusr_mainById" parameterType="int" resultType="User">  
-        SELECT *   
-        FROM usr_main  
-        WHERE id = #{id}  
-    </select>  
-    
-    <select id="authenticationUser"  resultType="User">  
-        SELECT *   
-        FROM usr_main  
-        WHERE name = #{name} and pwd=#{password}  
-    </select>      
-    
-    <select id="queryUserPermission"  resultMap="permissionDTO"> 
-		select d.resourceid id,c.roleid,c.resourceid,d.resourcecode,d.resourcename from
-			usr_main a,usr_role b,perms_role_resource c,perms_resource d
-		where a.name=#{name} and a.userid=b.userid and b.roleid=c.roleid and c.resourceid=d.resourceid
+    <resultMap type="com.myhexin.entity.TResourceTreeDTO" id="perms_resourceTreeDTO">
+        <result column="id" property="id" javaType="int"/>
+        <association property="children" column="id" select="queryChildPermissionById"/>
+    </resultMap>
+
+    <select id="queryPermissionByPage" resultMap="perms_resource" parameterType="page">
+        select *
+        from perms_resource
     </select>
-    
 
-    <select id="queryPermissionTreeById"  parameterType="Integer" resultMap="perms_resourceTreeDTO">
-		select resourceid id,resourcename text 
-			from perms_resource 
-		where resourceid=#{id}
-    </select>         
-    
+    <select id="geusr_mainById" parameterType="int" resultType="User">
+        SELECT *
+        FROM usr_main
+        WHERE id = #{id}
+    </select>
+
+    <select id="authenticationUser" resultType="User">
+        SELECT *
+        FROM usr_main
+        WHERE name = #{name} and pwd=#{password}
+    </select>
+
+    <select id="queryUserPermission" resultMap="permissionDTO">
+        select d.resourceid id,c.roleid,c.resourceid,d.resourcecode,d.resourcename from
+        usr_main a,usr_role b,perms_role_resource c,perms_resource d
+        where a.name=#{name} and a.userid=b.userid and b.roleid=c.roleid and c.resourceid=d.resourceid
+    </select>
+
+
+    <select id="queryPermissionTreeById" parameterType="Integer" resultMap="perms_resourceTreeDTO">
+        select resourceid id,resourcename text
+        from perms_resource
+        where resourceid=#{id}
+    </select>
+
     <select id="queryChildPermissionById" parameterType="Integer" resultMap="perms_resourceTreeDTO">
-		select id,resourcename text 
-		 from perms_resource 
-		where pid=#{id}
-    </select>         
-    
+        select id,resourcename text
+        from perms_resource
+        where pid=#{id}
+    </select>
+
     <insert id="insertusr_main" parameterType="User">
-    	insert into usr_main(name,password)
-    	values(#{name},#{password})
-    </insert>    
-    	
+        insert into usr_main(name,password)
+        values(#{name},#{password})
+    </insert>
+
 </mapper> 

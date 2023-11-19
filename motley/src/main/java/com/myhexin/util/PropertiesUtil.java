@@ -20,35 +20,36 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 类PropertiesUtil.java的实现描述：读取配置文件Util
- * 
+ *
  * @author wangjie 2013-2-23 下午03:48:42
  */
 public class PropertiesUtil {
 
-   	private static Properties properties = new Properties();
+    private static Properties properties = new Properties();
 
-	private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 
-//	private static String DEFAULT_ENCODING = "UTF-8";
-	static{
-		loadProperties("common.properties");
-	}
+    //	private static String DEFAULT_ENCODING = "UTF-8";
+    static {
+        loadProperties("common.properties");
+    }
 
-    
-    public static String getPropertyValue(String propertyKey){
-    	return properties.getProperty(propertyKey);
+
+    public static String getPropertyValue(String propertyKey) {
+        return properties.getProperty(propertyKey);
     }
 
     /**
+     *
      */
     public static void loadProperties(String filePath) {
-    	InputStream is;
-		try {
-			is = PropertiesUtil.class.getClassLoader().getResourceAsStream(filePath);
-			properties.load(is);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error("properties parse error!",e);
-		} 
+        InputStream is;
+        try {
+            is = PropertiesUtil.class.getClassLoader().getResourceAsStream(filePath);
+            properties.load(is);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            logger.error("properties parse error!", e);
+        }
     }
 }

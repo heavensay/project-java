@@ -13,34 +13,34 @@ import javax.jws.WebService;
 		targetNamespace = "123.com")*/
 public class HelloWorldImpl implements HelloWorld {
 
-	public String sayHello(String username) {
+    public String sayHello(String username) {
 
-		System.out.println("say hello is called!");
+        System.out.println("say hello is called!");
 
-		return "Hello " + username;
+        return "Hello " + username;
 
-	}
+    }
 
-	public void annexTransportation(Annex annex) throws Exception{
-		// TODO Auto-generated method stub
-		System.out.println(annex.getName());
-		
-		DataHandler annexData = annex.getAnnexData();
-		InputStream is = annexData.getInputStream();
-		
-		FileOutputStream fos  = new FileOutputStream(new File("D:/kk/t.jpg"));
-		
-		byte[] b = new byte[1024];
-		int count = 0 ;
-		
-		while ((count=is.read(b))!=-1) {
-			fos.write(b,0,count);
-		}
-		
-		fos.flush();
-		fos.close();
-		is.close();
-		
-	}
+    public void annexTransportation(Annex annex) throws Exception {
+        // TODO Auto-generated method stub
+        System.out.println(annex.getName());
+
+        DataHandler annexData = annex.getAnnexData();
+        InputStream is = annexData.getInputStream();
+
+        FileOutputStream fos = new FileOutputStream(new File("D:/kk/t.jpg"));
+
+        byte[] b = new byte[1024];
+        int count = 0;
+
+        while ((count = is.read(b)) != -1) {
+            fos.write(b, 0, count);
+        }
+
+        fos.flush();
+        fos.close();
+        is.close();
+
+    }
 
 }

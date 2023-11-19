@@ -1,20 +1,20 @@
 <html>
 
-  <head>
+<head>
 
-  </head>
-  
-  <body>
+</head>
 
-    This is xss test page 3333. <br>
-	
+<body>
+
+This is xss test page 3333. <br>
+
 </html>
-      <script>
-      //var v1 = document.cookie; alert(v1)
-      
-
-		var aCookie = document.cookie;
-		alert(aCookie);
+<script>
+    //var v1 = document.cookie; alert(v1)
 
 
-      </script>
+    var aCookie = document.cookie;
+    alert(aCookie);
+
+
+</script>

@@ -15,24 +15,24 @@ import com.rabbitmq.client.Envelope;
 
 public class TestRabbitMQ {
 
-	String host = "127.0.0.1";
-	String user = "guest";
-	String pwd = "guest";
-	Integer port = 5672;
-	
-	@Test
-	public void test1Producer() throws Exception {
-		String QUEUE_NAME = "queue-test-1";
-		 //创建连接工厂
-		ConnectionFactory factory = null;
+    String host = "127.0.0.1";
+    String user = "guest";
+    String pwd = "guest";
+    Integer port = 5672;
 
-		factory = new ConnectionFactory();
-		// 设置RabbitMQ相关信息
-		factory.setHost(host);
-		factory.setUsername(user);
-		factory.setPassword(pwd);
-		factory.setPort(port);
-		
+    @Test
+    public void test1Producer() throws Exception {
+        String QUEUE_NAME = "queue-test-1";
+        //创建连接工厂
+        ConnectionFactory factory = null;
+
+        factory = new ConnectionFactory();
+        // 设置RabbitMQ相关信息
+        factory.setHost(host);
+        factory.setUsername(user);
+        factory.setPassword(pwd);
+        factory.setPort(port);
+
         //创建一个新的连接
         Connection connection = factory.newConnection();
 
@@ -43,28 +43,28 @@ public class TestRabbitMQ {
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 
         //发送消息到队列中
-        String message = "Hello RabbitMQ:"+System.currentTimeMillis();
+        String message = "Hello RabbitMQ:" + System.currentTimeMillis();
         channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
         System.out.println("Producer Send +'" + message + "'");
 
         //关闭通道和连接
         channel.close();
         connection.close();
-	}
-	
-	@Test
-	public void test1Consumer() throws Exception {
-		String QUEUE_NAME = "queue-test-1";
-		 //创建连接工厂
-		ConnectionFactory factory = null;
+    }
 
-		factory = new ConnectionFactory();
-		// 设置RabbitMQ相关信息
-		factory.setHost(host);
-		factory.setUsername(user);
-		factory.setPassword(pwd);
-		factory.setPort(port);
-		
+    @Test
+    public void test1Consumer() throws Exception {
+        String QUEUE_NAME = "queue-test-1";
+        //创建连接工厂
+        ConnectionFactory factory = null;
+
+        factory = new ConnectionFactory();
+        // 设置RabbitMQ相关信息
+        factory.setHost(host);
+        factory.setUsername(user);
+        factory.setPassword(pwd);
+        factory.setPort(port);
+
         //创建一个新的连接
         Connection connection = factory.newConnection();
 
@@ -86,6 +86,6 @@ public class TestRabbitMQ {
         };
         //自动回复队列应答 -- RabbitMQ中的消息确认机制
         channel.basicConsume(QUEUE_NAME, true, consumer);
-	}
+    }
 
 }

@@ -22,7 +22,6 @@ import com.myhexin.service.UserService;
 
 /**
  * 类CrmRealm的实现描述：shiro领域，用于授权和认证
- * 
  */
 public class UserRealm extends AuthorizingRealm {
 
@@ -30,28 +29,28 @@ public class UserRealm extends AuthorizingRealm {
     private IUserDao iuserDao;
     @Autowired
     private UserService userService;
-    
+
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        User user = iuserDao.authenticationUser(token.getUsername(),new String(token.getPassword()));
+        User user = iuserDao.authenticationUser(token.getUsername(), new String(token.getPassword()));
         if (user != null) {
             return new SimpleAuthenticationInfo(user, token.getPassword(),
-                                                    user.getName());
+                    user.getName());
         } else {
             return null;
         }
     }
 
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    	 User user = (User)getAvailablePrincipal(principals);
-    	
-    	List<PermissionDTO> permissions = userService.queryUserPermission(user.getName());
-    	
-    	SimpleAuthorizationInfo infos = new SimpleAuthorizationInfo ();
-    	for (PermissionDTO permission : permissions) {
-    		infos.addStringPermission(permission.getResourcecode());
-		}
-    	return infos;
+        User user = (User) getAvailablePrincipal(principals);
+
+        List<PermissionDTO> permissions = userService.queryUserPermission(user.getName());
+
+        SimpleAuthorizationInfo infos = new SimpleAuthorizationInfo();
+        for (PermissionDTO permission : permissions) {
+            infos.addStringPermission(permission.getResourcecode());
+        }
+        return infos;
 //        return (AuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute(Constants.USER_RESOURCE);
     }
 }

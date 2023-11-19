@@ -21,61 +21,61 @@ import com.myhexin.service.UserService;
 
 /**
  * 类UserController.java的实现描述：内部用户WEB层
- * 
+ *
  * @author admin 2013-3-5 上午09:50:56
  */
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
-	/**
-	 * 转向创建内部用户页面
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/login",method=RequestMethod.POST)
+    /**
+     * 转向创建内部用户页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
 //	@ResponseBody
-	public String login(User user,String username,String name) {
+    public String login(User user, String username, String name) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username,user.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(username, user.getPassword());
         token.setRememberMe(true);
         try {
             subject.login(token);
             return "redirect:/success.jsp";
-        }catch (AuthenticationException e) {
+        } catch (AuthenticationException e) {
 //            log.error("登录失败错误信息:"+e);
 //            token.clear();
-        	System.out.println(e);
+            System.out.println(e);
             return "redirect:/login.jsp";
         }
-	}
-	
-	/**
-	 * 
-	 */
-	@RequestMapping(value = "/queryUserPermission",method=RequestMethod.GET)
-	@ResponseBody
-	public List<PermissionDTO> queryUserPermission(String name) {
-			return userService.queryUserPermission(name);
     }
-	
-	/**
-	 * 
-	 */
-	@RequestMapping(value = "/queryResourceTree",method=RequestMethod.GET)
-	@ResponseBody
-	public TResourceTreeDTO queryResourceTreeById(String name) {
-			return userService.queryResourceTreeById(1);
+
+    /**
+     *
+     */
+    @RequestMapping(value = "/queryUserPermission", method = RequestMethod.GET)
+    @ResponseBody
+    public List<PermissionDTO> queryUserPermission(String name) {
+        return userService.queryUserPermission(name);
     }
-	
-	@RequestMapping(value = "/queryPermissionByPage",method=RequestMethod.GET)
-	@ResponseBody
-	public List<TResource> queryPermissionByPage(String name) {
-		Page page = new Page();
-		return userService.queryPermissionByPage(page);
+
+    /**
+     *
+     */
+    @RequestMapping(value = "/queryResourceTree", method = RequestMethod.GET)
+    @ResponseBody
+    public TResourceTreeDTO queryResourceTreeById(String name) {
+        return userService.queryResourceTreeById(1);
     }
-	
+
+    @RequestMapping(value = "/queryPermissionByPage", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TResource> queryPermissionByPage(String name) {
+        Page page = new Page();
+        return userService.queryPermissionByPage(page);
+    }
+
 }

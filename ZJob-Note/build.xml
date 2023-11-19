@@ -3,43 +3,42 @@
 <project name="myswt project" default="pack">
 
     <!-- 定义目录变量 -->
-    <property name="src.dir2" value="src" />
-	<property name="src.dir" value="Test" />
+    <property name="src.dir2" value="src"/>
+    <property name="src.dir" value="Test"/>
 
-    <property name="bin.dir" value="bin" />
-	
-	<property name="lib.dir" value="bin/lib" />
-	
-    <property name="eclipse_plugins.dir" value="D:/NBxiangmu/eclipse/plugins" />
-	<!-- 打包的目的地  -->
-    <property name="dist.dir" value="d:/dist" />
-	<!-- 打包jar的名称  -->
-	<property name="jar.name" value="myjar.jar"  />
+    <property name="bin.dir" value="bin"/>
 
-    <property name="doc.dir" value="${dist.dir}/api" />
-    <property name="swt.dll" value="swt-win32-3063.dll" />
+    <property name="lib.dir" value="bin/lib"/>
 
-	<!-- manifest's args -->
-	<property name="user.name" value="ljy"/>
-	
+    <property name="eclipse_plugins.dir" value="D:/NBxiangmu/eclipse/plugins"/>
+    <!-- 打包的目的地  -->
+    <property name="dist.dir" value="d:/dist"/>
+    <!-- 打包jar的名称  -->
+    <property name="jar.name" value="myjar.jar"/>
+
+    <property name="doc.dir" value="${dist.dir}/api"/>
+    <property name="swt.dll" value="swt-win32-3063.dll"/>
+
+    <!-- manifest's args -->
+    <property name="user.name" value="ljy"/>
+
     <!-- 定义编译文件时所引用的库 -->
 
-	<path id="project.lib">
-		<fileset dir="${lib.dir}" id="lib_jars">
-			<include name="**/**"/>
-		</fileset>
-	</path>
-	
-    <path id="master-classpath">
-        <fileset dir="${eclipse_plugins.dir}" id="project_lib">
-        	<include name="org.junit_3.8.2.v20090203-1005/junit.jar"/>
+    <path id="project.lib">
+        <fileset dir="${lib.dir}" id="lib_jars">
+            <include name="**/**"/>
         </fileset>
-    	<fileset dir="E:">
-    		<include name="lijianyu/source/struts-2.1.8.1/lib/struts2-core-2.1.8.1.jar"/>
-    	</fileset>
     </path>
 
- 
+    <path id="master-classpath">
+        <fileset dir="${eclipse_plugins.dir}" id="project_lib">
+            <include name="org.junit_3.8.2.v20090203-1005/junit.jar"/>
+        </fileset>
+        <fileset dir="E:">
+            <include name="lijianyu/source/struts-2.1.8.1/lib/struts2-core-2.1.8.1.jar"/>
+        </fileset>
+    </path>
+
 
     <!-- 首任务（空）-->
     <target name="init"/>
@@ -53,9 +52,9 @@
 
         <!--编译源程序  jdk 1.6-->
 
-        <javac srcdir="${src.dir}" destdir="${bin.dir}" target="1.6"> 
+        <javac srcdir="${src.dir}" destdir="${bin.dir}" target="1.6">
             <classpath refid="master-classpath"/>
-        	<classpath refid="project.lib"/>
+            <classpath refid="project.lib"/>
         </javac>
 
         <!--复制图标目录-->
@@ -76,36 +75,36 @@
 
         <delete dir="${dist.dir}"/>
 
-        <mkdir dir="${dist.dir}" />
-<!-- 
-        <jar basedir="${bin.dir}"  destfile="${dist.dir}/${jar.name}" manifest="ant_manifes.txt">
-        -->
-         <jar basedir="${bin.dir}"  destfile="${dist.dir}/${jar.name}">	
-         	<!-- 
-            <exclude name="**/*Test.*" />
-            <exclude name="**/Test*.*" />
-            -->
-            	<manifest>
-            	       <attribute name="Built-By" value="${user.name}" />
-            	       <attribute name="Main-Class" value="my.path.to.the.main.Application" />
-            	       <section name="common">
-            	         <attribute name="Specification-Title" value="${component.name}" />
-            	         <attribute name="Specification-Version" value="${component.version}" />
-            	         <attribute name="Specification-Vendor" value="${component.vendor}" />
-            	         <attribute name="Implementation-Title" value="${component.name}" />
-            	         <attribute name="Implementation-Version" value="${component.version} ${TODAY}" />
-            	         <attribute name="Implementation-Vendor" value="${component.vendor}" />
-            	       </section>
-            	       <!-- finally, use the magically generated libs path -->
-            	       <attribute name="Class-Path" value="${project.lib}" />
-            	     </manifest>
+        <mkdir dir="${dist.dir}"/>
+        <!--
+                <jar basedir="${bin.dir}"  destfile="${dist.dir}/${jar.name}" manifest="ant_manifes.txt">
+                -->
+        <jar basedir="${bin.dir}" destfile="${dist.dir}/${jar.name}">
+            <!--
+           <exclude name="**/*Test.*" />
+           <exclude name="**/Test*.*" />
+           -->
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="my.path.to.the.main.Application"/>
+                <section name="common">
+                    <attribute name="Specification-Title" value="${component.name}"/>
+                    <attribute name="Specification-Version" value="${component.version}"/>
+                    <attribute name="Specification-Vendor" value="${component.vendor}"/>
+                    <attribute name="Implementation-Title" value="${component.name}"/>
+                    <attribute name="Implementation-Version" value="${component.version} ${TODAY}"/>
+                    <attribute name="Implementation-Vendor" value="${component.vendor}"/>
+                </section>
+                <!-- finally, use the magically generated libs path -->
+                <attribute name="Class-Path" value="${project.lib}"/>
+            </manifest>
         </jar>
 
         <!-- 复制用到的库 -->
-        <mkdir dir="${dist.dir}/lib" />
+        <mkdir dir="${dist.dir}/lib"/>
 
         <copy todir="${dist.dir}/lib">
-        	<fileset refid="lib_jars" />
+            <fileset refid="lib_jars"/>
         </copy>
 
         <!-- 复制本地化文件 
@@ -117,7 +116,7 @@
 
     <target name="api_doc" depends="pack">
         <delete dir="${doc.dir}"/>
-        <mkdir dir="${doc.dir}" />
+        <mkdir dir="${doc.dir}"/>
 
         <javadoc destdir="${doc.dir}" author="true" version="true" use="true" windowtitle="MySWT API">
             <packageset dir="${src.dir}" defaultexcludes="yes"/>

@@ -11,6 +11,7 @@ import com.myhexin.entity.PctMetal;
  */
 public interface IProductDao {
 
-	public List<PctMetal> queryPctMetal(@Param("pctcode")String pctcode);
-	public void insertPctMetal(PctMetal pctMetal);
+    public List<PctMetal> queryPctMetal(@Param("pctcode") String pctcode);
+
+    public void insertPctMetal(PctMetal pctMetal);
 }

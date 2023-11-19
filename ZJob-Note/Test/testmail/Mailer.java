@@ -1,4 +1,5 @@
 package testmail;
+
 import java.util.*;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -12,11 +13,12 @@ import javax.mail.internet.MimeMultipart;
 
 /**
  * 使成为事实邮件的特快专递功能
+ *
  * @author Winter Lau
  */
- 
+
 public class Mailer {
- 
+
     /**
      * 发送邮件
      *
@@ -26,7 +28,7 @@ public class Mailer {
      */
     protected static void sendMail(String smtpHost, String email)
             throws MessagingException {
- 
+
         Properties mailProperties = System.getProperties();
         mailProperties.put("mail.smtp.host", smtpHost);
         mailProperties.put("mail.smtp.port", "25");
@@ -36,7 +38,7 @@ public class Mailer {
         MimeBodyPart messageBodyPart = new MimeBodyPart();
         Multipart multipart = new MimeMultipart("related");
         messageBodyPart.setText("这搭是邮件内部实质意义");
- 
+
         multipart.addBodyPart(messageBodyPart);
         mailMessage.setContent(multipart);
         mailMessage.setSentDate(new Date());
@@ -46,8 +48,8 @@ public class Mailer {
         mailMessage.setSubject("hi，邮件发送测试");
         Transport.send(mailMessage);
     }
-    
-    public static void main(String[] args) throws MessagingException{
-    	sendMail("mail.myhexin.com", "lijianyu@myhexin.com");
+
+    public static void main(String[] args) throws MessagingException {
+        sendMail("mail.myhexin.com", "lijianyu@myhexin.com");
     }
 }

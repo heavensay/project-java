@@ -14,40 +14,42 @@ import com.myhexin.service.ProductService;
 
 
 /**
- * 
+ *
  */
 @Controller
 @RequestMapping("/product")
-public class ProductController  extends BaseController{
+public class ProductController extends BaseController {
 
-	@Autowired
-	ProductService productService;
+    @Autowired
+    ProductService productService;
 
-	/**
-	 * 理财专区->贵金属
-	 * @return
-	 */
-	@RequestMapping(value = "/queryPctMetal",method=RequestMethod.GET)
-	@ResponseBody
-	public List<PctMetal> queryPctMetal(String pctcode){
-		List<PctMetal> list = productService.queryPctMetal(pctcode);
-		return list;
-	}
-	
-	/**
-	 * 多数据源的测试
-	 * @return
-	 */
-	@RequestMapping(value = "/insertPctMetal",method=RequestMethod.GET)
-	@ResponseBody
-	public String insertPctMetal(String pctcode,String pctname){
-		PctMetal pctMetal = new PctMetal();
-		pctMetal.setPctcode("code1");
-		pctMetal.setPctcode("name1");
-		pctMetal.setInputtime(new Timestamp(System.currentTimeMillis()));
-		
-		productService.insertPctMetal(pctMetal);
-		return "insert pctmetal ok";
-	}
-	
+    /**
+     * 理财专区->贵金属
+     *
+     * @return
+     */
+    @RequestMapping(value = "/queryPctMetal", method = RequestMethod.GET)
+    @ResponseBody
+    public List<PctMetal> queryPctMetal(String pctcode) {
+        List<PctMetal> list = productService.queryPctMetal(pctcode);
+        return list;
+    }
+
+    /**
+     * 多数据源的测试
+     *
+     * @return
+     */
+    @RequestMapping(value = "/insertPctMetal", method = RequestMethod.GET)
+    @ResponseBody
+    public String insertPctMetal(String pctcode, String pctname) {
+        PctMetal pctMetal = new PctMetal();
+        pctMetal.setPctcode("code1");
+        pctMetal.setPctcode("name1");
+        pctMetal.setInputtime(new Timestamp(System.currentTimeMillis()));
+
+        productService.insertPctMetal(pctMetal);
+        return "insert pctmetal ok";
+    }
+
 }

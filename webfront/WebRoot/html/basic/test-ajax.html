@@ -1,45 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
 </head>
 <body>
-	<div id='div1'>
-		div1
-	</div>
-	<input type="button" value="ajax请求数据" onclick="queryResourceTree()"/>	
+<div id='div1'>
+    div1
+</div>
+<input type="button" value="ajax请求数据" onclick="queryResourceTree()"/>
 </body>
 <script type="text/javascript">
-	
-var queryResourceTree = function() {
-	/* ajax 请求+超时功能设置
-	 * */
-	var treejson;
-	var request = new XMLHttpRequest();
-	//async:true 表示异步
-	request.open("get", "/webfront/data/queryResourceTree?name=admin", true);
-	request.onreadystatechange = function() {
-		/*console.log("request.status:"+request.status+"  request.statusText:"+request.statusText+
-			"  request.readyState:"+request.readyState+
-			"  request.responseText:"+request.responseText+"  request.responseBody:"+request.responseBody);*/
-		if (request.readyState == 4) {
-			if (request.status == 200) {//
-				//treejson=JSON.parse('['+JSON.stringify(request.responseText)+']');
-				treejson = request.responseText;
-				console.log(treejson);
-				//撤掉定时器
-				window.clearTimeout(timeid);
-				console.log('ajax -> 清楚定时器');
-			}
-		}
-	}
-	request.send(null);
-	//3秒以后自动终止还在请求中的ajax请求
-	var timeid = window.setTimeout(function() {
-		console.log('ajax-> abort()');
-		request.abort();
-	}, 3000);
-}
+
+    var queryResourceTree = function () {
+        /* ajax 请求+超时功能设置
+         * */
+        var treejson;
+        var request = new XMLHttpRequest();
+        //async:true 表示异步
+        request.open("get", "/webfront/data/queryResourceTree?name=admin", true);
+        request.onreadystatechange = function () {
+            /*console.log("request.status:"+request.status+"  request.statusText:"+request.statusText+
+                "  request.readyState:"+request.readyState+
+                "  request.responseText:"+request.responseText+"  request.responseBody:"+request.responseBody);*/
+            if (request.readyState == 4) {
+                if (request.status == 200) {//
+                    //treejson=JSON.parse('['+JSON.stringify(request.responseText)+']');
+                    treejson = request.responseText;
+                    console.log(treejson);
+                    //撤掉定时器
+                    window.clearTimeout(timeid);
+                    console.log('ajax -> 清楚定时器');
+                }
+            }
+        }
+        request.send(null);
+        //3秒以后自动终止还在请求中的ajax请求
+        var timeid = window.setTimeout(function () {
+            console.log('ajax-> abort()');
+            request.abort();
+        }, 3000);
+    }
 </script>
 </html>

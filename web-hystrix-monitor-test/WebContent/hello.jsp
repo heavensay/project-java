@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Hello Gradle Web App</title>
+    <title>Hello Gradle Web App</title>
 </head>
 <body>
 
-	Hello Gradle Web Application
+Hello Gradle Web Application
 
 </body>
 </html>

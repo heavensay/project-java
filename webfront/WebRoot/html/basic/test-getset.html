@@ -1,48 +1,52 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-	<script type="text/javascript">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <script type="text/javascript">
 
-	
-	/*******
-		var o ={
+
+        /*******
+         var o ={
 			v:1,
 			get v1(){ return this.v},
 			set v1(value){this.v=value;}
 		};
-		console.log(o.v1);    //1
-		console.log(o.v1=2);    //2
-		console.log(o.v1);    //2
-	
-		console.log(typeof o.v1);   //number
-	
-	  	//console.log(o.getV1());    //Uncaught TypeError: Object #<Object> has no method 'getV1' 
-		//console.log(o.v1());    //Uncaught TypeError: Property 'v1' of object #<Object> is not a function 
-		console.log(o.v1.prototype);    //undefied
-		***/
-		var o ={
-			get v1(){ return 1},
-			set v1(value){value;}
-		};
-		console.log(o.v1);    //1
-		console.log(o.v1=2);    //2
-		console.log(o.v1);    //1
-	
-		console.log(typeof o.v1);   //number
-	
-	  	//console.log(o.getV1());    //Uncaught TypeError: Object #<Object> has no method 'getV1' 
-		//console.log(o.v1());    //Uncaught TypeError: Property 'v1' of object #<Object> is not a function 
-		console.log(o.v1.prototype);    //undefied		
-		
-	</script>
+         console.log(o.v1);    //1
+         console.log(o.v1=2);    //2
+         console.log(o.v1);    //2
+
+         console.log(typeof o.v1);   //number
+
+         //console.log(o.getV1());    //Uncaught TypeError: Object #<Object> has no method 'getV1'
+         //console.log(o.v1());    //Uncaught TypeError: Property 'v1' of object #<Object> is not a function
+         console.log(o.v1.prototype);    //undefied
+         ***/
+        var o = {
+            get v1() {
+                return 1
+            },
+            set v1(value) {
+                value;
+            }
+        };
+        console.log(o.v1);    //1
+        console.log(o.v1 = 2);    //2
+        console.log(o.v1);    //1
+
+        console.log(typeof o.v1);   //number
+
+        //console.log(o.getV1());    //Uncaught TypeError: Object #<Object> has no method 'getV1'
+        //console.log(o.v1());    //Uncaught TypeError: Property 'v1' of object #<Object> is not a function
+        console.log(o.v1.prototype);    //undefied
+
+    </script>
 </head>
 <body>
 
 </body>
-	<div id='div1'>
-		div1----
-	</div>
+<div id='div1'>
+    div1----
+</div>
 
 </html>

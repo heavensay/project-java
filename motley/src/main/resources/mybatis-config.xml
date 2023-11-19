@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
-"http://mybatis.org/dtd/mybatis-3-config.dtd">  
-  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
 <configuration>
 
-	<settings>
-	<!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default: OTHER 默认值得花，
-	当传进来的一些值为null,会报错   -->
-		<setting name="jdbcTypeForNull" value="NULL" />
-	</settings>
+    <settings>
+        <!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default: OTHER 默认值得花，
+        当传进来的一些值为null,会报错   -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
 
-	<typeAliases>
-		<typeAlias alias="User" type="com.myhexin.entity.User" />  <!--配置别名，是在Mapper中使用别名-->
-		<typeAlias alias="page" type="com.myhexin.persistent.Page" />  <!--配置别名，是在Mapper中使用别名-->
-		<typeAlias alias="PageInterceptor" type="com.myhexin.persistent.PageInterceptor" />  <!--配置别名，是在Mapper中使用别名-->
-		
-		<typeAlias alias="pctMetal" type="com.myhexin.entity.PctMetal" />
-	</typeAliases>
-	
-    <plugins>  
-       <plugin interceptor="PageInterceptor">  
-           <property name="databaseType" value="mysql"/>  
-       </plugin>  
-    </plugins>  	
-	
-	<mappers>  
-        <mapper resource="mybatis-mapper/user-mapper.xml" />  
-        <mapper resource="mybatis-mapper/product-mapper.xml" />  
-    </mappers> 
-	
+    <typeAliases>
+        <typeAlias alias="User" type="com.myhexin.entity.User"/>  <!--配置别名，是在Mapper中使用别名-->
+        <typeAlias alias="page" type="com.myhexin.persistent.Page"/>  <!--配置别名，是在Mapper中使用别名-->
+        <typeAlias alias="PageInterceptor" type="com.myhexin.persistent.PageInterceptor"/>  <!--配置别名，是在Mapper中使用别名-->
+
+        <typeAlias alias="pctMetal" type="com.myhexin.entity.PctMetal"/>
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="PageInterceptor">
+            <property name="databaseType" value="mysql"/>
+        </plugin>
+    </plugins>
+
+    <mappers>
+        <mapper resource="mybatis-mapper/user-mapper.xml"/>
+        <mapper resource="mybatis-mapper/product-mapper.xml"/>
+    </mappers>
+
 </configuration>  

@@ -12,9 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Annex complex type�� Java �ࡣ
- * 
+ *
  * <p>����ģʽƬ��ָ�����ڴ����е�Ԥ�����ݡ�
- * 
+ *
  * <pre>
  * &lt;complexType name="Annex">
  *   &lt;complexContent>
@@ -27,13 +27,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Annex", propOrder = {
-    "annexData",
-    "name"
+        "annexData",
+        "name"
 })
 public class Annex {
 
@@ -44,11 +42,9 @@ public class Annex {
 
     /**
      * ��ȡannexData���Ե�ֵ��
-     * 
-     * @return
-     *     possible object is
-     *     {@link DataHandler }
-     *     
+     *
+     * @return possible object is
+     * {@link DataHandler }
      */
     public DataHandler getAnnexData() {
         return annexData;
@@ -56,11 +52,9 @@ public class Annex {
 
     /**
      * ����annexData���Ե�ֵ��
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DataHandler }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link DataHandler }
      */
     public void setAnnexData(DataHandler value) {
         this.annexData = value;
@@ -68,11 +62,9 @@ public class Annex {
 
     /**
      * ��ȡname���Ե�ֵ��
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
+     *
+     * @return possible object is
+     * {@link JAXBElement }{@code <}{@link String }{@code >}
      */
     public JAXBElement<String> getName() {
         return name;
@@ -80,11 +72,9 @@ public class Annex {
 
     /**
      * ����name���Ե�ֵ��
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
+     *
+     * @param value allowed object is
+     *              {@link JAXBElement }{@code <}{@link String }{@code >}
      */
     public void setName(JAXBElement<String> value) {
         this.name = value;

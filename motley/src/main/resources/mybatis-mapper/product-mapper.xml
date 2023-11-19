@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-  
-<mapper namespace="com.myhexin.dao.product.IProductDao">  
-    
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myhexin.dao.product.IProductDao">
+
     <!-- 理财专区->贵金属 -->
-    <select id="queryPctMetal" resultType="pctMetal">  
-	    select id,pctcode,pctname,intro,purity,weight,price,
-			label,rank,customlabel,ext1,ext2,inputtime,updatetime  
-			from pct_metal
-			<if test="pctcode!=null  and pctcode!=&quot;&quot;">
-				where pctcode=#{pctcode}
-			</if>			
-		order by rank	 
+    <select id="queryPctMetal" resultType="pctMetal">
+        select id,pctcode,pctname,intro,purity,weight,price,
+        label,rank,customlabel,ext1,ext2,inputtime,updatetime
+        from pct_metal
+        <if test="pctcode!=null  and pctcode!=&quot;&quot;">
+            where pctcode=#{pctcode}
+        </if>
+        order by rank
     </select>
-    
-	<insert id="insertPctMetal" parameterType="pctMetal" useGeneratedKeys="true">
-		insert into pct_metal(pctcode,pctname,inputtime)
-		values(#{pctcode},#{pctname},#{inputtime})
-	</insert>    
+
+    <insert id="insertPctMetal" parameterType="pctMetal" useGeneratedKeys="true">
+        insert into pct_metal(pctcode,pctname,inputtime)
+        values(#{pctcode},#{pctname},#{inputtime})
+    </insert>
 </mapper> 
 

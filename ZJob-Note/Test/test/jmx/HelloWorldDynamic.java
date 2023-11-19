@@ -14,85 +14,86 @@ import javax.management.MBeanOperationInfo;
 import javax.management.ReflectionException;
 
 public class HelloWorldDynamic implements DynamicMBean {
-	public String hello;
-	
+    public String hello;
 
-	public HelloWorldDynamic() {
-		this.hello = "Hello World! I am a Dynamic MBean";
-	}
 
-	public HelloWorldDynamic(String hello) {
-		this.hello = hello;
-	}
+    public HelloWorldDynamic() {
+        this.hello = "Hello World! I am a Dynamic MBean";
+    }
 
-	public String getHello() {
-		return hello;
-	}
+    public HelloWorldDynamic(String hello) {
+        this.hello = hello;
+    }
 
-	public Object getInstance() {
-		return new Object();
-	}
+    public String getHello() {
+        return hello;
+    }
 
-	public void setHello(String hello) {
-		this.hello = hello;
-	}
+    public Object getInstance() {
+        return new Object();
+    }
 
-	@Override
-	public Object getAttribute(String attribute)
-			throws AttributeNotFoundException, MBeanException,
-			ReflectionException {
-		//设置getAttribute的执行逻辑
-		if("getInstance".equals(attribute)){
-			return getInstance();
-		}
-		
-		return null;
-	}
+    public void setHello(String hello) {
+        this.hello = hello;
+    }
 
-	@Override
-	public AttributeList getAttributes(String[] attributes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Object getAttribute(String attribute)
+            throws AttributeNotFoundException, MBeanException,
+            ReflectionException {
+        //设置getAttribute的执行逻辑
+        if ("getInstance".equals(attribute)) {
+            return getInstance();
+        }
 
-	MBeanInfo info = null;
-	@Override
-	public MBeanInfo getMBeanInfo()  {
-		try {
-			Class cls = this.getClass();
-			// 用反射获得 "getHello" 属性的读方法
-			//DynamicMBean中，
-			Method readMethod = cls.getMethod("getHello", new Class[0]);
-			MBeanAttributeInfo attribute = new MBeanAttributeInfo("gh",
-					" the first attribute ", readMethod, null);
-			//执行java类的method需要的一些元数据，由MBeanOperationInfo提供
-			MBeanOperationInfo operation = new MBeanOperationInfo(
-					" the first operation ", cls.getMethod("getInstance", null));
-			info = new MBeanInfo(cls.getName(), " this is a dynamic MBean ",
-					new MBeanAttributeInfo[] { attribute }, null,
-					new MBeanOperationInfo[] { operation }, null);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return info;
-	}
+        return null;
+    }
 
-	@Override
-	public Object invoke(String actionName, Object[] params, String[] signature)
-			throws MBeanException, ReflectionException {
-		System.out.println(" the HelloWorldDynamic's method invoke  ");
-		return null;
-	}
+    @Override
+    public AttributeList getAttributes(String[] attributes) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public void setAttribute(Attribute attribute)
-			throws AttributeNotFoundException, InvalidAttributeValueException,
-			MBeanException, ReflectionException {
-		
-	}
+    MBeanInfo info = null;
 
-	@Override
-	public AttributeList setAttributes(AttributeList attributes) {
-		return null;
-	}
+    @Override
+    public MBeanInfo getMBeanInfo() {
+        try {
+            Class cls = this.getClass();
+            // 用反射获得 "getHello" 属性的读方法
+            //DynamicMBean中，
+            Method readMethod = cls.getMethod("getHello", new Class[0]);
+            MBeanAttributeInfo attribute = new MBeanAttributeInfo("gh",
+                    " the first attribute ", readMethod, null);
+            //执行java类的method需要的一些元数据，由MBeanOperationInfo提供
+            MBeanOperationInfo operation = new MBeanOperationInfo(
+                    " the first operation ", cls.getMethod("getInstance", null));
+            info = new MBeanInfo(cls.getName(), " this is a dynamic MBean ",
+                    new MBeanAttributeInfo[]{attribute}, null,
+                    new MBeanOperationInfo[]{operation}, null);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return info;
+    }
+
+    @Override
+    public Object invoke(String actionName, Object[] params, String[] signature)
+            throws MBeanException, ReflectionException {
+        System.out.println(" the HelloWorldDynamic's method invoke  ");
+        return null;
+    }
+
+    @Override
+    public void setAttribute(Attribute attribute)
+            throws AttributeNotFoundException, InvalidAttributeValueException,
+            MBeanException, ReflectionException {
+
+    }
+
+    @Override
+    public AttributeList setAttributes(AttributeList attributes) {
+        return null;
+    }
 }

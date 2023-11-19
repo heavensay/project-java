@@ -30,43 +30,44 @@ import com.myhexin.persistent.Page;
 import com.myhexin.service.UserService;
 
 /**
- * 附件上传下载 
+ * 附件上传下载
+ *
  * @author admin 2013-3-5 上午09:50:56
  */
 @Controller
 @RequestMapping("/annex")
 public class AnnexController {
 
-	@RequestMapping(method=RequestMethod.GET,value="/download")
-	public void download(@RequestParam("fileName")  
-		    String fileName, HttpServletRequest request, HttpServletResponse respons) throws IOException{
-		OutputStream  os = null;
-		InputStream is = null;
-		try{
-			
-			is = (this.getClass().getClassLoader().getResourceAsStream(fileName));
+    @RequestMapping(method = RequestMethod.GET, value = "/download")
+    public void download(@RequestParam("fileName")
+                                 String fileName, HttpServletRequest request, HttpServletResponse respons) throws IOException {
+        OutputStream os = null;
+        InputStream is = null;
+        try {
 
-			int fileLength = 0;
-			os = respons.getOutputStream();
-			byte[] bs = new byte[1024];
-			int count = 0;
-			while((count=is.read(bs))!=-1){
-				os.write(bs);
-				fileLength = fileLength+count;
-			}
-			System.out.println(fileLength);
-			respons.setContentType("application/x-msdownload;");
-			respons.setHeader("Content-disposition", "attachment; filename="
-					+ new String(fileName.getBytes("utf-8"), "ISO8859-1"));
-			respons.setHeader("Content-Length", String.valueOf(fileLength));
-			
+            is = (this.getClass().getClassLoader().getResourceAsStream(fileName));
 
-		}catch(Exception e){
-			System.out.println(e);
-		}finally{
-			os.close();
-			is.close();
-		}
-	}
-	
+            int fileLength = 0;
+            os = respons.getOutputStream();
+            byte[] bs = new byte[1024];
+            int count = 0;
+            while ((count = is.read(bs)) != -1) {
+                os.write(bs);
+                fileLength = fileLength + count;
+            }
+            System.out.println(fileLength);
+            respons.setContentType("application/x-msdownload;");
+            respons.setHeader("Content-disposition", "attachment; filename="
+                    + new String(fileName.getBytes("utf-8"), "ISO8859-1"));
+            respons.setHeader("Content-Length", String.valueOf(fileLength));
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            os.close();
+            is.close();
+        }
+    }
+
 }

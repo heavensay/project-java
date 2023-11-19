@@ -19,18 +19,18 @@ import javax.management.openmbean.SimpleType;
 import test.jmx.HelloWorld;
 
 public class OpenMBeanTest {
-	
-	public static void main(String[] args) throws Exception{
-		ZooImpl zoo = new ZooImpl();
-		ZooOpenMBean open = new ZooOpenMBean(zoo);
-		ObjectName name = new ObjectName("ZooOpenMBean:type=OpenMBean--");
-		
-		MBeanServer ms = MBeanServerFactory.createMBeanServer();
-		ms.registerMBean(open, name);
-		
- 		String zooName = (String)ms.getAttribute(name, "zooName");
-		Object tiger = ms.getAttribute(name, "tiger");
-		System.out.println(zooName);
-		System.out.println(tiger);
-	}
+
+    public static void main(String[] args) throws Exception {
+        ZooImpl zoo = new ZooImpl();
+        ZooOpenMBean open = new ZooOpenMBean(zoo);
+        ObjectName name = new ObjectName("ZooOpenMBean:type=OpenMBean--");
+
+        MBeanServer ms = MBeanServerFactory.createMBeanServer();
+        ms.registerMBean(open, name);
+
+        String zooName = (String) ms.getAttribute(name, "zooName");
+        Object tiger = ms.getAttribute(name, "tiger");
+        System.out.println(zooName);
+        System.out.println(tiger);
+    }
 }

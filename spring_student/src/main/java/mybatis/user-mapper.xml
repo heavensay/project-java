@@ -1,95 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="mybatis.IUserDao">  <!--mybatis的namespace是必须的-->  
+<mapper namespace="mybatis.IUserDao">  <!--mybatis的namespace是必须的-->
 
-<!-- 
-	<resultMap type="com.myhexin.persistent.Page" id="page">
-	</resultMap>
- -->
+    <!--
+        <resultMap type="com.myhexin.persistent.Page" id="page">
+        </resultMap>
+     -->
 
-    <select id="getUserById" parameterType="int" resultType="user">  
-        SELECT id,#{annex_prefix_path}||name name,password  
-      	  FROM tuser  
-        WHERE id = #{id}  
-    </select>  
-    
+    <select id="getUserById" parameterType="int" resultType="user">
+        SELECT id,#{annex_prefix_path}||name name,password
+        FROM tuser
+        WHERE id = #{id}
+    </select>
+
     <update id="updateUser" parameterType="user">
-    	update tuser set remark=#{remark} where id=#{id}
+        update tuser set remark=#{remark} where id=#{id}
     </update>
-    
+
     <!-- Oracle insert 主键使用sequence主键 -->
     <insert id="insertUser" parameterType="user">
-    	<selectKey resultType="int" keyProperty="id"  order="BEFORE">
-	       SELECT tuser_id_seq.nextval AS id FROM DUAL
-	    </selectKey>
-    	insert into tuser(id,name,password,remark) values( #{id}, #{name},'888888', #{remark} )
+        <selectKey resultType="int" keyProperty="id" order="BEFORE">
+            SELECT tuser_id_seq.nextval AS id FROM DUAL
+        </selectKey>
+        insert into tuser(id,name,password,remark) values( #{id}, #{name},'888888', #{remark} )
     </insert>
-    	
+
     <!-- 批量插入 主键使用sequence主键 -->
     <insert id="batchInsertUser">
-    	insert into tuser(id,name,password,remark)
-    		select tuser_seq.nextval,a.* 
-    		 from ( 
-		<foreach collection="users" index="index" item="user"  separator="union all" >
-			select #{user.name},'666666',#{user.remark} from dual
-		</foreach>  	
-				) a
+        insert into tuser(id,name,password,remark)
+        select tuser_seq.nextval,a.*
+        from (
+        <foreach collection="users" index="index" item="user" separator="union all">
+            select #{user.name},'666666',#{user.remark} from dual
+        </foreach>
+        ) a
     </insert>
-    	
-    	
-    	
+
+
     <!-- 测试分页 1 -->
-    <select id="queryUserByPage"  resultType="user" parameterType="page"> 
-		select * 
-			from tuser
-			where 1=1 
-			<!-- 
-			<if test="#{id}!=null">#{id}</if>			
-			 -->
+    <select id="queryUserByPage" resultType="user" parameterType="page">
+        select *
+        from tuser
+        where 1=1
+        <!--
+        <if test="#{id}!=null">#{id}</if>
+         -->
     </select>
-    
+
     <!-- 测试分页 1 -->
-    <select id="query2UserByPage"  resultType="user"> 
-		select * 
-			from tuser
-			where 1=1 
-			and id=#{id}
-			<!-- 
-			<if test="#{id}!=null">#{id}</if>			
-			 -->
-    </select>    
-    
+    <select id="query2UserByPage" resultType="user">
+        select *
+        from tuser
+        where 1=1
+        and id=#{id}
+        <!--
+        <if test="#{id}!=null">#{id}</if>
+         -->
+    </select>
+
     <!-- 测试分页 
     <select id="queryUserByRowRounds"  resultType="user" parameterType="rowBounds" > 
 		select * 
 			from tuser
 			
     </select>        
-      -->  	
-      
+      -->
+
     <!-- 测试foreach 1 -->
-    <select id="queryUserByForeach"  resultType="user"> 
-		select * 
-			from tuser
-			where 1=1 
-			 <if test="ids != null and ids.length!=0 "> 
-		    	and id in 
-				<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
-					#{id}	
-				</foreach>
-			</if>
-    </select>         
-    	
+    <select id="queryUserByForeach" resultType="user">
+        select *
+        from tuser
+        where 1=1
+        <if test="ids != null and ids.length!=0 ">
+            and id in
+            <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
     <!-- 测试foreach 2 -->
-    <select id="queryUserByForeach2"  resultType="user"> 
-		select * 
-			from tuser
-			where 1=1 
-		    	and id in 
-				<foreach collection="array" index="index" item="id" open="(" separator="," close=")">
-					#{id}	
-				</foreach>
-    </select>       	
+    <select id="queryUserByForeach2" resultType="user">
+        select *
+        from tuser
+        where 1=1
+        and id in
+        <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper> 

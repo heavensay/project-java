@@ -13,23 +13,23 @@ import com.myhexin.service.UserService;
 
 /**
  * 类UserController.java的实现描述：内部用户WEB层
- * 
+ *
  * @author admin 2013-3-5 上午09:50:56
  */
 @Controller
 @RequestMapping("/common")
 public class CommonController {
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
-	/**
-	 * 
-	 */
-	@RequestMapping(value = "/view1",method=RequestMethod.GET)
-	@ModelAttribute(value="list")
-	public List<PermissionDTO>  view1(String name) {
-			List<PermissionDTO> list = userService.queryUserPermission(name);
-			return list;
+    /**
+     *
+     */
+    @RequestMapping(value = "/view1", method = RequestMethod.GET)
+    @ModelAttribute(value = "list")
+    public List<PermissionDTO> view1(String name) {
+        List<PermissionDTO> list = userService.queryUserPermission(name);
+        return list;
     }
 }

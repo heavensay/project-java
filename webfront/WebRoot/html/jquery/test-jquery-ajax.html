@@ -1,36 +1,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta http-equiv="Access-Control-Allow-Origin" content="*">
-		
-		<title>Insert title here</title>
-		<script type="text/javascript" src="../../js/jquery/jquery-1.9.1.js"> </script>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
 
-	</head>
-	<body>
+    <title>Insert title here</title>
+    <script type="text/javascript" src="../../js/jquery/jquery-1.9.1.js"></script>
 
-	</body>
-	<div id='div1'>
-		div1----
-		
-	</div>
+</head>
+<body>
 
-	<input type="button" value="ajax请求数据" onclick="queryResourceTree()"/>
+</body>
+<div id='div1'>
+    div1----
+
+</div>
+
+<input type="button" value="ajax请求数据" onclick="queryResourceTree()"/>
 
 <script type="text/javascript">
-var treejson;
-var queryResourceTree = function() {
-	$.ajax( {
-		url : "/webfront/data/queryResourceTree",
-		type : "get",
-		async : false,
-		success : function(data, textStatus, jqXHR) {
-			treejson = JSON.stringify(data);
-			console.log(treejson);
-		}
-	});
-}
+    var treejson;
+    var queryResourceTree = function () {
+        $.ajax({
+            url: "/webfront/data/queryResourceTree",
+            type: "get",
+            async: false,
+            success: function (data, textStatus, jqXHR) {
+                treejson = JSON.stringify(data);
+                console.log(treejson);
+            }
+        });
+    }
 </script>
 
 </html>

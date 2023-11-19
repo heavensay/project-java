@@ -32,8 +32,8 @@ public class UTF8StringHttpMessageConverter extends
     /**
      * Indicates whether the {@code Accept-Charset} should be written to any
      * outgoing request.
-     *
-
+     * <p>
+     * <p>
      * Default is {@code true}.
      */
     public void setWriteAcceptCharset(boolean writeAcceptCharset) {
@@ -79,12 +79,12 @@ public class UTF8StringHttpMessageConverter extends
 
     /**
      * Return the list of supported {@link Charset}.
-     * 
-     *
-
+     * <p>
+     * <p>
+     * <p>
      * By default, returns {@link Charset#availableCharsets()}. Can be
      * overridden in subclasses.
-     * 
+     *
      * @return the list of accepted charsets
      */
     protected List getAcceptedCharsets() {

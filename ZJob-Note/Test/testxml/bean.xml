@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-	<!DOCTYPE xml PUBLIC "-//Apache Software Foundation//DTD mydtd//EN"
-	"bean.dtd">
+<!DOCTYPE xml PUBLIC "-//Apache Software Foundation//DTD mydtd//EN"
+        "bean.dtd">
 <xml>
-	<bean path="testxml.Person">
-		<referencepath>testxml.Bird</referencepath>
-	</bean>	
+    <bean path="testxml.Person">
+        <referencepath>testxml.Bird</referencepath>
+    </bean>
 </xml>

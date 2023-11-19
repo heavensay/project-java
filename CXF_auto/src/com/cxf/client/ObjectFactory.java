@@ -8,18 +8,17 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the com.cxf.client package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
+ * This object contains factory methods for each
+ * Java content interface and Java element interface
+ * generated in the com.cxf.client package.
+ * <p>An ObjectFactory allows you to programatically
+ * construct new instances of the Java representation
+ * for XML content. The Java representation of XML
+ * content can consist of schema derived interfaces
+ * and classes representing the binding of schema
+ * type definitions, element declarations and model
+ * groups.  Factory methods for each of these are
  * provided in this class.
- * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -33,14 +32,12 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.cxf.client
-     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link AnnexTransportationResponse }
-     * 
      */
     public AnnexTransportationResponse createAnnexTransportationResponse() {
         return new AnnexTransportationResponse();
@@ -48,7 +45,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Annex }
-     * 
      */
     public Annex createAnnex() {
         return new Annex();
@@ -56,7 +52,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link AnnexTransportation }
-     * 
      */
     public AnnexTransportation createAnnexTransportation() {
         return new AnnexTransportation();
@@ -64,7 +59,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SayHelloResponse }
-     * 
      */
     public SayHelloResponse createSayHelloResponse() {
         return new SayHelloResponse();
@@ -72,7 +66,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SayHello }
-     * 
      */
     public SayHello createSayHello() {
         return new SayHello();
@@ -80,7 +73,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AnnexTransportationResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://service.cxf.com/", name = "annexTransportationResponse")
     public JAXBElement<AnnexTransportationResponse> createAnnexTransportationResponse(AnnexTransportationResponse value) {
@@ -89,7 +81,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Annex }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://service.cxf.com/", name = "Annex")
     public JAXBElement<Annex> createAnnex(Annex value) {
@@ -98,7 +89,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AnnexTransportation }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://service.cxf.com/", name = "annexTransportation")
     public JAXBElement<AnnexTransportation> createAnnexTransportation(AnnexTransportation value) {
@@ -107,7 +97,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SayHello }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://service.cxf.com/", name = "sayHello")
     public JAXBElement<SayHello> createSayHello(SayHello value) {
@@ -116,7 +105,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SayHelloResponse }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://service.cxf.com/", name = "sayHelloResponse")
     public JAXBElement<SayHelloResponse> createSayHelloResponse(SayHelloResponse value) {
@@ -125,7 +113,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "", name = "name", scope = Annex.class)
     public JAXBElement<String> createAnnexName(String value) {

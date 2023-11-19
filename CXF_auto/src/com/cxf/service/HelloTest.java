@@ -6,21 +6,21 @@ import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 
 public class HelloTest {
 
-	public static void main(String[] args) {
-		JaxWsServerFactoryBean factoryBean = new JaxWsServerFactoryBean();
+    public static void main(String[] args) {
+        JaxWsServerFactoryBean factoryBean = new JaxWsServerFactoryBean();
 
-		// Web服务的地址
+        // Web服务的地址
 
-		factoryBean.setAddress("http://localhost:8081/hello");
+        factoryBean.setAddress("http://localhost:8081/hello");
 
-		// Web服务对象调用接口
+        // Web服务对象调用接口
 
-		factoryBean.setServiceClass(HelloWorldImpl.class);
+        factoryBean.setServiceClass(HelloWorldImpl.class);
 
-		Server server = factoryBean.create();
+        Server server = factoryBean.create();
 
-		server.start();
+        server.start();
 
-	}
+    }
 
 }

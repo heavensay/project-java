@@ -4,50 +4,50 @@ import java.util.List;
 
 public class PermissionDTO {
 
-	private Integer id;
-	private Integer pid;
-	private String resourcecode;
-	private String resourcename;
+    private Integer id;
+    private Integer pid;
+    private String resourcecode;
+    private String resourcename;
 
-	private List<PermissionDTO> list;
-	
-	public Integer getId() {
-		return id;
-	}
+    private List<PermissionDTO> list;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public Integer getPid() {
-		return pid;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
+    public Integer getPid() {
+        return pid;
+    }
 
-	public String getResourcecode() {
-		return resourcecode;
-	}
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
 
-	public void setResourcecode(String resourcecode) {
-		this.resourcecode = resourcecode;
-	}
+    public String getResourcecode() {
+        return resourcecode;
+    }
 
-	public String getResourcename() {
-		return resourcename;
-	}
+    public void setResourcecode(String resourcecode) {
+        this.resourcecode = resourcecode;
+    }
 
-	public void setResourcename(String resourcename) {
-		this.resourcename = resourcename;
-	}
+    public String getResourcename() {
+        return resourcename;
+    }
 
-	public List<PermissionDTO> getList() {
-		return list;
-	}
+    public void setResourcename(String resourcename) {
+        this.resourcename = resourcename;
+    }
 
-	public void setList(List<PermissionDTO> list) {
-		this.list = list;
-	}
+    public List<PermissionDTO> getList() {
+        return list;
+    }
+
+    public void setList(List<PermissionDTO> list) {
+        this.list = list;
+    }
 }

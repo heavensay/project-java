@@ -7,7 +7,7 @@ import testmq.rabbitmq.RabbitMQUtil;
 
 public class Consumer {
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         String QUEUE_NAME = "queue-test-1";
 
         //创建一个新的连接
@@ -20,7 +20,7 @@ public class Consumer {
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 
         //发送消息到队列中
-        String message = "Hello RabbitMQ:"+System.currentTimeMillis();
+        String message = "Hello RabbitMQ:" + System.currentTimeMillis();
         channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
         System.out.println("Producer Send +'" + message + "'");
 

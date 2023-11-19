@@ -1,103 +1,112 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-	<script type="text/javascript">
-		console.log('*************test typeof*****************');
-	/****
-		this关键字：
-		1 函数内嵌套函数：嵌套内部的函数中，this没有按预想的绑定到外层函数对象上，而是绑定到了全局对象。
-		如果想访问外层函数的this值，那可以参考下面脚本var that = this，用一个变量保存外层this。
-		这个变量和内部函数都同在一个作用域内。
-		2 注意构造函数中的this关键字指向当前创建的对象
-		3 this没有作用域的限制
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <script type="text/javascript">
+        console.log('*************test typeof*****************');
+        /****
+         this关键字：
+         1 函数内嵌套函数：嵌套内部的函数中，this没有按预想的绑定到外层函数对象上，而是绑定到了全局对象。
+         如果想访问外层函数的this值，那可以参考下面脚本var that = this，用一个变量保存外层this。
+         这个变量和内部函数都同在一个作用域内。
+         2 注意构造函数中的this关键字指向当前创建的对象
+         3 this没有作用域的限制
 
-	***/
-		console.log('*************test this*****************');
-		
-			//情况一：纯粹的函数调用
-			//这是函数的最通常用法，属于全局性调用，因此this就代表全局对象Global。		
-		　	var x = 1;
-		　　function test(){
-		　　　　this.x = 0;
-		　　}
-		　　test();  //这种调用方式，test函数中的this就代表全局对象
-		　　console.log(x); //0
-		
-			//情况二：作为对象方法的调用
-			function test(){
-		　　　　alert(this.x);
-		　　}
-		　　var o = {};
-		　　o.x = 1;
-		　　o.m = test;
-		　　o.m(); // 1	   test函數中this指向o对象
-		
-			//	情况三 作为构造函数调用
-			//所谓构造函数，就是通过这个函数生成一个新对象（object）。这时，this就指这个新对象
-			var x = 2;
-		　　function test(){
-		　　　　this.x = 1;
-		　　}
-		　　var o = new test();//这种构造函数调用，test函数中的this就代表新创建的o对象
-		　　alert(x); //2
-		
-		
-		//情况四  内部嵌套函数
-		//在内部函数中，this没有按预想的绑定到外层函数对象上，而是绑定到了全局对象。
-		//这里普遍被认为是JavaScript语言的设计错误，因为没有人想让内部函数中的this指向全局对象。
-		//一般的处理方式是将this作为变量保存下来，一般约定为that或者self
-			var name='global name';
-			var o = {
-				name:'local name',
-				t:function(){
-					innerF();
-					function innerF(){
-						console.log(this.name);//global name
-					}
-				}
-			}
-			o.t(); //global name
-			var v2 = new o.t();
-			
-			//修正以后
-			var name='global name';
-			var o = {
-				name:'local name',
-				t:function(){
-					var that = this;
-					innerF();
-					function innerF(){
-						console.log(that.name);//local name
-					}
-				}
-			}
-			o.t(); //local name			
+         ***/
+        console.log('*************test this*****************');
 
-			//情况五 apply调用
-			//apply()是函数对象的一个方法，它的作用是改变函数的调用对象，
-			//它的第一个参数就表示改变后的调用这个函数的对象。因此，this指的就是这第一个参数。
-			//apply()的参数为空时，默认调用全局对象。因此，这时的运行结果为0，证明this指的是全局对象
-			var x = 0;
-		　　function test(){
-		　　　　alert(this.x);
-		　　}
-		　　var o={};
-		　　o.x = 1;
-		　　o.m = test;
-		　　o.m.apply(this); //0		
-		
-		
-	    console.log('*************change scope*****************');
-		
-	</script>
+        //情况一：纯粹的函数调用
+        //这是函数的最通常用法，属于全局性调用，因此this就代表全局对象Global。
+        var x = 1;
+
+        function test() {
+            this.x = 0;
+        }
+
+        test();  //这种调用方式，test函数中的this就代表全局对象
+        console.log(x); //0
+
+        //情况二：作为对象方法的调用
+        function test() {
+            alert(this.x);
+        }
+
+        var o = {};
+        o.x = 1;
+        o.m = test;
+        o.m(); // 1	   test函數中this指向o对象
+
+        //	情况三 作为构造函数调用
+        //所谓构造函数，就是通过这个函数生成一个新对象（object）。这时，this就指这个新对象
+        var x = 2;
+
+        function test() {
+            this.x = 1;
+        }
+
+        var o = new test();//这种构造函数调用，test函数中的this就代表新创建的o对象
+        alert(x); //2
+
+
+        //情况四  内部嵌套函数
+        //在内部函数中，this没有按预想的绑定到外层函数对象上，而是绑定到了全局对象。
+        //这里普遍被认为是JavaScript语言的设计错误，因为没有人想让内部函数中的this指向全局对象。
+        //一般的处理方式是将this作为变量保存下来，一般约定为that或者self
+        var name = 'global name';
+        var o = {
+            name: 'local name',
+            t: function () {
+                innerF();
+
+                function innerF() {
+                    console.log(this.name);//global name
+                }
+            }
+        }
+        o.t(); //global name
+        var v2 = new o.t();
+
+        //修正以后
+        var name = 'global name';
+        var o = {
+            name: 'local name',
+            t: function () {
+                var that = this;
+                innerF();
+
+                function innerF() {
+                    console.log(that.name);//local name
+                }
+            }
+        }
+        o.t(); //local name
+
+        //情况五 apply调用
+        //apply()是函数对象的一个方法，它的作用是改变函数的调用对象，
+        //它的第一个参数就表示改变后的调用这个函数的对象。因此，this指的就是这第一个参数。
+        //apply()的参数为空时，默认调用全局对象。因此，这时的运行结果为0，证明this指的是全局对象
+        var x = 0;
+
+        function test() {
+            alert(this.x);
+        }
+
+        var o = {};
+        o.x = 1;
+        o.m = test;
+        o.m.apply(this); //0
+
+
+        console.log('*************change scope*****************');
+
+    </script>
 </head>
 <body>
 
 </body>
-	<div id='div1'>
-		div1----
-	</div>
+<div id='div1'>
+    div1----
+</div>
 
 </html>

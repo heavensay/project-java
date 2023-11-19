@@ -6,25 +6,25 @@ import java.util.Map;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class FundBean {
-	
-	private List<FundItem> data;
-			
-	@JsonProperty("error")
-	private Map map;
 
-	public List<FundItem> getData() {
-		return data;
-	}
+    private List<FundItem> data;
 
-	public void setData(List<FundItem> data) {
-		this.data = data;
-	}
+    @JsonProperty("error")
+    private Map map;
 
-	public Map getMap() {
-		return map;
-	}
+    public List<FundItem> getData() {
+        return data;
+    }
 
-	public void setMap(Map map) {
-		this.map = map;
-	}
+    public void setData(List<FundItem> data) {
+        this.data = data;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
 }
